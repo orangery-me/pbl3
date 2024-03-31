@@ -1,0 +1,55 @@
+<nav th:fragment="nav">
+    <ul>
+        <li>
+            <div href="/admin" class="logo">
+                <img src="https://png.pngtree.com/png-vector/20191021/ourlarge/pngtree-medical-logo-png-image_1770394.jpg"
+                    alt="">
+                <span class="nav-dashBoard">DashBoard</span>
+            </div>
+        </li>
+        <li>
+            <div class="non-accordion">
+                <i class="fas fas-icon fa-home"></i>
+                <span class="nav-item">Trang chủ</span>
+            </div>
+        </li>
+        <li>
+            <div class="accordion">
+                <i class="fas fas-icon fa-address-card"></i>
+                <span class="nav-item">Quản lý</span>
+                <i class="icon-colap fas fa-plus"></i>
+                <i class="icon-colap fas fa-minus"></i>
+            </div>
+            <div class="panel">
+                <a href="/admin/doctor">Quản lý thông tin bác sĩ</a>
+                <a href="/admin/user">Quản lý tài khoản người dùng</a>
+            </div>
+        </li>
+        <li>
+            <div class="accordion">
+                <i class="fas fas-icon fa-bars"></i>
+                <span class="nav-item">Báo cáo</span>
+                <i class="icon-colap fas fa-plus"></i>
+                <i class="icon-colap fas fa-minus"></i>
+            </div>
+            <div class="panel">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+                <a href="#">Link 4</a>
+            </div>
+        </li>
+        <li>
+            <div class="accordion">
+                <i class="fas fas-icon fa-user"></i>
+                <span class="nav-item">Tài khoản</span>
+                <i class="icon-colap fas fa-plus"></i>
+                <i class="icon-colap fas fa-minus"></i>
+            </div>
+            <div class="panel">
+                <a href="#">Tùy chỉnh</a>
+                <a href="#">Đăng xuất</a>
+            </div>
+        </li>
+    </ul>
+</nav>
