@@ -9,4 +9,8 @@ public class HomeController {
     public String home() {
         return "index";
     }
+
+    public String login() {
+        return "auth/login/login";
+    }
 }
