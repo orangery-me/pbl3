@@ -43,7 +43,8 @@ public class SecurityAppConfig {
                                 org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login"));
+                .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/home", true));
 
         return httpSecurity.build();
     }

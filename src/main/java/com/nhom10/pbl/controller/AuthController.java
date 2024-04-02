@@ -20,12 +20,13 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-
+        // model.addAttribute("registerForm", new RegisterRequest());
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+        // model.addAttribute("loginForm", new AuthenticationRequest());
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
