@@ -5,9 +5,10 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.nhom10.pbl.models.UserModel;
+import com.nhom10.pbl.models.ERole;
+import com.nhom10.pbl.models.Role;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserModel, Long> {
-    public Optional<UserModel> findByUserName(String userName);
+public interface RoleRepository extends JpaRepository<Role, Integer> {
+    Optional<Role> findByName(ERole name);
 }

@@ -1,53 +1,39 @@
 package com.nhom10.pbl.models;
 
-import java.util.Set;
-
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "name")
-    private String name;
+    private Integer id;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
-    private Set<UserRole> roleUsers;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 
     public Role() {
+
     }
 
-    public Role(Long id, String name, Set<UserRole> roleUsers) {
-        this.id = id;
+    public Role(ERole name) {
         this.name = name;
-        this.roleUsers = roleUsers;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
+    public ERole getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(ERole name) {
         this.name = name;
     }
-
-    public Set<UserRole> getRoleUsers() {
-        return roleUsers;
-    }
-
-    public void setRoleUsers(Set<UserRole> roleUsers) {
-        this.roleUsers = roleUsers;
-    }
-
 }

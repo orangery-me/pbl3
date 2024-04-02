@@ -4,9 +4,17 @@ import java.sql.Date;
 import java.util.Set;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Builder
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username")
+})
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserModel {
     @Id
     @Column(name = "id")
@@ -29,25 +37,9 @@ public class UserModel {
     @Column(name = "telephone")
     private String telephone;
 
-    @OneToMany(mappedBy = "user")
-    private Set<UserRole> roleUsers;
-
-    public UserModel() {
-    }
-
-    public UserModel(Long id, String userName, String passWord, Boolean enabled, String fullName, Boolean gender,
-            Date birthday, String email, String telephone, Set<UserRole> roleUsers) {
-        this.id = id;
-        this.userName = userName;
-        this.passWord = passWord;
-        this.enabled = enabled;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.email = email;
-        this.telephone = telephone;
-        this.roleUsers = roleUsers;
-    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -121,12 +113,11 @@ public class UserModel {
         this.telephone = telephone;
     }
 
-    public Set<UserRole> getRoleUsers() {
-        return roleUsers;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleUsers(Set<UserRole> roleUsers) {
-        this.roleUsers = roleUsers;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
-
 }
