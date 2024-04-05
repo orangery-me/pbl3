@@ -18,14 +18,18 @@ public class UserController {
    private UserService userService;
    @GetMapping("/register")
    public String get_register(){
-      return "index";
+      return "register";
    }
    @PostMapping("/register")
    public String saveUser(@ModelAttribute("user") UserDto userDto, Model model ){
-      userService.save(userDto);
-      model.addAttribute("message", "Đăng ký thành công");
+      System.out.println("a");
+        userService.save(userDto);
+        model.addAttribute("message", "Đăng ký thành công");
+      return "register";
+   }
+   @GetMapping("/")
+   public String home(){
       return "index";
    }
-	
 	
 }

@@ -4,65 +4,64 @@ import java.sql.Date;
 
 public class UserDto  {
     private String  username;
-    private String name;
-    private String gender;
+    private String fullname;
+    private boolean gender;
     private Date birthday;
-    private String address;
-    private  String pass;
-    private String mail;
+    private  String password;
+    private String email;
     
   
    
-    public UserDto(String username, String name, String gender, Date birthday, String address, String pass, String mail) {
+    public UserDto(String username, String fullname, boolean gender, Date birthday, String email, String password) {
         this.username = username;
-        this.name = name;
+        this.fullname = fullname;
         this.gender = gender;
         this.birthday = birthday;
-        this.address = address;
-        this.pass = pass;
-        this.mail = mail;
+        // this.address = address;
+        this.password = password;
+        this.email = email;
     }
     public String getMail() {
-        return mail;
+        return email;
     }
     public void setMail(String mail) {
-        this.mail = mail;
+        this.email = mail;
     }
     public String getUsername() {
         return username;
     }
     public String getName() {
-        return name;
+        return fullname;
     }
-    public String getGender() {
+    public boolean getGender() {
         return gender;
     }
     public Date getYear() {
         return birthday;
     }
-    public String getAddress() {
-        return address;
-    }
+    // public String getAddress() {
+    //     return address;
+    // }
     public String getPass() {
-        return pass;
+        return password;
     }
     public void setUsername(String username) {
         this.username = username;
     }
     public void setName(String name) {
-        this.name = name;
+        this.fullname = name;
     }
-    public void setGender(String gender) {
+    public void setGender(boolean gender) {
         this.gender = gender;
     }
     public void setYear(Date birthday) {
         this.birthday =birthday;
     }
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    // public void setAddress(String address) {
+    //     this.address = address;
+    // }
     public void setPass(String pass) {
-        this.pass = pass;
+        this.password = pass;
     }
     
 }

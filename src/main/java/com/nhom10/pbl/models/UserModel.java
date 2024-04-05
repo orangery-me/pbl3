@@ -16,7 +16,7 @@ public class UserModel {
     @Column(name = "fullname")
     private String fullName;
     @Column(name = "gender")
-    private String gender;
+    private boolean gender;
     @Column(name = "birthday")
     private Date birthday;
     @Column(name = "address")
@@ -34,7 +34,7 @@ public class UserModel {
     public UserModel() {
 		super();
 	}
-    public UserModel(Long id, String userName, String fullName,String gender, Date birthday, String address, String passWord,
+    public UserModel(Long id, String userName, String fullName,boolean gender, Date birthday, String address, String passWord,
             String email, String telephone, String role) {
         this.id = id;
         this.userName = userName;
@@ -62,7 +62,7 @@ public class UserModel {
     public String getFullName() {
         return fullName;
     }
-    public String getGender() {
+    public boolean getGender() {
         return gender;
     }
     public Date getBirthday() {
@@ -95,7 +95,7 @@ public class UserModel {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-    public void setGender(String gender) {
+    public void setGender(boolean gender) {
         this.gender = gender;
     }
     public void setBirthday(Date birthday) {
