@@ -44,6 +44,10 @@ public class AuthenticateService {
     @Autowired
     private final AuthenticationManager authenticationManager;
 
+    public Boolean comparePassword(String inputPassword, String encodedPassword) {
+        return passwordEncoder.matches(inputPassword, encodedPassword);
+    }
+
     public UserResponse getUserFromCookie(HttpServletRequest request) throws UsernameNotFoundException {
         String username = null;
         Cookie[] cookies = request.getCookies();

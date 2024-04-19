@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+  <link rel="stylesheet" th:href="@{/css/edit/global.css}" />
+  <link rel="stylesheet" th:href="@{/css/edit/index.css}" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Font Awesome 5 Free:wght@400&display=swap" />
+</head>
+
+<body>
+  <div class="content">
+    <aside class="sidebar">
+      <div class="sidebar-item active">Sức khỏe của tôi</div>
+      <!-- <a class="sidebar-item active" th:href="@{/new-content}"> Sức khỏe của tôi </a> -->
+      <div class="sidebar-item">Hồ sơ của tôi</div>
+      <div class="sidebar-item">Lịch sử đặt lịch</div>
+      <div class="sidebar-item">Trợ giúp</div>
+      <div class="sidebar-item">Đăng xuất</div>
+    </aside>
+    <main class="main-content">
+      <h3 class="user-title-main">Thông tin tài khoản</h3>
+      <div class="user-account">
+        <form class="user-form" method="PUT" id="patient-form">
+          <input type="hidden" id="patient-id" th:value="${user.id}">
+
+          <div class="form-group">
+            <label for="chieucao" class="form-label1">Chieu cao cua ban</label>
+            <input id="chieucao" name="chieucao" type="text" placeholder="Chieu cao" class="form-control"
+              autocomplete="off" th:value="${patient.chieucao}">
+          </div>
+
+          <div class="form-group">
+            <label for="cannang" class="form-label1">Can nang</label>
+            <input id="cannang" name="cannang" type="text" placeholder="Can nang" class="form-control"
+              autocomplete="off" th:value="${patient.cannang}">
+          </div>
+
+          <div class="form-group">
+            <label for="nhommau" class="form-label1">Nhom mau</label>
+            <input id="nhommau" name="nhommau" type="text" placeholder="Nhom mau" class="form-control"
+              autocomplete="off" th:value="${patient.nhommau}">
+          </div>
+
+          <div class="form-group">
+            <label for="benhnen" class="form-label1">Benh nen</label>
+            <input id="benhnen" name="benhnen" type="text" placeholder="Chi nhap ten benh nen" class="form-control"
+              autocomplete="off" th:value="${patient.benhnen}">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="update-btn">Cập nhật</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <div class="footer-component">
+    <img class="footer-component-child" alt="" th:src="@{/images/public/rectangle-9.svg}" />
+
+    <b class="phng-khm-a-container">
+      <p class="phng-khm-a">©Phòng Khám Đa Khoa GudMec.</p>
+      <p class="phng-khm-a">
+        Tất cả những thông tin trên chỉ mang tính chất tham khảo, bệnh nhân
+        phải đến trực tiếp bệnh viện khám để bác sĩ chẩn đoán và điều trị.
+      </p>
+    </b>
+    <div class="group-parent">
+      <div class="sdt-02353921656-parent">
+        <b class="sdt-02353921656">SDT: 02353921656</b>
+        <img class="icon-cellphone" alt="" th:src="@{/images/public/-icon-cellphone.svg}" />
+      </div>
+      <div class="vector-parent">
+        <img class="line-icon" alt="" th:src="@{/images/public/line-8.svg}" />
+
+        <b class="lin-h">Liên hệ</b>
+      </div>
+      <div class="sdt-2-1900868630-parent">
+        <b class="sdt-2-1900868630">SDT 2: 1900868630</b>
+        <img class="icon-phone" alt="" th:src="@{/images/public/-icon-phone.svg}" />
+      </div>
+      <div class="email-contactmsgdkhamatsaig-parent">
+        <b class="email-contactmsgdkhamatsaig">Email: contact.msgdkha@matsaigon.com</b>
+        <img class="icon-envelope-closed" alt="" th:src="@{/images/public/-icon-envelope-closed.svg}" />
+      </div>
+    </div>
+    <div class="group-container">
+      <div class="heading-1margin-parent">
+        <div class="heading-1margin">
+          <b class="heading-1"> GudMec</b>
+        </div>
+        <div class="heading-1margin1">
+          <b class="heading-11">Clinic</b>
+        </div>
+      </div>
+      <img class="standard-collection-23" alt="" th:src="@{/images/public/standard-collection-23@2x.png}" />
+    </div>
+  </div>
+  <div class="header-component">
+    <div class="group-div">
+      <div class="heading-1margin-group">
+        <div class="heading-1margin2">
+          <b class="heading-1"> GudMec</b>
+        </div>
+        <div class="heading-1margin3">
+          <b class="heading-11">Clinic</b>
+        </div>
+      </div>
+      <img class="standard-collection-231" alt="" th:src="@{images/public/standard-collection-23@2x.png}" />
+    </div>
+    <div class="divcontainer">
+      <div class="divcontainer-child"></div>
+      <div class="link-gii">GIỚI THIỆU</div>
+      <div class="link-chuyn">CHUYÊN KHOA</div>
+      <div class="link-i">ĐỘI NGŨ BÁC SĨ</div>
+      <div class="link-dch">DỊCH VỤ</div>
+      <div class="link-thnh">THÀNH TỰU</div>
+      <div class="link-tin">TIN TỨC</div>
+      <div class="link-lin">LIÊN HỆ</div>
+      <a class="link-me" th:text="${user.username}"></a>
+      <div class="t-lch-ngay">ĐẶT LỊCH NGAY</div>
+      <div class="symbol" id="symbolText1"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('#patient-form');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          var userIdInput = document.getElementById('patient-id');
+          var userId = userIdInput.value;
+          console.log(`patientId là ${userId}`);
+
+          const chieucao = document.querySelector('#chieucao').value;
+          const cannang = document.querySelector('#cannang').value;
+          const nhommau = document.querySelector('#nhommau').value;
+          const benhnen = document.querySelector('#benhnen').value;
+
+          const patientData = {
+            chieucao,
+            cannang,
+            nhommau,
+            benhnen
+          };
+
+          console.log(patientData);
+
+          const url = 'http://localhost:8080/api/patients/save-or-update/' + userId
+          fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(patientData)
+          })
+            .then(response => response.text())  // Read response as text first
+            .then(text => {
+              try {
+                const data = JSON.parse(text);  // Try to parse the text as JSON
+                console.log('Success:', data);
+                alert(data.message || 'Patient information updated successfully');
+              } catch (error) {
+                console.error('Error parsing JSON:', error);
+                alert('Error parsing response JSON');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Error updating patient information');
+            });
+        });
+      }
+    })
+
+  </script>
+</body>
+
+</html>

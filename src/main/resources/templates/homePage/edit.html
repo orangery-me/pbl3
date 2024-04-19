@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+  <link rel="stylesheet" th:href="@{/css/edit/global.css}" />
+  <link rel="stylesheet" th:href="@{/css/edit/index.css}" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Font Awesome 5 Free:wght@400&display=swap" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="content">
+    <aside class="sidebar">
+      <div class="sidebar-item"><a th:href="@{/new-content}"> Sức khỏe của tôi </a></div>
+      <div class="sidebar-item">Hồ sơ của tôi</div>
+      <div class="sidebar-item">Lịch sử đặt lịch</div>
+      <div class="sidebar-item">Trợ giúp</div>
+      <div class="sidebar-item">Đăng xuất</div>
+    </aside>
+    <main class="main-content">
+      <h3 class="user-title-main">Thông tin tài khoản</h3>
+      <div class="user-account">
+        <form class="user-form" method="PUT" id="form-2">
+          <input type="hidden" id="user-id" th:value="${user.id}">
+          <input type="hidden" id="password-id" th:value="${user.password}">
+
+          <div class="form-group">
+            <label for="name">Tên đăng nhập <span class="text-danger"></span></label>
+            <input id="username" name="username" type="text" placeholder="Tên đăng nhập" class="form-control"
+              th:value="${user.username}" disabled>
+          </div>
+          <div class="form-group">
+            <label for="fullname">Họ và tên <span class="text-danger">*</span></label>
+            <input id="fullname" name="fullname" type="text" placeholder="Họ và tên" class="form-control"
+              th:value="${user.fullname}">
+          </div>
+          <div class="form-group">
+            <label for="email">Email <span class="text-danger">*</span></label>
+            <input id="email" name="email" type="text" class="form-control" th:value="${user.email}">
+          </div>
+          <div class="form-group">
+            <label for="birthdate">Ngày sinh <span class="text-danger">*</span></label>
+            <input id="birthday" name="birthday" type="date" placeholder="" class="form-control"
+              th:value="${user.birthday}">
+          </div>
+          <div class="form-group">
+            <label for="phone">Số điện thoại <span class="text-danger">*</span></label>
+            <input id="phone" name="phone" type="text" placeholder="So dien thoai" class="form-control"
+              th:value="${user.phone}">
+          </div>
+          <div class="form-group">
+            <label>Giới tính</label>
+            <div class="gender-selection">
+              <input name="gender" type="radio" value="1" th:checked="${user.gender == 1 ? 'checked' : ''}">
+              <span>Nam</span>
+              <input name="gender" type="radio" value="0" th:checked="${user.gender == 0 ? 'checked' : ''}">
+              <span>Nữ</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="current-password">Current Password:<span class="text-danger">*</span></label>
+            <input type="password" id="current-password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password:<span class="text-danger">*</span></label>
+            <input type="password" id="new-password" class="form-control">
+          </div>
+          <div class="error" id="error-message" style="display: none;"></div>
+          <div class="success" id="success-message" style="display: none;"></div>
+          <!-- <button onclick="changePassword()">Change Password</button> -->
+          <div class="form-group">
+            <button type="submit" class="update-btn">Cập nhật</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <div class="footer-component">
+    <img class="footer-component-child" alt="" th:src="@{/images/public/rectangle-9.svg}" />
+
+    <b class="phng-khm-a-container">
+      <p class="phng-khm-a">©Phòng Khám Đa Khoa GudMec.</p>
+      <p class="phng-khm-a">
+        Tất cả những thông tin trên chỉ mang tính chất tham khảo, bệnh nhân
+        phải đến trực tiếp bệnh viện khám để bác sĩ chẩn đoán và điều trị.
+      </p>
+    </b>
+    <div class="group-parent">
+      <div class="sdt-02353921656-parent">
+        <b class="sdt-02353921656">SDT: 02353921656</b>
+        <img class="icon-cellphone" alt="" th:src="@{/images/public/-icon-cellphone.svg}" />
+      </div>
+      <div class="vector-parent">
+        <img class="line-icon" alt="" th:src="@{/images/public/line-8.svg}" />
+
+        <b class="lin-h">Liên hệ</b>
+      </div>
+      <div class="sdt-2-1900868630-parent">
+        <b class="sdt-2-1900868630">SDT 2: 1900868630</b>
+        <img class="icon-phone" alt="" th:src="@{/images/public/-icon-phone.svg}" />
+      </div>
+      <div class="email-contactmsgdkhamatsaig-parent">
+        <b class="email-contactmsgdkhamatsaig">Email: contact.msgdkha@matsaigon.com</b>
+        <img class="icon-envelope-closed" alt="" th:src="@{/images/public/-icon-envelope-closed.svg}" />
+      </div>
+    </div>
+    <div class="group-container">
+      <div class="heading-1margin-parent">
+        <div class="heading-1margin">
+          <b class="heading-1"> GudMec</b>
+        </div>
+        <div class="heading-1margin1">
+          <b class="heading-11">Clinic</b>
+        </div>
+      </div>
+      <img class="standard-collection-23" alt="" th:src="@{/images/public/standard-collection-23@2x.png}" />
+    </div>
+  </div>
+  <div class="header-component">
+    <div class="group-div">
+      <div class="heading-1margin-group">
+        <div class="heading-1margin2">
+          <b class="heading-1"> GudMec</b>
+        </div>
+        <div class="heading-1margin3">
+          <b class="heading-11">Clinic</b>
+        </div>
+      </div>
+      <img class="standard-collection-231" alt="" th:src="@{images/public/standard-collection-23@2x.png}" />
+    </div>
+    <div class="divcontainer">
+      <div class="divcontainer-child"></div>
+      <div class="link-gii">GIỚI THIỆU</div>
+      <div class="link-chuyn">CHUYÊN KHOA</div>
+      <div class="link-i">ĐỘI NGŨ BÁC SĨ</div>
+      <div class="link-dch">DỊCH VỤ</div>
+      <div class="link-thnh">THÀNH TỰU</div>
+      <div class="link-tin">TIN TỨC</div>
+      <div class="link-lin">LIÊN HỆ</div>
+      <a class="link-me" th:text="${user.fullname}"></a>
+      <div class="t-lch-ngay">ĐẶT LỊCH NGAY</div>
+      <div class="symbol" id="symbolText1"></div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('#form-2');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const userIdInput = document.getElementById('user-id');
+          const userId = userIdInput.value;
+          console.log(`userId là ${userId}`);
+          const passwordInput = document.getElementById('password-id');
+          const password = passwordInput.value;
+          console.log(`password là ${password}`);
+
+          const name = document.querySelector('#username').value;
+          const phone = document.querySelector('#phone').value;
+          const email = document.querySelector('#email').value;
+          const fullname = document.querySelector('#fullname').value;
+          const genderElement = document.querySelector('input[name="gender"]:checked');
+          const gender = genderElement ? parseInt(genderElement.value) : null;
+          const birthday = document.querySelector('#birthday').value;
+          const currentPasswordInput = document.querySelector('#current-password').value;
+          const newPasswordInput = document.querySelector('#new-password').value;
+          console.log(currentPasswordInput);
+
+          // Thông báo lỗi và thành công
+          const errorMessage = document.getElementById('error-message');
+          const successMessage = document.getElementById('success-message');
+          errorMessage.style.display = 'none';
+          successMessage.style.display = 'none';
+
+          if (currentPasswordInput && newPasswordInput) {
+            if (currentPasswordInput !== password) {
+              errorMessage.textContent = 'Current password is incorrect.';
+              errorMessage.style.display = 'block';
+              return;
+            }
+            password = newPasswordInput;
+          }
+
+          const userData = {
+            "id": userId,
+            "username": name,
+            "email": email,
+            "phone": phone,
+            "fullname": fullname,
+            "gender": gender,
+            "birthday": birthday,
+            "enabled": 1,
+            "role": "PATIENT",
+          };
+
+          if (password) {
+            userData.password = password;
+          }
+
+          console.log(userData);
+
+          const url = 'http://localhost:8080/api/admin/updateUser/' + userId;
+
+          fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+            },
+            body: JSON.stringify(userData)
+          })
+            .then(async response => {
+              console.log('Response status:', response.status);
+              console.log('Response headers:', response.headers);
+
+              if (!response.ok) {
+                const errorText = await response.text();
+                console.log('Error response text:', errorText);
+                throw new Error(errorText || 'Unknown error');
+              }
+
+              const contentType = response.headers.get('Content-Type');
+              if (contentType && contentType.includes('application/json')) {
+                return response.json();
+              } else {
+                const responseText = await response.text();
+                console.log('Response text:', responseText);
+                return responseText ? JSON.parse(responseText) : {};
+              }
+            })
+            .then(data => {
+              console.log('Response data:', data);
+              successMessage.textContent = 'User updated successfully!';
+              successMessage.style.display = 'block';
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              errorMessage.textContent = 'Failed to update user: ' + error.message;
+              errorMessage.style.display = 'block';
+            });
+        });
+      }
+    });
+
+  </script>
+
+</body>
+
+</html>

@@ -1,18 +1,27 @@
 package com.nhom10.pbl.security.service;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+// import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.nhom10.pbl.models.ERole;
+import com.nhom10.pbl.models.Patient;
 import com.nhom10.pbl.models.UserModel;
 import com.nhom10.pbl.payload.response.UserResponse;
 import com.nhom10.pbl.payload.resquest.UserDTO;
+// import com.nhom10.pbl.repository.RoleRepository;
 import com.nhom10.pbl.repository.UserRepository;
+import com.nhom10.pbl.repository.patientRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,6 +29,12 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    // @Autowired
+    // private RoleRepository roleRepository;
+    @Autowired
+    private patientRepository patientRepository;
 
     public List<UserResponse> getUserById(Long id) throws Exception {
         UserModel user = repository.findById(id)
@@ -66,7 +81,8 @@ public class UserService {
         UserModel userFromDb = repository.findById(user.getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         try {
-            userFromDb.setPassWord(user.getPassword());
+
+            userFromDb.setPassWord(passwordEncoder.encode(user.getPassword()));
             userFromDb.setFullName(user.getFullname());
             userFromDb.setEmail(user.getEmail());
             userFromDb.setTelephone(user.getPhone());
@@ -88,4 +104,27 @@ public class UserService {
             throw new Exception("Delete user failed");
         }
     }
+
+    @Transactional
+    public UserModel createUser(UserModel user) {
+        UserModel savedUser = repository.save(user);
+        ERole userRole = user.getRole().getName();
+
+        // Optional<com.nhom10.pbl.models.Role> role =
+        // roleRepository.findByName(userRole);
+
+        if (ERole.PATIENT.equals(userRole)) {
+            Patient patient = new Patient();
+            patient.setId(generateRandomId());
+            patient.setUser(savedUser);
+            patientRepository.save(patient);
+        }
+
+        return savedUser;
+    }
+
+    private Long generateRandomId() {
+        return ByteBuffer.wrap(UUID.randomUUID().toString().getBytes()).getLong();
+    }
+
 }

@@ -31,4 +31,29 @@ setInterval(()=>{
     console.log(left)
 }, 4000)
 
-
+const form1 = document.querySelector('form');
+form1.addEventListener('submit',event => {
+    event.preventDefault();
+    const formData = new  FormData(form1);
+    // formData.append(form1);
+    const data = Object.fromEntries(formData);
+    fetch('http://localhost:8080/register', {
+        method:'POST',
+        headers:{
+            'content-type':'application/json'
+          },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+          return response.json(); 
+        } else {
+          throw new Error('API request failed');
+        }
+      })
+      .then(data => {
+        console.log(data); 
+      })
+      .catch(error => {
+        console.error(error); 
+        })});

@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nhom10.pbl.payload.response.AuthenticationResponse;
 import com.nhom10.pbl.payload.resquest.AuthenticationRequest;
+import com.nhom10.pbl.payload.resquest.PasswordCheckRequest;
 import com.nhom10.pbl.payload.resquest.RegisterRequest;
 import com.nhom10.pbl.security.service.AuthenticateService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +36,12 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(401).build();
         }
+    }
+
+    @PostMapping("/comparePassword")
+    public Boolean comparePassword(@RequestBody PasswordCheckRequest passwordCheckRequest) {
+        return authenticationService.comparePassword(passwordCheckRequest.getInputPassword(),
+                passwordCheckRequest.getEncodedPassword());
     }
 
 }

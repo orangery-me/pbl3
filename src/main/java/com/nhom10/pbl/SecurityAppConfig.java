@@ -41,15 +41,15 @@ public class SecurityAppConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(
                         (authorizeHttpRequests) -> authorizeHttpRequests
-                                .requestMatchers("/api/auth/**", "/login")
+                                .requestMatchers("/api/auth/**", "/login", "/**")
                                 .permitAll()
                                 .anyRequest().authenticated())
                 .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
                         .defaultSuccessUrl("/home", true))
-                .logout()
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .logoutUrl("/logout");
+                .logout(logout -> logout
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .logoutUrl("/logout"));
         return httpSecurity.build();
     }
 

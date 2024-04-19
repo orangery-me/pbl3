@@ -17,8 +17,8 @@ import com.nhom10.pbl.payload.response.ArticleResponse;
 import com.nhom10.pbl.payload.response.UserResponse;
 import com.nhom10.pbl.payload.resquest.ArticleRequest;
 import com.nhom10.pbl.payload.resquest.UserDTO;
-import com.nhom10.pbl.security.service.ArticleService;
 import com.nhom10.pbl.security.service.UserService;
+import com.nhom10.pbl.services.ArticleService;
 
 import lombok.RequiredArgsConstructor;
 

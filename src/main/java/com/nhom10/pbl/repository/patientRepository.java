@@ -9,5 +9,6 @@ import com.nhom10.pbl.models.Patient;
 
 @Repository
 public interface patientRepository extends JpaRepository<Patient, Long> {
-    Optional<Patient> findById(Long id);
+    Optional<Patient> findByUser_Id(Long id);
+
 }

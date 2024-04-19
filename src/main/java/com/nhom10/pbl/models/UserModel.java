@@ -22,16 +22,16 @@ public class UserModel {
     private Long id;
     @Column(name = "username")
     private String userName;
+    @Column(name = "fullname")
+    private String fullName;
+    @Column(name = "gender")
+    private boolean gender;
+    @Column(name = "birthday")
+    private Date birthday;
     @Column(name = "password")
     private String passWord;
     @Column(name = "enabled")
     private Boolean enabled;
-    @Column(name = "fullname")
-    private String fullName;
-    @Column(name = "gender")
-    private Boolean gender;
-    @Column(name = "birthday")
-    private Date birthday;
     @Column(name = "email")
     private String email;
     @Column(name = "telephone")
@@ -128,5 +128,9 @@ public class UserModel {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Patient getPatient() {
+        return patient;
     }
 }
