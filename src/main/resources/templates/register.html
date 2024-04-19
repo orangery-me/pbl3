@@ -17,13 +17,13 @@
                     <form action="" method="POST" class="form" id="form-1">
 
                         <div class="form-group">
-                            <input id="username" name="fullname" type="text" placeholder="Tên đăng nhập" class="form-control" autocomplete="off">
+                            <input id="username" name="username" type="text" placeholder="Tên đăng nhập" class="form-control" autocomplete="off">
                             <span class="form-message"></span>
                         </div>
 
                         <div class="form-group">
-                          <input id="fullname" name="fullname" type="text" placeholder="Họ và tên" class="form-control" autocomplete="off">
-                          <span class="form-message"></span>
+                            <input id="fullname" name="fullname" type="text" placeholder="Họ và tên" class="form-control" autocomplete="off">
+                            <span class="form-message"></span>
                         </div>
                         
                         <div class="cover">
@@ -31,19 +31,14 @@
                               <label for="gender" class="form-label">Giới Tính</label>
                               <div class="checkbox">
                                 <div class="radio">
-                                  <input name="gender"  type="radio"  value="male" class="form-control btn-radio">
+                                  <input name="gender"  type="radio"  value="1" class="form-control btn-radio">
                                   <i class="fa-solid fa-square-check"></i>
                                   <span>Nam</span>
                                 </div>
                                 <div class="radio">
-                                  <input name="gender"  type="radio"  value="female" class="form-control btn-radio">
+                                  <input name="gender"  type="radio"  value="0" class="form-control btn-radio">
                                   <i class="fa-solid fa-square-check"></i>
                                   <span>Nữ</span>
-                                </div>
-                                <div class="radio">
-                                  <input name="gender"  type="radio" value="other" class="form-control btn-radio">
-                                  <i class="fa-solid fa-square-check"></i>
-                                  <span>Khác</span>
                                 </div>
                               </div>  
                               <span class="form-message"></span>
@@ -51,7 +46,7 @@
 
                           <div class="form-group birth">
                               <label for="birth" class="form-label">Năm sinh</label>
-                              <input id="birth" name="password" type="date" placeholder="" class="form-control">
+                              <input id="birthday" name="password" type="date" placeholder="" class="form-control">
                               <span class="form-message"></span>
                           </div>
                         </div>
@@ -66,11 +61,6 @@
                           <input id="password" name="password" type="password" placeholder="Mật khẩu" class="form-control" autocomplete="off">
                           <span class="form-message"></span>
                         </div>
-                    
-                        <div class="form-group">
-                          <input id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu" type="password" class="form-control" autocomplete="off">
-                          <span class="form-message"></span>
-                        </div>
                         <button class="form-submit">Đăng ký</button>
                       </form>
                 </div>
@@ -79,9 +69,7 @@
                   or
                   <span class="after"></span>
                 </div>
-                <div class="link-login">
-                  <p>Bạn đã có tài khoản? <a href="/auth/login">Đăng nhập.</a></p>
-                </div>
+            
             </div>
         </div>
         <div class="right">
@@ -101,4 +89,4 @@
     </div>
     <script src="/js/register.js"></script>
 </body>
-</html>
+</html> 
