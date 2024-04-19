@@ -1,8 +1,5 @@
 package com.nhom10.pbl.security.service;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,16 +37,16 @@ public class AuthenticateService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         // get roles from request
-        String strRoles = request.getRole();
+        String strRole = request.getRole();
         final Role role;
 
-        if (strRoles == null) {
+        if (strRole == null) {
             Role patient = roleRepository.findByName(ERole.PATIENT)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             role = patient;
         } else {
 
-            switch (strRoles) {
+            switch (strRole) {
                 case "ADMIN":
                     Role admin = roleRepository.findByName(ERole.ADMIN)
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -75,13 +72,10 @@ public class AuthenticateService {
                 .email(request.getEmail())
                 .telephone(request.getPhone())
                 .fullName(request.getFullname())
+                .birthday(request.getBirthday())
+                .gender(request.getGender())
                 .enabled(true)
-                .roles(new HashSet<Role>() {
-                    {
-                        add(role);
-                    }
-
-                })
+                .role(role)
                 .build();
 
         userRepository.save(user);

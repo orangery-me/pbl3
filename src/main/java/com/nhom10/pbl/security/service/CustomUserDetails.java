@@ -2,7 +2,6 @@ package com.nhom10.pbl.security.service;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,12 +33,9 @@ public class CustomUserDetails implements UserDetails {
     public static CustomUserDetails build(UserModel user) {
         // collection of authorities of the user
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        Set<Role> roles = user.getRoles();
+        Role role = user.getRole();
 
-        for (Role role : roles) {
-            // foreach userRole of the user, add that role to authorities
-            authorities.add(new SimpleGrantedAuthority(role.getName().name()));
-        }
+        authorities.add(new SimpleGrantedAuthority(role.getName().name()));
 
         return new CustomUserDetails(authorities, user, true, true, true);
     }
