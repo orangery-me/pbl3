@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <body>
     <style>
@@ -186,7 +186,7 @@
                     TramAnh
                 </h1>
                 <h1 style="color: black;">
-                    Hospital
+                    Clinic
                 </h1>
             </div>
             <div class="main-view-input">
@@ -197,30 +197,33 @@
                     <h1 style="color: blue;">TramAnh</h1>
 
                 </div>
-                <input class="input-info" type="text" id="inputEmail" name="inputEmail" placeholder="Email">
-                <input class="input-info" type="password" id="inputPassword" name="inputPassword"
-                    placeholder="Password">
-                <div style="display: flex; align-self: stretch; justify-content: flex-end; margin-right: 50px;">
-                    <h4><a href="https://example.com">Forgot password?</a></h4>
-                </div>
-                <button class="button-sign-in">
-                    <p style="color: white; font-weight: 600;">
-                        Sign in
-                    </p>
-                </button>
+
+                <form id="loginForm">
+                    <input class="input-info" type="text" id="username" name="username" placeholder="Username">
+                    <input class="input-info" type="password" id="password" name="password" placeholder="Password">
+                    <div style="display: flex; align-self: stretch; justify-content: flex-end; margin-right: 50px;">
+                        <h4><a th:href="@{https://example.com}">Forgot password?</a></h4>
+                    </div>
+                    <button type="submit" class="button-sign-in" id="loginButton">
+                        <p style="color: white; font-weight: 600;">
+                            Sign in
+                        </p>
+                    </button>
+                </form>
+
                 <div class="view-line">
                     <div class="line"></div>
                     <p style="margin-left: 5px; margin-right: 5px;">or</p>
                     <div class="line"></div>
                 </div>
                 <div class="question-sign">
-                    <h4>Don't have an account? </h4>
+                    <h4>You don't have an account? </h4>
                     <h4 style="margin-left: 5px;"><a>Sign up</a></h4>
                 </div>
                 <div class="question-sign">
                     <p style="font-weight: lighter;">
-                        <b> Term & Condition </b>
-                        <b> &nbsp;&nbsp; Privacy Bolicy</b>
+                        <b> Terms & Conditions </b>
+                        <b> &nbsp;&nbsp; Privacy Policy</b>
                         <b> &nbsp;&nbsp; Help</b>
                         <b> &nbsp;&nbsp; English</b>
                     </p>
@@ -228,34 +231,20 @@
             </div>
         </div>
 
-
-
-        <!-- <div class="banner">
-                <div class="carousel-container">
-                    <div class="carousel-content">
-                        <div class="carousel-item" style="background-color: lightblue;">Slide 1
-
-                        </div>
-                        <div class="carousel-item" style="background-color: lightgreen;">Slide 2</div>
-                        <div class="carousel-item" style="background-color: lightcoral;">Slide 3</div>
-                    </div>
-                </div>
-            </div> -->
-
         <div class="banner">
             <div class="slideshow-container">
                 <div class="slideshow-content">
                     <div class="slide">
-                        <img class="image-slide" src="images/anh1.jpg" alt="slide1">
+                        <img class="image-slide" th:src="@{/images/anh1.jpg}" alt="slide1">
                     </div>
                     <div class="slide">
-                        <img class="image-slide" src="images/anh2.jpg" alt="slide2">
+                        <img class="image-slide" th:src="@{/images/anh2.jpg}" alt="slide2">
                     </div>
                     <div class="slide">
-                        <img class="image-slide" src="images/anh3.jpg" alt="slide3">
+                        <img class="image-slide" th:src="@{/images/anh3.jpg}" alt="slide3">
                     </div>
                     <div class="slide">
-                        <img class="image-slide" src="images/anh4.jpg" alt="slide4">
+                        <img class="image-slide" th:src="@{/images/anh4.jpg}" alt="slide4">
                     </div>
 
                 </div>
@@ -263,7 +252,7 @@
         </div>
     </div>
 
-    <script th:src="@{login.js}"></script> <!-- Nạp tệp JavaScript -->
+    <script th:src="@{/js/login.js}"></script> <!-- Nạp tệp JavaScript -->
 
 </body>
 
