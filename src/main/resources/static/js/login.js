@@ -43,8 +43,8 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
         .then(data => {
             // Handle successful authentication
             // Redirect to another page or perform any necessary actions
-            // alert("Login successful!");
-            // window.location.href = "http://localhost:8080/home";
+            alert("Login successful!");
+            window.location.href = "http://localhost:8080/home";
             console.log("Authentication successful:", data);
         })
         .catch(error => {

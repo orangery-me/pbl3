@@ -1,0 +1,50 @@
+<head th:fragment="head">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Dashboard</title>
+
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <link rel="stylesheet" th:href="@{/css/admin/bootstrap.css}">
+
+  <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+
+  <link rel="stylesheet" th:href="@{css/admin/ionicons.min.css}">
+
+  <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+
+  <link rel="stylesheet" th:href="@{/css/admin/admin.style.css}">
+
+  <link rel="stylesheet" th:href="@{/css/admin/skin.css}">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+
+
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet"
+    th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic}">
+  <script
+    nonce="8ce78cac-91fc-410c-899a-843a26dfd18d">try { (function (w, d) { !function (b, c, d, e) { b[d] = b[d] || {}; b[d].executed = []; b.zaraz = { deferred: [], listeners: [] }; b.zaraz.q = []; b.zaraz._f = function (f) { return async function () { var g = Array.prototype.slice.call(arguments); b.zaraz.q.push({ m: f, a: g }) } }; for (const h of ["track", "set", "debug"]) b.zaraz[h] = b.zaraz._f(h); b.zaraz.init = () => { var i = c.getElementsByTagName(e)[0], j = c.createElement(e), k = c.getElementsByTagName("title")[0]; k && (b[d].t = c.getElementsByTagName("title")[0].text); b[d].x = Math.random(); b[d].w = b.screen.width; b[d].h = b.screen.height; b[d].j = b.innerHeight; b[d].e = b.innerWidth; b[d].l = b.location.href; b[d].r = c.referrer; b[d].k = b.screen.colorDepth; b[d].n = c.characterSet; b[d].o = (new Date).getTimezoneOffset(); if (b.dataLayer) for (const o of Object.entries(Object.entries(dataLayer).reduce(((p, q) => ({ ...p[1], ...q[1] })), {}))) zaraz.set(o[0], o[1], { scope: "page" }); b[d].q = []; for (; b.zaraz.q.length;) { const r = b.zaraz.q.shift(); b[d].q.push(r) } j.defer = !0; for (const s of [localStorage, sessionStorage]) Object.keys(s || {}).filter((u => u.startsWith("_zaraz_"))).forEach((t => { try { b[d]["z_" + t.slice(7)] = JSON.parse(s.getItem(t)) } catch { b[d]["z_" + t.slice(7)] = s.getItem(t) } })); j.referrerPolicy = "origin"; j.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(b[d]))); i.parentNode.insertBefore(j, i) };["complete", "interactive"].includes(c.readyState) ? zaraz.init() : b.addEventListener("DOMContentLoaded", zaraz.init) }(w, d, "zarazData", "script"); })(window, document) } catch (e) { throw fetch("/cdn-cgi/zaraz/t"), e; };</script>
+</head>
