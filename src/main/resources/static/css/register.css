@@ -11,24 +11,24 @@ html {
 
 .root{
     display: flex;
+    height: 960px;
+
 }
 
 .right{
     display: flex;
     width: calc(100vw - 607px);
     overflow: hidden;
-    height: 900px;
 
 }
 .right .cover-img img{
     position: relative;
     width: calc(100vw - 300px);
-    height: 900px;
+    height: 960px;
     transition: all 0.7s ease-in-out;
 }
 .left{
     background-color: rgb(29,35,42);
-    height: 900px;
 }
 .SignUp-text{
     position: relative;
@@ -90,8 +90,8 @@ html {
     -webkit-appearance: none; 
     -moz-appearance: none;  
     appearance: none; 
-    width: 10px;
-    height: 23px;
+    width: 23px;
+    height: 24px;
     border-radius: 25%;
     background: rgb(29,35,42);
     border-width: 2px;
@@ -101,8 +101,8 @@ html {
 .fa-solid.fa-square-check{
     display: none;
     position: absolute;
-    margin-left: -21.6px;
-    margin-top: 3.41px;
+    margin-left: -24px;
+    margin-top: 4.41px;
     font-size: large;
 }
 

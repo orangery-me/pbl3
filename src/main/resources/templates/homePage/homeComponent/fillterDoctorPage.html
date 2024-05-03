@@ -1,0 +1,77 @@
+<div class="fillter-body" th:fragment="fillterDoctorPage">
+    
+    <div class="container container_custom3">
+
+        <div class="cover-nulltext-and-towdiv">
+    
+            <div class="cover-two-div">
+                <div class="input-fillter">
+                    <label class="doctor-name" for="fillter-doctor">Tên bác sĩ</label>
+                    <input id="fillter-doctor" type="text">
+                </div>
+                <div id="dynamic-content" th:if="${listDoctorOfDepartment != null && !(#lists.isEmpty(listDoctorOfDepartment))}">
+                    <div class="list-doctor-department">
+                        <div class="card w-100 mb-5 card-doctor" th:each="doctor : ${listDoctorOfDepartment}">
+                            <div class="card-body">
+                              <h5 class="card-title" th:text="${doctor.id}"></h5>
+                              <p class="card-text" th:text="${doctor.departmentRespone.getNameDepartment()}"></p>
+                              <p class="card-text" th:text="${doctor.ServicePrices}"></p>
+                              <a th:href="@{'/home/user/appointment/doctor/' + ${doctor.id}}" class="btn btn-primary">Đặt lịch ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="null-text" th:if="${listDoctorOfDepartment == null || #lists.isEmpty(listDoctorOfDepartment)}">
+                <p>trống.</p>
+            </div>
+
+        </div>
+
+        <div class="buttons-fillter">
+
+            <div class="available">
+                <span class="available-bf"></span>
+                <span class="available-at">CÒN TRỐNG</span>
+            </div>
+
+            <div class="container-radio">
+
+                <div class="check-item radio-today">
+                    <input class="input-check" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/today/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-today" name="check" type="radio">
+                    <label class="lable-check" for="check-today">Hôm nay</label>
+                </div>
+    
+                <div class="check-item radio-tomorrow">
+                    <input class="input-check" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/tomorrow/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-tomorrow" name="check" type="radio">               
+                    <label class="lable-check" for="check-tomorrow">Ngày mai</label>
+                </div>
+
+                <div class="check-item radio-nextsevenday">
+                    <input class="input-check" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/nextsevenday/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-nextsevenday" name="check" type="radio">               
+                    <label class="lable-check" for="check-nextsevenday">Bảy ngày tới</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var checks = document.querySelectorAll('.input-check')
+
+        $(document).ready(function() {
+            
+            checks.forEach((check, index) =>{
+                check.onclick = function() {
+                    var _url = check.getAttribute('value')
+                    console.log(_url)
+                    $.ajax({
+                        url: _url, 
+                        success: function(result) {
+                            $("#dynamic-content").html(result);
+                        }
+                    });
+                };
+            })
+        });
+    </script>
+</div>
