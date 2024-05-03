@@ -28,24 +28,23 @@ public class HomeController {
     public String getHomePage(Model model, HttpServletRequest request) {
 
         String username = jwtService.extractUserNameFromTokenCookie(request);
-        
 
         model.addAttribute("view", "homePage/homeComponent/homePage");
         model.addAttribute("file", "homePage");
         model.addAttribute("nav", "homePage/partials/navLogged");
         model.addAttribute("navState", "navLogged");
 
-        if(username != null){
+        if (username != null) {
             CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
             UserModel currUser = userDetails.getUser();
             model.addAttribute("user", currUser);
-            List<departmentRespone> listDepartmentRespones =  _departmentServices.getAllDepartmentRespones();
+            List<departmentRespone> listDepartmentRespones = _departmentServices.getAllDepartmentRespones();
             model.addAttribute("listDepartmentRespones", listDepartmentRespones);
         }
 
         return "homePage/index";
     }
-      
+
     @RequestMapping("/login")
     public String login() {
         return "auth/login/login";
@@ -64,5 +63,10 @@ public class HomeController {
     @RequestMapping("/logout")
     public String logout() {
         return "homePage/index";
+    }
+
+    @RequestMapping("/admin/articles")
+    public String adminControllArticles() {
+        return "admin/pages/articles";
     }
 }

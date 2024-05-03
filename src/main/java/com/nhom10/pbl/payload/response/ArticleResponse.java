@@ -1,6 +1,6 @@
 package com.nhom10.pbl.payload.response;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.nhom10.pbl.models.Article;
 import com.nhom10.pbl.models.Status;
@@ -19,7 +19,7 @@ public class ArticleResponse {
     private Long id;
     private String title;
     private String content;
-    private UserDTO user;
+    private UserDTO author;
     private Date createAt;
     private Date updatedAt;
     private Status status;
@@ -29,7 +29,7 @@ public class ArticleResponse {
                 .id(article.getId())
                 .title(article.getTitle())
                 .content(article.getContent())
-                .user(UserDTO.mapToUserDTO(article.getUser()))
+                .author(UserDTO.mapToUserDTO(article.getAuthor()))
                 .createAt(article.getCreatedAt())
                 .updatedAt(article.getUpdatedAt())
                 .status(article.getStatus())
@@ -41,7 +41,7 @@ public class ArticleResponse {
                 .id(articleResponse.getId())
                 .title(articleResponse.getTitle())
                 .content(articleResponse.getContent())
-                .user(UserDTO.mapToUserModel(articleResponse.getUser()))
+                .author(UserDTO.mapToUserModel(articleResponse.getAuthor()))
                 .createdAt(articleResponse.getCreateAt())
                 .updatedAt(articleResponse.getUpdatedAt())
                 .status(articleResponse.getStatus())

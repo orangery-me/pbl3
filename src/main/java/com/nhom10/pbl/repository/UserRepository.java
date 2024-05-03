@@ -12,10 +12,17 @@ import com.nhom10.pbl.models.UserModel;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Long> {
-    @EntityGraph(attributePaths = {"role"})
+    public @NonNull Optional<UserModel> findById(@NonNull Long id);
+
     public Optional<UserModel> findByUserName(String userName);
 
-    public Optional<UserModel> getUserById(Long id);
+    public Optional<List<UserModel>> findByUserNameContaining(String userName);
+
+    public Optional<List<UserModel>> findByEmailContaining(String email);
+
+    public Optional<List<UserModel>> findByTelephoneContaining(String phone);
+
+    public Optional<List<UserModel>> findByFullNameContaining(String fullName);
 
     public void deleteById(@NonNull Long id);
 

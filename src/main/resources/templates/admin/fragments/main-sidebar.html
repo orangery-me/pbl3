@@ -26,19 +26,21 @@
 
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active treeview menu-open">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+            <!-- <li class="active treeview menu-open"> -->
+            <li>
+                <a th:href="@{/admin/accounts}">
+                    <i class="fa fa-dashboard"></i> <span>Quản lý tài khoản</span>
+                </a>
+            </li>
+            <!-- </li> -->
+            <li>
+                <!-- show articles here -->
+                <a th:href="@{/admin/articles}">
+                    <i class="fa fa-th"></i> <span>Quản lý bài viết KH</span>
                     <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
+                        <small class="label pull-right bg-green">new</small>
                     </span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a th:href="@{/admin/accounts}"><i class="fa fa-circle-o"></i> Account
-                            managements</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a>
-                    </li>
-                </ul>
             </li>
             <li class="treeview">
                 <a href="#">
@@ -57,14 +59,7 @@
                             Sidebar</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="pages/widgets.html">
-                    <i class="fa fa-th"></i> <span>Widgets</span>
-                    <span class="pull-right-container">
-                        <small class="label pull-right bg-green">new</small>
-                    </span>
-                </a>
-            </li>
+
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-pie-chart"></i>

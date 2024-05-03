@@ -63,7 +63,7 @@ public class UserModel {
     @JoinColumn(name = "id_role")
     private Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Article> articles;
 
     public Long getId() {

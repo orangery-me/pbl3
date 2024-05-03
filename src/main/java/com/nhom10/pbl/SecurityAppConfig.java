@@ -33,22 +33,22 @@ public class SecurityAppConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
-        .sessionManagement((sessionManagement) -> sessionManagement
-        .sessionCreationPolicy(
-                org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
-        .authenticationProvider(authenticationProvider())
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-        .authorizeHttpRequests(
-                (authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/api/auth/**", "/login", "/auth/register")
-                        .permitAll()
-                        .anyRequest().authenticated())
-        .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
-        .defaultSuccessUrl("/home", true))
+                .sessionManagement((sessionManagement) -> sessionManagement
+                        .sessionCreationPolicy(
+                                org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(
+                        (authorizeHttpRequests) -> authorizeHttpRequests
+                                .requestMatchers("/api/auth/**", "/login", "/auth/register")
+                                .permitAll()
+                                .anyRequest().authenticated())
+                .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/home", true))
                 .logout()
                 .invalidateHttpSession(true)
                 .deleteCookies("accessToken")
-                .logoutUrl("/logout");        
+                .logoutUrl("/logout");
 
         return httpSecurity.build();
     }
