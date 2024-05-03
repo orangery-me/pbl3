@@ -1,9 +1,11 @@
 package com.nhom10.pbl.controller;
 
 import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+=======
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,11 +22,6 @@ public class HomeController {
         this._departmentServices = departmentServices;
     }
 
-    @RequestMapping("")
-    public String home() {
-        return "index";
-    }
-
     @GetMapping("/home")
     public String getHomePage(Model model) {
         List<departmentRespone> listDepartmentRespones =  _departmentServices.getAllDepartmentRespones();
@@ -34,5 +31,19 @@ public class HomeController {
         model.addAttribute("navState", "navLogged");
         model.addAttribute("listDepartmentRespones", listDepartmentRespones);
         return "homePage/index";
+      
+    @RequestMapping("/login")
+    public String login() {
+        return "auth/login/login";
+    }
+
+    @RequestMapping("/admin")
+    public String adminPage() {
+        return "admin/pages/home";
+    }
+
+    @RequestMapping("/admin/accounts")
+    public String adminControllUsers() {
+        return "admin/pages/accounts";
     }
 }
