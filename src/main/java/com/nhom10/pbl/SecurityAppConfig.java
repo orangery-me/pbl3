@@ -70,10 +70,4 @@ public class SecurityAppConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // @Bean
-    // public WebSecurityCustomizer webSecurityCustomizer() {
-    // return (web) -> web.ignoring().requestMatchers("/static/**",
-    // "/static/css/admin/**", "/static/js/admin/**",
-    // "/static/images/**");
-    // }
 }

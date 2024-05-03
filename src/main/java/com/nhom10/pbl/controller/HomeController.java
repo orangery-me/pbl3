@@ -32,4 +32,9 @@ public class HomeController {
     public String adminControllUsers() {
         return "admin/pages/accounts";
     }
+
+    @RequestMapping("/admin/articles")
+    public String adminControllArticles() {
+        return "admin/pages/articles";
+    }
 }
