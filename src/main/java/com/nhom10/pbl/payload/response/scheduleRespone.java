@@ -1,4 +1,4 @@
-package com.nhom10.pbl.dto.respone;
+package com.nhom10.pbl.payload.response;
 
 import java.sql.Date;
 
@@ -13,7 +13,7 @@ public class scheduleRespone {
 
     private Long _doctorId;
 
-    private Long _patientId; 
-    
+    private Long _patientId;
+
     private Long _shiftId;
 }

@@ -1,4 +1,4 @@
-package com.nhom10.pbl.dto.respone;
+package com.nhom10.pbl.payload.response;
 
 import java.sql.Date;
 import java.util.List;
@@ -10,5 +10,5 @@ public class bookingModel {
 
     private Date day;
     private List<shiftRespone> ListShift;
-    
+
 }

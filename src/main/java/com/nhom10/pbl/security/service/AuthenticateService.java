@@ -16,6 +16,7 @@ import com.nhom10.pbl.repository.RoleRepository;
 import com.nhom10.pbl.repository.UserRepository;
 import com.nhom10.pbl.security.jwt.JWTService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -84,13 +85,15 @@ public class AuthenticateService {
         return AuthenticationResponse.builder().token(token).build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request, HttpSession session) {
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
         // user is authenticated
         var user = userRepository.findByUserName(request.getUsername()).orElseThrow();
         var token = jwtService.generateToken(CustomUserDetails.build(user));
+
+        session.setAttribute("user", user);
 
         return AuthenticationResponse.builder().token(token).build();
     }

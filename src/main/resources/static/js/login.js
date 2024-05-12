@@ -1,7 +1,7 @@
 var slideIndex = 0;
 showSlides();
 
-function showSlides() {
+function showSlides () {
     var i;
     var slides = document.getElementsByClassName("slide");
     for (i = 0; i < slides.length; i++) {
@@ -44,7 +44,7 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
             // Handle successful authentication
             // Redirect to another page or perform any necessary actions
             alert("Login successful!");
-            window.location.href = "http://localhost:8080/home";
+            // window.location.href = "http://localhost:8080/home";
             console.log("Authentication successful:", data);
         })
         .catch(error => {

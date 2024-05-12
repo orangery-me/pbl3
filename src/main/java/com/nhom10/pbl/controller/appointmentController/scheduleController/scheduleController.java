@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.nhom10.pbl.dto.request.scheduleRequest;
-import com.nhom10.pbl.dto.respone.scheduleRespone;
+import com.nhom10.pbl.payload.response.scheduleRespone;
+import com.nhom10.pbl.payload.resquest.scheduleRequest;
 import com.nhom10.pbl.services.scheduleServices;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,16 +22,16 @@ public class scheduleController {
     @Autowired
     private scheduleServices scheduleServices;
 
-    @PostMapping(path = "/appointment", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @PostMapping(path = "/appointment", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
     public String createSchedulejson(scheduleRequest sRequest, HttpServletRequest request) {
         scheduleServices.createSchedule(sRequest);
-        String prevUrl =  request.getHeader("referer");
+        String prevUrl = request.getHeader("referer");
         return "redirect:" + prevUrl;
     }
 
     @GetMapping("/appointment")
     @ResponseBody
-    public List<scheduleRespone> getListOfSchedules(){
+    public List<scheduleRespone> getListOfSchedules() {
         return scheduleServices.getAllschedule();
     }
 }
