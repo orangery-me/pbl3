@@ -26,7 +26,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String getHomePage(Model model, HttpServletRequest request) {
-        String username = "thi";
+        String username = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
