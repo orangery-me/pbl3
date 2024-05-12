@@ -33,6 +33,11 @@ public class SecurityAppConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        (authorizeHttpRequests) -> authorizeHttpRequests
+                                .requestMatchers("/api/auth/**", "/login", "/**")
+                                .permitAll()
+                                .anyRequest().authenticated())
                 .sessionManagement((sessionManagement) -> sessionManagement
                         .sessionCreationPolicy(
                                 org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
@@ -81,4 +86,5 @@ public class SecurityAppConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

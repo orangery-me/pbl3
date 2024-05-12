@@ -1,4 +1,4 @@
-package com.nhom10.pbl.dto.request;
+package com.nhom10.pbl.payload.resquest;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ public class scheduleRequest {
 
     private Long doctorID;
 
-    private Long patientID; 
+    private Long patientID;
 
     private Long shiftID;
 }

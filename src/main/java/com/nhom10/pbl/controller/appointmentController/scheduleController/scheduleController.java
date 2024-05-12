@@ -29,16 +29,16 @@ public class scheduleController {
 
     private final scheduleServices scheduleServices;
     private final doctorServices _doctorServices;
-    
 
     @PostMapping(path = "/appointment/{doctorId}")
-    public String createSchedulejson(@PathVariable("doctorId") String doctorId, 
-                                        scheduleRequest sRequest, HttpServletRequest request, Model model) {
+    public String createSchedulejson(@PathVariable("doctorId") String doctorId,
+            scheduleRequest sRequest, HttpServletRequest request, Model model) {
         scheduleServices.createSchedule(sRequest);
-                                            
-        List<bookingModel> ListBookingAvailable = _doctorServices.getListBookingModelsOfDoctor(Long.parseLong(doctorId));
+
+        List<bookingModel> ListBookingAvailable = _doctorServices
+                .getListBookingModelsOfDoctor(Long.parseLong(doctorId));
         doctorRespone doctorRespone = _doctorServices.getDoctorResponeById(Long.parseLong(doctorId));
-        
+
         model.addAttribute("doctor", doctorRespone);
         model.addAttribute("ListbookingAvailable", ListBookingAvailable);
 
@@ -47,14 +47,14 @@ public class scheduleController {
 
     @GetMapping("/appointment")
     @ResponseBody
-    public List<scheduleRespone> getListOfSchedules(){
+    public List<scheduleRespone> getListOfSchedules() {
         return scheduleServices.getAllschedule();
     }
 
     // @GetMapping("/appointments")
     // @ResponseBody
     // public Long getListSchedulesToday(){
-        
-    //     return scheduleServices.getRevenueOfDay(Date.valueOf(LocalDate.now()));
+
+    // return scheduleServices.getRevenueOfDay(Date.valueOf(LocalDate.now()));
     // }
 }

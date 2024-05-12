@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
-import com.nhom10.pbl.models.patient;
+import com.nhom10.pbl.models.Patient;
 
 @Repository
-public interface patientRepository extends JpaRepository<patient, Long> {
-    @NonNull Optional<patient> findById(@NonNull Long id);
+public interface patientRepository extends JpaRepository<Patient, Long> {
+    @NonNull
+    Optional<Patient> findById(@NonNull Long id);
 }

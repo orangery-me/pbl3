@@ -24,6 +24,11 @@
                     </ul>
                 </li> -->
                 <div class="line"></div>
+                <div sec:authorize="isAuthenticated()">Test xem sao</div>
+                <div sec:authorize="hasRole('DOCTOR')">BAC SI NEK</div>
+                <div sec:authorize="hasRole('PATIENT')">BENH NHAN NEK</div>
+                <div sec:authentication="name"></div>
+                <div th:text="${#authentication.name}"></div>
             </div>
         </div>
     </nav>

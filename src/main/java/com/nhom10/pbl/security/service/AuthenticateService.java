@@ -97,7 +97,7 @@ public class AuthenticateService {
             // user is authenticated
             var user = userRepository.findByUserName(request.getUsername()).orElseThrow();
             var token = jwtService.generateToken(CustomUserDetails.build(user));
-            ResponseCookie cookie = ResponseCookie.from("accessToken", token).httpOnly(true).maxAge(6*3600).path("/")
+            ResponseCookie cookie = ResponseCookie.from("accessToken", token).httpOnly(true).maxAge(6 * 3600).path("/")
                     .build();
             response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             return AuthenticationResponse.builder().token(token).build();

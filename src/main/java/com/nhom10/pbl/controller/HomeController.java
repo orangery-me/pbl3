@@ -68,5 +68,7 @@ public class HomeController {
     @RequestMapping("/admin/articles")
     public String adminControllArticles() {
         return "admin/pages/articles";
-    }
-}
+    }} 
+
+    
+    

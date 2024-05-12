@@ -30,8 +30,8 @@ public class schedule {
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    private patient _patient; 
-    
+    private Patient _patient;
+
     @ManyToOne
     @JoinColumn(name = "shift_id")
     private shift _shift;

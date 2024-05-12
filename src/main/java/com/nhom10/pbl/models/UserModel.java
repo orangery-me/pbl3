@@ -66,6 +66,12 @@ public class UserModel {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Article> articles;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Patient patient;
+
     public Long getId() {
         return id;
     }
