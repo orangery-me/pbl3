@@ -14,6 +14,7 @@ import com.nhom10.pbl.security.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,19 +27,18 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-        @NonNull FilterChain filterChain)
-        throws ServletException, IOException {
-        // Lấy token từ cookie
-        String jwt = jwtService.extractTokenFromCookie(request);
+            @NonNull FilterChain filterChain)
+            throws ServletException, IOException {
+
+        String jwt = null;
         String userName = null;
-        if (jwt != null && jwtService.isTokenExpired(jwt)) {
-            System.out.println("======================== token is expride ===================");
-            clearTokenCookie(response);
-            filterChain.doFilter(request, response);
-            return;
-        }
-        if (jwt != null) {
-            userName = jwtService.extractUserName(jwt); // Trích xuất tên người dùng từ jwt
+
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("accessToken")) {
+                    jwt = cookie.getValue();
+                }
+            }
         }
 
         if (jwt == null) {
@@ -47,16 +47,18 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            // Nếu tên người dùng không null và người dùng chưa được xác thực
-            // Thì xác thực người dùng
+        userName = jwtService.extractUserName(jwt);// extract the username from the jwt
+        if (userName != null &&
+                SecurityContextHolder.getContext().getAuthentication() == null) {
+            // if the username is not null and the user is not authenticated
+            // then authenticate the user
             CustomUserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
             if (jwtService.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
                         null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-                System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+
             }
         }
         filterChain.doFilter(request, response);
@@ -73,6 +75,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         String cookieHeader = String.format("%s; SameSite=Strict", response.getHeader("Set-Cookie"));
         response.setHeader("Set-Cookie", cookieHeader);
 
-        System.out.println("========================================================================JWT is expride: " + "da xoa");
+        System.out.println(
+                "========================================================================JWT is expride: " + "da xoa");
     }
 }
