@@ -11,7 +11,7 @@ import com.nhom10.pbl.payload.resquest.AuthenticationRequest;
 import com.nhom10.pbl.payload.resquest.RegisterRequest;
 import com.nhom10.pbl.security.service.AuthenticateService;
 
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -27,9 +27,12 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request,
-            HttpSession session) {
-
-        return ResponseEntity.ok(authenticationService.authenticate(request, session));
+            HttpServletResponse response) {
+        try {
+            return ResponseEntity.ok(authenticationService.authenticate(request, response));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).build();
+        }
     }
 
 }

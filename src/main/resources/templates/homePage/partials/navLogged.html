@@ -13,13 +13,8 @@
                 <a class="link" href="#">TIN TỨC</a>
                 <a class="link" href="#">LIÊN HỆ</a>
                 <div id="link-popup" class="link">ĐẶT LỊCH NGAY</div>
-                <a class="link" th:href="@{/register}">ME</a>
+                <a class="link" th:href="@{/register}" th:text="${username}"></a>
                 <div class="line"></div>
-                <div sec:authorize="isAuthenticated()">Test xem sao</div>
-                <div sec:authorize="hasRole('DOCTOR')">BAC SI NEK</div>
-                <div sec:authorize="hasRole('PATIENT')">BENH NHAN NEK</div>
-                <div sec:authentication="name"></div>
-                <div th:text="${#authentication.name}"></div>
             </div>
         </div>
     </nav>

@@ -7,29 +7,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nhom10.pbl.payload.response.departmentRespone;
+import com.nhom10.pbl.security.jwt.JWTService;
 import com.nhom10.pbl.services.departmentServices;
 
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
-    private final departmentServices _departmentServices;
-
-    public HomeController(departmentServices departmentServices) {
-        this._departmentServices = departmentServices;
-    }
+    private final departmentServices departmentServices;
+    private final JWTService jwtService;
 
     @GetMapping("/home")
-    public String getHomePage(Model model, HttpSession session) {
-        var user = session.getAttribute("user");
-        if (user == null) {
+    public String getHomePage(Model model, HttpServletRequest request) {
+        String username = "thi";
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("accessToken")) {
+                    username = jwtService.extractUserName(cookie.getValue());
+                }
+            }
+        }
+        model.addAttribute("username", username);
+        if (username == null) {
             model.addAttribute("view", "homePage/homeComponent/homePage");
             model.addAttribute("file", "homePage");
             model.addAttribute("nav", "homePage/partials/nav");
             model.addAttribute("navState", "nav");
         } else {
-            List<departmentRespone> listDepartmentRespones = _departmentServices.getAllDepartmentRespones();
+            List<departmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
             model.addAttribute("view", "homePage/homeComponent/homePage");
             model.addAttribute("file", "homePage");
             model.addAttribute("nav", "homePage/partials/navLogged");
@@ -42,6 +52,11 @@ public class HomeController {
     @RequestMapping("/login")
     public String login() {
         return "auth/login/login";
+    }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "homePage/index";
     }
 
     @RequestMapping("/admin")

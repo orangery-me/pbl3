@@ -20,7 +20,7 @@ import com.nhom10.pbl.security.jwt.JWTAuthFilter;
 import com.nhom10.pbl.security.service.CustomUserDetailsService;
 
 @Configuration // This annotation indicates that this class is a configuration class (cau hinh
-               // spring security)
+// spring security)
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityAppConfig {
@@ -33,19 +33,23 @@ public class SecurityAppConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(
-                        (authorizeHttpRequests) -> authorizeHttpRequests
-                                .requestMatchers("/api/auth/**", "/login", "/**")
-                                .permitAll()
-                                .anyRequest().authenticated())
+
                 .sessionManagement((sessionManagement) -> sessionManagement
                         .sessionCreationPolicy(
                                 org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(
+                        (authorizeHttpRequests) -> authorizeHttpRequests
+                                .requestMatchers("/api/auth/**", "/login")
+                                .permitAll()
+                                .anyRequest().authenticated())
                 .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/home", true));
-
+                        .defaultSuccessUrl("/home", true))
+                .logout()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutUrl("/logout");
         return httpSecurity.build();
     }
 
@@ -73,7 +77,8 @@ public class SecurityAppConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/static/**", "/css/**", "/js/**",
+        return (web) -> web.ignoring().requestMatchers("/static/**", "/css/**",
+                "/js/**",
                 "/images/**");
     }
 
