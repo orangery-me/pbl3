@@ -6,11 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.nhom10.pbl.payload.response.UserResponse;
 import com.nhom10.pbl.payload.response.departmentRespone;
-import com.nhom10.pbl.security.jwt.JWTService;
+import com.nhom10.pbl.security.service.AuthenticateService;
 import com.nhom10.pbl.services.departmentServices;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -19,21 +19,13 @@ import lombok.RequiredArgsConstructor;
 public class HomeController {
 
     private final departmentServices departmentServices;
-    private final JWTService jwtService;
+    private final AuthenticateService authenticateService;
 
     @GetMapping("/home")
     public String getHomePage(Model model, HttpServletRequest request) {
-        String username = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("accessToken")) {
-                    username = jwtService.extractUserName(cookie.getValue());
-                }
-            }
-        }
-        model.addAttribute("username", username);
-        if (username == null) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        if (user == null) {
             model.addAttribute("view", "homePage/homeComponent/homePage");
             model.addAttribute("file", "homePage");
             model.addAttribute("nav", "homePage/partials/nav");

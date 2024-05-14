@@ -14,12 +14,15 @@ import com.nhom10.pbl.models.ERole;
 import com.nhom10.pbl.models.Role;
 import com.nhom10.pbl.models.UserModel;
 import com.nhom10.pbl.payload.response.AuthenticationResponse;
+import com.nhom10.pbl.payload.response.UserResponse;
 import com.nhom10.pbl.payload.resquest.AuthenticationRequest;
 import com.nhom10.pbl.payload.resquest.RegisterRequest;
 import com.nhom10.pbl.repository.RoleRepository;
 import com.nhom10.pbl.repository.UserRepository;
 import com.nhom10.pbl.security.jwt.JWTService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +43,20 @@ public class AuthenticateService {
 
     @Autowired
     private final AuthenticationManager authenticationManager;
+
+    public UserResponse getUserFromCookie(HttpServletRequest request) throws UsernameNotFoundException {
+        String username = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("accessToken")) {
+                    username = jwtService.extractUserName(cookie.getValue());
+                }
+            }
+        }
+        var user = userRepository.findByUserName(username).orElseThrow();
+        return UserResponse.mapToUserResponse(user);
+    }
 
     public AuthenticationResponse register(RegisterRequest request) {
         // get roles from request
