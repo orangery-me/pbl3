@@ -67,7 +67,7 @@ public class JWTService {
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes); // Creates a new SecretKey instance for use with HMAC-SHA algorithms based
-                                             // on the specified key byte array.
+        // on the specified key byte array.
     }
 
 }

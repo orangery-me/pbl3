@@ -1,4 +1,5 @@
-package com.nhom10.pbl.dto.respone;
+package com.nhom10.pbl.payload.response;
+
 import java.util.List;
 
 import com.nhom10.pbl.models.department;
@@ -15,10 +16,10 @@ public class doctorRespone {
     private String ServicePrices;
 
     private departmentRespone departmentRespone;
-    
+
     private List<scheduleRespone> listSchedule;
 
-    public void setInitValuedepartmentRespone(department department){
+    public void setInitValuedepartmentRespone(department department) {
         departmentRespone departmentRespone = new departmentRespone();
         departmentRespone.setId(department.getId());
         departmentRespone.setDescriptionDepartment(department.getDescriptionDepartment());

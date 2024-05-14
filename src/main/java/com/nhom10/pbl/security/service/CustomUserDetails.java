@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.nhom10.pbl.models.ERole;
 import com.nhom10.pbl.models.Role;
 import com.nhom10.pbl.models.UserModel;
 
@@ -35,7 +36,9 @@ public class CustomUserDetails implements UserDetails {
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         Role role = user.getRole();
 
-        authorities.add(new SimpleGrantedAuthority(role.getName().name()));
+        ERole roleName = role.getName();
+
+        authorities.add(new SimpleGrantedAuthority(roleName.name()));
 
         return new CustomUserDetails(authorities, user, true, true, true);
     }

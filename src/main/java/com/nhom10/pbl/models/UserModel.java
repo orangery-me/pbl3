@@ -37,12 +37,18 @@ public class UserModel {
     @Column(name = "telephone")
     private String telephone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_role")
     private Role role;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Article> articles;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Patient patient;
 
     public Long getId() {
         return id;
