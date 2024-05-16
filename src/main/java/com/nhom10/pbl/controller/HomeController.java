@@ -2,7 +2,6 @@ package com.nhom10.pbl.controller;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +24,6 @@ public class HomeController {
     private final departmentServices _departmentServices;
     private final JWTService jwtService;
 
-    @RequestMapping("")
-    public String home() {
-        return "index";
-    }
-
     @GetMapping("/home")
     public String getHomePage(Model model, HttpServletRequest request) {
 
@@ -51,20 +45,10 @@ public class HomeController {
 
         return "homePage/index";
     }
-
-    @GetMapping("/home/greeting")
-    public ResponseEntity<String> greeting() {
-        return ResponseEntity.ok("Greeting from home");
-    }
-
+      
     @RequestMapping("/login")
     public String login() {
         return "auth/login/login";
-    }
-
-    @RequestMapping("/logout")
-    public String logout() {
-        return "homePage/index";
     }
 
     @RequestMapping("/admin")
@@ -75,5 +59,10 @@ public class HomeController {
     @RequestMapping("/admin/accounts")
     public String adminControllUsers() {
         return "admin/pages/accounts";
+    }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "homePage/index";
     }
 }

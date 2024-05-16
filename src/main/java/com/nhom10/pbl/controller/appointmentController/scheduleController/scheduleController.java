@@ -1,9 +1,6 @@
 package com.nhom10.pbl.controller.appointmentController.scheduleController;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +13,6 @@ import com.nhom10.pbl.dto.request.scheduleRequest;
 import com.nhom10.pbl.dto.respone.bookingModel;
 import com.nhom10.pbl.dto.respone.doctorRespone;
 import com.nhom10.pbl.dto.respone.scheduleRespone;
-import com.nhom10.pbl.models.UserModel;
-import com.nhom10.pbl.security.jwt.JWTService;
-import com.nhom10.pbl.security.service.CustomUserDetails;
 import com.nhom10.pbl.services.doctorServices;
 import com.nhom10.pbl.services.scheduleServices;
 

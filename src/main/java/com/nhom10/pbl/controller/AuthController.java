@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nhom10.pbl.payload.response.AuthenticationResponse;
 import com.nhom10.pbl.payload.resquest.AuthenticationRequest;
 import com.nhom10.pbl.payload.resquest.RegisterRequest;
-import com.nhom10.pbl.security.jwt.JWTService;
 import com.nhom10.pbl.security.service.AuthenticateService;
 
 import jakarta.servlet.http.HttpServletResponse;
