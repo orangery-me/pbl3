@@ -5,28 +5,46 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nhom10.pbl.dto.request.scheduleRequest;
+import com.nhom10.pbl.dto.respone.bookingModel;
+import com.nhom10.pbl.dto.respone.doctorRespone;
 import com.nhom10.pbl.dto.respone.scheduleRespone;
+import com.nhom10.pbl.models.UserModel;
+import com.nhom10.pbl.security.jwt.JWTService;
+import com.nhom10.pbl.security.service.CustomUserDetails;
+import com.nhom10.pbl.services.doctorServices;
 import com.nhom10.pbl.services.scheduleServices;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 
 @Controller
 @RequestMapping("/user")
+@AllArgsConstructor
 public class scheduleController {
-    @Autowired
-    private scheduleServices scheduleServices;
 
-    @PostMapping(path = "/appointment", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String createSchedulejson(scheduleRequest sRequest, HttpServletRequest request) {
+    private final scheduleServices scheduleServices;
+    private final doctorServices _doctorServices;
+
+    @PostMapping(path = "/appointment/{doctorId}")
+    public String createSchedulejson(@PathVariable("doctorId") String doctorId, 
+                                        scheduleRequest sRequest, HttpServletRequest request, Model model) {
         scheduleServices.createSchedule(sRequest);
-        String prevUrl =  request.getHeader("referer");
-        return "redirect:" + prevUrl;
+                                            
+        List<bookingModel> ListBookingAvailable = _doctorServices.getListBookingModelsOfDoctor(Long.parseLong(doctorId));
+        doctorRespone doctorRespone = _doctorServices.getDoctorResponeById(Long.parseLong(doctorId));
+        
+        model.addAttribute("doctor", doctorRespone);
+        model.addAttribute("ListbookingAvailable", ListBookingAvailable);
+
+        return "homePage/homeComponent/bookingComponent";
     }
 
     @GetMapping("/appointment")

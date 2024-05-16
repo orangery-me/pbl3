@@ -5,10 +5,13 @@
         <div class="cover-nulltext-and-towdiv">
     
             <div class="cover-two-div">
-                <div class="input-fillter">
-                    <label class="doctor-name" for="fillter-doctor">Tên bác sĩ</label>
-                    <input id="fillter-doctor" type="text">
+                <div class="input-and-btn">
+                    <div class="input-fillter">
+                        <label class="doctor-name" for="fillter-doctor">Tên bác sĩ</label>
+                        <input id="fillter-doctor" type="text">
+                    </div>
                 </div>
+                
                 <div id="dynamic-content" th:if="${listDoctorOfDepartment != null && !(#lists.isEmpty(listDoctorOfDepartment))}">
                     <div class="list-doctor-department">
                         <div class="card w-100 mb-5 card-doctor" th:each="doctor : ${listDoctorOfDepartment}">

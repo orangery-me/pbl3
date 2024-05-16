@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.nhom10.pbl.models.Role;
 import com.nhom10.pbl.models.UserModel;
 
+import lombok.Data;
+
+@Data
 public class CustomUserDetails implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
     private UserModel user;

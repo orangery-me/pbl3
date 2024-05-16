@@ -25,304 +25,74 @@
                 <h1>detail</h1>
             </section>
 
-            <div class="booking-doctor">
-                <div class="input-date">
-                  <input id = "input-date" type="date" >
-                </div>
+              <div id="dynamic-booking-div">
+                <div class="booking-doctor">
+                  <div class="input-date">
+                    <input id = "input-date" type="date">
+                  </div>
 
-                <div class="view-booking">
-                    <div class="booking-model">
-                      <i id="left-click" class="fa-solid fa-chevron-left"></i>
-                      <div class="view-booking-model" th:each = "bookingItem, iterStat : ${ListbookingAvailable}" style="left: 0px;">
+                  <div class="view-booking">
+                      <div class="booking-model">
+                        <i id="left-click" class="fa-solid fa-chevron-left"></i>
+                        <div class="view-booking-model" th:each = "bookingItem, iterStat : ${ListbookingAvailable}" style="left: 0px;">
 
-                        <div class="date-and-countAvailable" th:data-value="${#dates.format(bookingItem.day, 'yyyy-MM-dd')}" th:classappend="${iterStat.first} ? 'active'">
-                          <div class="date-and-count">
-                            <div class="dayOfweek" th:text="${#dates.format(bookingItem.day, 'EEEE')}"></div>
-                            <div class="bookingItem" th:text="${#dates.format(bookingItem.day, 'dd/MM')}"></div>
-                            <div class="cout-available" th:text="${bookingItem.ListShift.size()} + ' trống'" th:classappend="${bookingItem.ListShift.size() > 0} ? 'isavailable' : ''"></div>
+                          <div class="date-and-countAvailable" th:data-value="${#dates.format(bookingItem.day, 'yyyy-MM-dd')}" th:classappend="${iterStat.first} ? 'active'">
+                            <div class="date-and-count">
+                              <div class="dayOfweek" th:text="${#dates.format(bookingItem.day, 'EEEE')}"></div>
+                              <div class="bookingItem" th:text="${#dates.format(bookingItem.day, 'dd/MM')}"></div>
+                              <div class="cout-available" th:text="${bookingItem.ListShift.size()} + ' trống'" th:classappend="${bookingItem.ListShift.size() > 0} ? 'isavailable' : ''"></div>
+                            </div>
+                          </div>
+
+                          <div class="shift-hidden-available">
+                            <div class="container morning-shift">
+                              <div class="shift-item" th:each="shiftItem : ${bookingItem.ListShift}" th:if="${shiftItem.Id le 7}" th:text="${shiftItem.timeStart} + ' : ' + ${shiftItem.timeEnd}" th:data-value="${shiftItem.Id}"></div>
+                            </div>
+      
+                            <div class="container afternoon-shift">
+                              <div class="shift-item"  th:each="shiftItem : ${bookingItem.ListShift}" th:unless="${shiftItem.Id le 7}" th:text="${shiftItem.timeStart} + ' : ' + ${shiftItem.timeEnd}" th:data-value="${shiftItem.Id}"></div>
+                            </div>
                           </div>
                         </div>
+                        <i id="right-click" class="fa-solid fa-chevron-right"></i>
+                      </div>
 
-                        <div class="shift-hidden-available">
-                          <div class="container morning-shift">
-                            <div class="shift-item" th:each="shiftItem : ${bookingItem.ListShift}" th:if="${shiftItem.Id le 7}" th:text="${shiftItem.timeStart} + ' : ' + ${shiftItem.timeEnd}" th:data-value="${shiftItem.Id}"></div>
-                          </div>
-    
-                          <div class="container afternoon-shift">
-                            <div class="shift-item"  th:each="shiftItem : ${bookingItem.ListShift}" th:unless="${shiftItem.Id le 7}" th:text="${shiftItem.timeStart} + ' : ' + ${shiftItem.timeEnd}" th:data-value="${shiftItem.Id}"></div>
-                          </div>
+                      <div class="view-shift-available">
+                        <div class="morning">
+                          <span class="txt-morning">Sáng</span>
+                        </div>
+
+                        <div class="afternoon">
+                          <span class="txt-afternoon">Chiều</span>
                         </div>
                       </div>
-                      <i id="right-click" class="fa-solid fa-chevron-right"></i>
-                    </div>
-
-                    <div class="view-shift-available">
-                      <div class="morning">
-                        <span class="txt-morning">Sáng</span>
+                      <div class="list-shift"></div>
+                      <div class="price">
+                          <i class="fa-solid fa-dollar-sign"></i>
+                          <span class="txt-price">Phí dịch vụ </span>
+                          <span class="doctor-price" th:text="${doctor.ServicePrices}"></span>
                       </div>
-
-                      <div class="afternoon">
-                        <span class="txt-afternoon">Chiều</span>
-                      </div>
-                    </div>
-                    <div class="list-shift"></div>
-                    <div class="price">
-                        <i class="fa-solid fa-dollar-sign"></i>
-                        <span class="txt-price">Phí dịch vụ </span>
-                        <span class="doctor-price" th:text="${doctor.ServicePrices}"></span>
-                    </div>
-                    <button class="btn-submit">Xác nhận lịch hẹn</button>
+                      <button class="btn-submit">Xác nhận lịch hẹn</button>
+                  </div>
                 </div>
-            </div>
+              </div>
 
-            <form class="form-hidden" action="/user/appointment" th:object="${scheduleRequest}" method="post">
+            <form class="form-hidden" th:action="'/user/appointment/' + ${doctor.id}" th:object="${scheduleRequest}" method="post">
                 <input type="text" id="Date" th:field="*{date}">
 
                 <input type="number" id="State" th:field="*{state}" th:data-value="1">
 
                 <input type="number" id="id_doctor" th:field="*{doctorID}" th:data-value="${doctor.id}">
 
-                <input type="number" id="id_benhnhan" th:field="*{patientID}" th:data-value="1">
+                <input type="number" id="id_benhnhan" th:field="*{patientID}">
 
                 <input type="number" id="id_shift" th:field="*{shiftID}">
+
+                <input type="number" id="id_benhnhan_toGet" th:object="${user}" th:data-value="${user.patient.id}">
 
             </form>
 
         </div>
-        <script>
-            const bkmodels = document.querySelectorAll('.view-booking-model')
-            const leftClick = document.getElementById('left-click')
-            const rightClick = document.getElementById('right-click')
-            
-            const shiftHidden = document.querySelectorAll('.shift-hidden-available')
-            const date = document.querySelectorAll('.date-and-countAvailable')
-            const listShift = document.querySelector('.list-shift')
-            const morning = document.querySelector('.morning')
-            const afternoon = document.querySelector('.afternoon')
-            var inputDate = document.getElementById('input-date')
-            var txtMorning = document.querySelector('.txt-morning')
-            var txtAfternoon = document.querySelector('.txt-afternoon')
-            const btnSubmit = document.querySelector('.btn-submit')
-            const form = document.querySelector('.form-hidden')
-
-            
-            var today = new Date();
-            var yyyy = today.getFullYear();
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-            var dd = String(today.getDate()).padStart(2, '0');
-            var currentDate = yyyy + '-' + mm + '-' + dd;
-
-            inputDate.value = currentDate;
-
-            
-            const maxDate = new Date();
-            maxDate.setDate(maxDate.getDate() + 29);
-            const maxDateString = maxDate.toISOString().slice(0, 10);
-
-            inputDate.setAttribute("min", currentDate);
-            inputDate.setAttribute("max", maxDateString);
-
-            let plus = 0
-            rightClick.onclick = () => {
-              if(plus > -3132){
-                plus -= 119*3
-                bkmodels.forEach((element, index) => {
-                  element.style.left = plus + 'px' 
-                })
-              }
-            }
-
-            leftClick.onclick = () => {
-              if(plus < 0){
-                plus += 119*3
-                bkmodels.forEach((element, index) => {
-                  element.style.left = plus + 'px' 
-                })
-              }
-              console.log(plus)
-            }
-
-            inputDate.onchange = () => {
-              const a_offset = 3213
-              const b_offset = -3213
-              var inputDateValue = new Date(inputDate.value)
-              var now = new Date().getTime()
-              var index = Math.floor((inputDateValue.getTime() - now) / (1000 * 60 * 60 * 24))+1
-
-              if(index >= 0 && index <= 29){
-                var current = b_offset + (a_offset - Math.floor(index/3)*119*3)
-                console.log(index)
-
-                plus = current
-
-                bkmodels.forEach(element => element.style.left = current + 'px')
-
-                afternoon.classList.contains('active') && afternoon.classList.remove('active')
-
-                !morning.classList.contains('active') && morning.classList.add('active')
-
-                removeActive()
-
-                date[index].classList.add('active')
-                var morningShiftElements = shiftHidden[index].querySelector('.morning-shift')
-                var afternoonShiftElements = shiftHidden[index].querySelector('.afternoon-shift')
-                
-                var countM = morningShiftElements.querySelectorAll('.shift-item').length
-                var countA = afternoonShiftElements.querySelectorAll('.shift-item').length
-
-                txtMorning.textContent = `Sáng (${countM})`
-                txtAfternoon.textContent = `Chiều (${countA})`
-
-                console.log(date[index])
-                console.log(morningShiftElements)
-                listShift.innerHTML = null
-                listShift.appendChild(morningShiftElements.cloneNode(true))
-                if(countM === 0){
-                  listShift.innerHTML = `<div class="full">Không có ca trống</div>`
-                }
-              }
-
-            }
-
-            function removeActive(){
-              date.forEach(date => date.classList.contains('active') && date.classList.remove('active'))
-            }
-
-
-             (function viewShiftOfmorningOrAfternoon(){
-                morning.onclick = () => {
-                  afternoon.classList.remove('active');
-                  morning.classList.add('active');
-                  console.log("abcde")
-                  date.forEach((e, i) => {
-                    if(e.classList.contains('active')){
-                      var morningShiftElements = shiftHidden[i].querySelector('.morning-shift')
-                      var countM = morningShiftElements.querySelectorAll('.shift-item').length
-                      
-                      listShift.innerHTML = null
-                      listShift.appendChild(morningShiftElements.cloneNode(true))
-
-                      if(countM === 0){
-                        listShift.innerHTML = `<div class="full">Không có ca trống</div>`
-                      }
-                    }
-                  })
-                }
-
-                afternoon.onclick = () => {
-                  morning.classList.remove('active')
-                  afternoon.classList.add('active')
-                  console.log("abc")
-                  date.forEach((e, i) => {
-                    if (e.classList.contains('active')) {
-                      var afternoonShiftElements = shiftHidden[i].querySelector('.afternoon-shift')
-                      var countA = afternoonShiftElements.querySelectorAll('.shift-item').length
-
-                      listShift.innerHTML = null
-                      listShift.appendChild(afternoonShiftElements.cloneNode(true))
-                      
-                      if(countA === 0){
-                        listShift.innerHTML = `<div class="full">Không có ca trống</div>`
-                      }
-                    }
-                  })
-                }
-              })()
-            
-            date.forEach((element, index) => {
-
-              if(element.classList.contains('active')){
-                !morning.classList.contains('active') && morning.classList.add('active')
-
-                var morningShiftElements = shiftHidden[index].querySelector('.morning-shift')
-                var afternoonShiftElements = shiftHidden[index].querySelector('.afternoon-shift')
-                
-                var countM = morningShiftElements.querySelectorAll('.shift-item').length
-                var countA = afternoonShiftElements.querySelectorAll('.shift-item').length
-
-                txtMorning.textContent = `Sáng (${countM})`
-                txtAfternoon.textContent = `Chiều (${countA})`
-                
-
-                listShift.innerHTML = null
-                listShift.appendChild(morningShiftElements.cloneNode(true))
-                if(countM === 0){
-                  listShift.innerHTML = `<div class="full">Không có ca trống</div>`
-                }
-              }
-
-              element.onclick = () => {
-
-                afternoon.classList.contains('active') && afternoon.classList.remove('active')
-
-                !morning.classList.contains('active') && morning.classList.add('active')
-
-                removeActive()
-                element.classList.add('active')
-
-                var morningShiftElements = shiftHidden[index].querySelector('.morning-shift')
-                var afternoonShiftElements = shiftHidden[index].querySelector('.afternoon-shift')
-                
-                var countM = morningShiftElements.querySelectorAll('.shift-item').length
-                var countA = afternoonShiftElements.querySelectorAll('.shift-item').length
-
-                txtMorning.textContent = `Sáng (${countM})`
-                txtAfternoon.textContent = `Chiều (${countA})`
-
-                listShift.innerHTML = null
-                listShift.appendChild(morningShiftElements.cloneNode(true))
-                if(countM === 0){
-                  listShift.innerHTML = `<div class="full">Không có ca trống</div>`
-                }
-              }
-            })
-
-           
-            listShift.onclick = (e) => {
-                var target = e.target
-                if (target.classList.contains('shift-item')) {
-                  listShift.querySelectorAll('.shift-item').forEach(element => {
-                    element.classList.contains('active') && element.classList.remove('active')
-                  })
-                  target.classList.add('active')
-                }
-            }
-
-            btnSubmit.onclick = () => {
-              var listSHiftOnScreen = document.querySelectorAll('.list-shift .shift-item')
-
-              var isChooseDate = [...date].find(element => element.classList.contains('active'));
-              var isChooseShift = [...listSHiftOnScreen].find(element => element.classList.contains('active'));
-              
-              if(isChooseShift && isChooseDate){
-                const ipputIdShift = document.getElementById('id_shift');
-                const date = document.getElementById('Date');
-                const state = document.getElementById('State');
-                const id_doctor = document.getElementById('id_doctor');
-                const id_benhnhan = document.getElementById('id_benhnhan');
-
-                console.log(date, date.value)
-                console.log(ipputIdShift, ipputIdShift.value)
-
-                console.log(isChooseDate, isChooseDate.dataset.value)
-                console.log(isChooseShift, isChooseShift.dataset.value)
-
-                id_doctor.value = id_doctor.dataset.value
-                id_benhnhan.value = id_benhnhan.dataset.value
-                state.value = state.dataset.value
-                date.value = isChooseDate.dataset.value
-                ipputIdShift.value = isChooseShift.dataset.value
-
-                console.log(date.value)
-                console.log(ipputIdShift.value )
-
-                form.submit()
-              }
-
-
-            }
-            
-        </script>
       
     </div>
 </div>

@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -26,6 +27,10 @@ public class Doctor {
     private String description;
     private String RoomAddress;
     private String ServicePrices;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserModel user;
 
     @ManyToOne
     @JoinColumn(name = "department_id")

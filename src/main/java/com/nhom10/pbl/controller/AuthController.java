@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nhom10.pbl.payload.response.AuthenticationResponse;
 import com.nhom10.pbl.payload.resquest.AuthenticationRequest;
 import com.nhom10.pbl.payload.resquest.RegisterRequest;
+import com.nhom10.pbl.security.jwt.JWTService;
 import com.nhom10.pbl.security.service.AuthenticateService;
+
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,8 +27,12 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
+        try {
+            return ResponseEntity.ok(authenticationService.authenticate(request, response));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).build();
+        }
     }
 
 }

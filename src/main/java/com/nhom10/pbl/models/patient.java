@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -21,6 +23,10 @@ public class patient {
     private Long id;
 
     private String name;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserModel user;
 
     @OneToMany(mappedBy = "_patient", cascade = CascadeType.ALL)
     private List<schedule> listSchedule;
