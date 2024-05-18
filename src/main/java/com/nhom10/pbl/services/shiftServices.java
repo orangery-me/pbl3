@@ -6,14 +6,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import com.nhom10.pbl.models.shift;
-import com.nhom10.pbl.repository.shiftRepository;
+import com.nhom10.pbl.repository.ShiftRepository;
 
 @Service
-public class shiftServices {
+public class ShiftServices {
     @Autowired
-    private shiftRepository shiftRepository;
+    private ShiftRepository shiftRepository;
 
     public List<shift> getShiftList() {
         return shiftRepository.findAll();
+    }
+
+    public shift getShiftById(Long id) {
+        return shiftRepository.findById(id).get();
     }
 }

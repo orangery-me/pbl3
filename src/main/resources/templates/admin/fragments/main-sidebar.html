@@ -23,7 +23,7 @@
             </div>
         </form>
 
-
+        <!-- ------------------------------------------------------------------------- -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
             <!-- <li class="active treeview menu-open"> -->
@@ -42,6 +42,22 @@
                     </span>
                 </a>
             </li>
+            <li>
+                <!-- show appointment here -->
+                <a th:href="@{/admin/departments}">
+                    <i class="fa fa-th"></i> <span>Quản lý các khoa</span>
+                    <span class="pull-right-container">
+                        <small class="label pull-right bg-green">4</small>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <!-- show appointment here -->
+                <a th:href="@{/admin/doctors}">
+                    <i class="fa fa-th"></i> <span>Quản lý bác sĩ</span>
+                </a>
+            </li>
+            <!-- ------------------------------------------------------------------------- -->
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-files-o"></i>

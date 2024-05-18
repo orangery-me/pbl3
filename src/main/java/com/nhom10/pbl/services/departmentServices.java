@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nhom10.pbl.models.Doctor;
-import com.nhom10.pbl.models.department;
+import com.nhom10.pbl.models.Department;
 import com.nhom10.pbl.models.schedule;
 import com.nhom10.pbl.models.shift;
-import com.nhom10.pbl.payload.response.departmentRespone;
+import com.nhom10.pbl.payload.response.DepartmentRespone;
 import com.nhom10.pbl.payload.response.doctorRespone;
 import com.nhom10.pbl.payload.response.scheduleRespone;
-import com.nhom10.pbl.repository.departmentRepository;
-import com.nhom10.pbl.repository.shiftRepository;
+import com.nhom10.pbl.payload.resquest.DepartmentRequest;
+import com.nhom10.pbl.repository.DepartmentRepository;
+import com.nhom10.pbl.repository.ShiftRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -20,37 +21,34 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Service
-public class departmentServices {
+public class DepartmentServices {
     @Autowired
-    private shiftRepository shiftRepository;
-
-    @Autowired
-    private shiftServices shiftServices;
+    private ShiftRepository shiftRepository;
 
     @Autowired
-    private departmentRepository departmentRepo;
+    private ShiftServices shiftServices;
 
-    public List<departmentRespone> getAllDepartmentRespones() {
-        List<departmentRespone> departmentRespones = new ArrayList<>();
+    @Autowired
+    private DepartmentRepository departmentRepo;
 
-        List<department> listDepartments = departmentRepo.findAll();
-        for (department i : listDepartments) {
-            departmentRespone _departmentRespone = new departmentRespone();
-            _departmentRespone.setId(i.getId());
-            _departmentRespone.setNameDepartment(i.getNameDepartment());
-            _departmentRespone.setDescriptionDepartment(i.getDescriptionDepartment());
-            _departmentRespone.setLocation(i.getLocation());
-
-            departmentRespones.add(_departmentRespone);
-        }
-        return departmentRespones;
+    public DepartmentRespone createDepartment(DepartmentRequest departmentRequest) {
+        Department department = Department.builder().NameDepartment(departmentRequest.getNameDepartment())
+                .DescriptionDepartment(departmentRequest.getDescriptionDepartment())
+                .Location(departmentRequest.getLocation())
+                .build();
+        departmentRepo.save(department);
+        return DepartmentRespone.mapToDepartmentRespone(department);
     }
 
-    public departmentRespone getDepartmentByID(Long id) {
-        Optional<department> departmentOptional = departmentRepo.findById(id);
+    public List<DepartmentRespone> getAllDepartmentRespones() {
+        return departmentRepo.findAll().stream().map(DepartmentRespone::mapToDepartmentRespone).toList();
+    }
+
+    public DepartmentRespone getDepartmentByID(Long id) {
+        Optional<Department> departmentOptional = departmentRepo.findById(id);
         if (departmentOptional.isPresent()) {
-            department _department = departmentOptional.get();
-            departmentRespone _departmentRespone = new departmentRespone();
+            Department _department = departmentOptional.get();
+            DepartmentRespone _departmentRespone = new DepartmentRespone();
             _departmentRespone.setId(_department.getId());
             _departmentRespone.setDescriptionDepartment(_department.getDescriptionDepartment());
             _departmentRespone.setLocation(_department.getLocation());
@@ -62,7 +60,7 @@ public class departmentServices {
 
     public List<doctorRespone> getListDoctor(Long id, boolean addSchedule) {
         List<doctorRespone> listDoctorRespone = new ArrayList<>();
-        Optional<department> departmentOptional = departmentRepo.findById(id);
+        Optional<Department> departmentOptional = departmentRepo.findById(id);
 
         if (departmentOptional.isPresent()) {
             List<Doctor> listDoctor = departmentOptional.get().getListDoctors();

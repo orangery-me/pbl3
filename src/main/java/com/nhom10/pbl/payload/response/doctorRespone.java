@@ -2,8 +2,7 @@ package com.nhom10.pbl.payload.response;
 
 import java.util.List;
 
-import com.nhom10.pbl.models.department;
-
+import com.nhom10.pbl.models.Department;
 import lombok.Data;
 
 @Data
@@ -15,12 +14,12 @@ public class doctorRespone {
     private String RoomAddress;
     private String ServicePrices;
 
-    private departmentRespone departmentRespone;
+    private DepartmentRespone departmentRespone;
 
     private List<scheduleRespone> listSchedule;
 
-    public void setInitValuedepartmentRespone(department department) {
-        departmentRespone departmentRespone = new departmentRespone();
+    public void setInitValuedepartmentRespone(Department department) {
+        DepartmentRespone departmentRespone = new DepartmentRespone();
         departmentRespone.setId(department.getId());
         departmentRespone.setDescriptionDepartment(department.getDescriptionDepartment());
         departmentRespone.setLocation(department.getLocation());

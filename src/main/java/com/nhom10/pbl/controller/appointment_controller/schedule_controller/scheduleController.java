@@ -1,4 +1,4 @@
-package com.nhom10.pbl.controller.appointmentController.scheduleController;
+package com.nhom10.pbl.controller.appointment_controller.schedule_controller;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nhom10.pbl.payload.response.scheduleRespone;
 import com.nhom10.pbl.payload.resquest.scheduleRequest;
-import com.nhom10.pbl.services.scheduleServices;
+import com.nhom10.pbl.services.ScheduleServices;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/user")
 public class scheduleController {
     @Autowired
-    private scheduleServices scheduleServices;
+    private ScheduleServices scheduleServices;
 
     @PostMapping(path = "/appointment", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
     public String createSchedulejson(scheduleRequest sRequest, HttpServletRequest request) {

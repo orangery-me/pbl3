@@ -14,20 +14,47 @@ import org.springframework.stereotype.Service;
 import com.nhom10.pbl.models.Doctor;
 import com.nhom10.pbl.models.schedule;
 import com.nhom10.pbl.models.shift;
+import com.nhom10.pbl.payload.response.DoctorInfoResponse;
 import com.nhom10.pbl.payload.response.bookingModel;
 import com.nhom10.pbl.payload.response.doctorRespone;
 import com.nhom10.pbl.payload.response.scheduleRespone;
 import com.nhom10.pbl.payload.response.shiftRespone;
-import com.nhom10.pbl.repository.doctorRepository;
+import com.nhom10.pbl.payload.resquest.DoctorRequest;
+import com.nhom10.pbl.repository.DepartmentRepository;
+import com.nhom10.pbl.repository.DoctorRepository;
+import com.nhom10.pbl.repository.UserRepository;
 
 @Service
-public class doctorServices {
+public class DoctorServices {
 
     @Autowired
-    private shiftServices shiftServices;
+    private ShiftServices shiftServices;
 
     @Autowired
-    private doctorRepository doctorRepository;
+    private DoctorRepository doctorRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<DoctorInfoResponse> getAllDoctors() {
+        return doctorRepository.findAll().stream().map(DoctorInfoResponse::mapToDoctorInfoRespone).toList();
+    }
+
+    public DoctorInfoResponse createNewDoctor(DoctorRequest doctorRequest) {
+        Doctor doctor = Doctor.builder().description(doctorRequest.getDescription())
+                .position(doctorRequest.getPosition())
+                .RoomAddress(doctorRequest.getRoomAddress()).ServicePrices(doctorRequest.getServicePrices())
+                ._department(departmentRepository.findById(doctorRequest.getDepartment_id())
+                        .orElseThrow(() -> new NullPointerException("Department not found")))
+                .user(userRepository.findById(doctorRequest.getUser_id())
+                        .orElseThrow(() -> new NullPointerException("User not found")))
+                .build();
+        doctorRepository.save(doctor);
+        return DoctorInfoResponse.mapToDoctorInfoRespone(doctor);
+    }
 
     public List<scheduleRespone> getListScheduleResponsesOfDoctor(Long doctorId) {
         Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorId);

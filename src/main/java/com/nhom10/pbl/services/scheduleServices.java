@@ -8,22 +8,22 @@ import org.springframework.stereotype.Service;
 import com.nhom10.pbl.models.schedule;
 import com.nhom10.pbl.payload.response.scheduleRespone;
 import com.nhom10.pbl.payload.resquest.scheduleRequest;
-import com.nhom10.pbl.repository.doctorRepository;
-import com.nhom10.pbl.repository.patientRepository;
+import com.nhom10.pbl.repository.DoctorRepository;
+import com.nhom10.pbl.repository.PatientRepository;
 import com.nhom10.pbl.repository.scheduleRepository;
-import com.nhom10.pbl.repository.shiftRepository;
+import com.nhom10.pbl.repository.ShiftRepository;
 
 @Service
-public class scheduleServices {
+public class ScheduleServices {
 
     private final scheduleRepository schedule_Repository;
-    private final shiftRepository shift_Repository;
-    private final doctorRepository doctor_Repository;
-    private final patientRepository patient_Repository;
+    private final ShiftRepository shift_Repository;
+    private final DoctorRepository doctor_Repository;
+    private final PatientRepository patient_Repository;
 
-    public scheduleServices(
-            scheduleRepository schedule_Repository, shiftRepository shift_Repository,
-            doctorRepository doctor_Repository, patientRepository patient_Repository) {
+    public ScheduleServices(
+            scheduleRepository schedule_Repository, ShiftRepository shift_Repository,
+            DoctorRepository doctor_Repository, PatientRepository patient_Repository) {
         this.schedule_Repository = schedule_Repository;
         this.shift_Repository = shift_Repository;
         this.doctor_Repository = doctor_Repository;

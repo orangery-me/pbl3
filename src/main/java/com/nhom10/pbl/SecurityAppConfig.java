@@ -46,10 +46,10 @@ public class SecurityAppConfig {
                                 .anyRequest().authenticated())
                 .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
                         .defaultSuccessUrl("/home", true))
-                .logout()
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .logoutUrl("/logout");
+                .logout(logout -> logout
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .logoutUrl("/logout"));
         return httpSecurity.build();
     }
 

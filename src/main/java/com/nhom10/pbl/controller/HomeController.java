@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nhom10.pbl.payload.response.UserResponse;
-import com.nhom10.pbl.payload.response.departmentRespone;
+import com.nhom10.pbl.payload.response.DepartmentRespone;
 import com.nhom10.pbl.security.service.AuthenticateService;
-import com.nhom10.pbl.services.departmentServices;
+import com.nhom10.pbl.services.DepartmentServices;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final departmentServices departmentServices;
+    private final DepartmentServices departmentServices;
     private final AuthenticateService authenticateService;
 
     @GetMapping("/home")
@@ -31,7 +31,7 @@ public class HomeController {
             model.addAttribute("nav", "homePage/partials/nav");
             model.addAttribute("navState", "nav");
         } else {
-            List<departmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
             model.addAttribute("view", "homePage/homeComponent/homePage");
             model.addAttribute("file", "homePage");
             model.addAttribute("nav", "homePage/partials/navLogged");
@@ -64,5 +64,15 @@ public class HomeController {
     @RequestMapping("/admin/articles")
     public String adminControllArticles() {
         return "admin/pages/articles";
+    }
+
+    @RequestMapping("/admin/departments")
+    public String adminControllDepartments() {
+        return "admin/pages/departments";
+    }
+
+    @RequestMapping("/admin/doctors")
+    public String adminControllDoctors() {
+        return "admin/pages/doctors";
     }
 }
