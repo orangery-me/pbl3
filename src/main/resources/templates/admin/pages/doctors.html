@@ -28,16 +28,15 @@
                     <div class="col-md-8">
                         <div class="box box-success">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Quản lý tài khoản người dùng</h3>
+                                <h3 class="box-title">Quản lý bác sĩ</h3>
                             </div>
                             <div class="search-bar">
                                 <p>Tìm kiếm theo: </p>
                                 <div class="col-md-2 inline-element">
                                     <select class="form-control options">
-                                        <option>id</option>
-                                        <option>email</option>
-                                        <option>phone</option>
-                                        <option>username</option>
+                                        <option>Id bác sĩ</option>
+                                        <option>Mã khoa</option>
+                                        <option>Tên bác sĩ</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 col-sm-4 inline-element">
@@ -47,24 +46,23 @@
                                     <button class="btn btn-default btn-search">Tìm kiếm</button>
                                 </div>
                             </div>
+
                             <div class="box-body no-padding">
-                                <div class="row" style="width: 100%">
+                                <div class="row">
                                     <div class="col-md-9 col-sm-8">
                                         <div class="table-editable">
                                             <table>
                                                 <thead>
                                                     <tr>
-                                                        <th class="id_user">id</th>
-                                                        <th class="username">username</th>
-                                                        <th class="password">password</th>
-                                                        <th class="email">email</th>
-                                                        <th class="phone">phone</th>
-                                                        <th class="fullname">fullname</th>
-                                                        <th class="gender">gender</th>
-                                                        <th class="birthday">birthday</th>
-                                                        <th class="enabled">enabled</th>
-                                                        <th class="role">role</th>
-                                                        <th class="action">action</th>
+                                                        <th class="id_doc">ID bác sĩ</th>
+                                                        <th class="doc_name">Tên bác sĩ</th>
+                                                        <th class="doc_dob">Ngày sinh</th>
+                                                        <th class="doc_pos">Vị trí</th>
+                                                        <th class="doc_des">Mô tả</th>
+                                                        <th class="doc_dep">Khoa làm việc</th>
+                                                        <th class="doc_loc">Nơi làm việc</th>
+                                                        <th class="doc_price">Giá dịch vụ</th>
+                                                        <th class="actions">Thao tác</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tableBody">
@@ -73,10 +71,10 @@
                                             <div class="btn-end">
                                                 <button class="btn btn-default">Save changes</button>
                                             </div>
-                                            <script th:src="@{/js/admin/accounts-management.js}"> </script>
                                             <div id="world-map-markers" style="height: 325px;"></div>
                                         </div>
                                     </div>
+
                                     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -102,10 +100,36 @@
                                     </div>
                                 </div>
 
+                                <div class="js-modal open">
+                                    <div class="modal-content">
+                                        <div class="heading">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script th:src="@{/js/admin/doctors-management.js}"> </script>
                             </div>
 
                         </div>
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="box-footer clearfix">
+                            </div>
+
+                        </div>
+
                     </div>
+
                 </div>
 
             </section>

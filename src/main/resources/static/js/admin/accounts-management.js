@@ -17,21 +17,42 @@ function loadData (data) {
     <td contenteditable="true">${user.birthday}</td>
     <td contenteditable="true">${user.enabled}</td>
     <td contenteditable="true">
-        ${user.role}
         <select class="form-control">
-            <option>PATIENT</option>
-            <option>DOCTOR</option>
-            <option>ADMIN</option>
+            <option ${user.role === 'PATIENT' ? 'selected' : ''}>PATIENT</option>
+            <option ${user.role === 'DOCTOR' ? 'selected' : ''}>DOCTOR</option>
+            <option ${user.role === 'ADMIN' ? 'selected' : ''}>ADMIN</option>
         </select>
     </td>
     <td>
-            <button class="btn btn-save"><i class="fa fa-save"></i></button>
+            <a href="#" id="trigger-modal">Xem</a>
             <button class="btn btn-remove"><i class="fa fa-remove"></i></button>
     </td>
     `;
         tableBody.appendChild(row);
     });
 }
+tableBody.addEventListener('click', function (event) {
+    const target = event.target;
+    if (target.id === 'trigger-modal') {
+        const row = target.closest('tr');
+        const title = row.children[1].textContent;
+        const content = row.children[2].textContent;
+        const author = row.children[3].textContent;
+        const createAt = row.children[4].textContent;
+        var modalTitle = document.getElementById('exampleModalScrollableTitle');
+        var modalBody = document.getElementById('exampleModalScrollableBody');
+        const modal = document.getElementById('exampleModalScrollable');
+        $(modal).modal('show');
+        modalTitle.innerHTML = `
+            <h4 style="text-align: center; font-weight: bold"> ${title}</h4>
+        `;
+        modalBody.innerHTML = `
+            <p style="text-align: right" >${createAt}</p>
+            <p>${content}</p>
+            <p style="text-align: right; font-weight: bold">Tác giả: ${author}</p>
+        `;
+    }
+});
 
 // load all users
 fetch('/api/admin/getAllUsers')

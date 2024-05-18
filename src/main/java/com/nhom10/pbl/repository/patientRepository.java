@@ -1,15 +1,19 @@
 package com.nhom10.pbl.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
+import org.springframework.lang.NonNull;
 
 import com.nhom10.pbl.models.Patient;
 
 @Repository
-public interface patientRepository extends JpaRepository<Patient, Long> {
+public interface PatientRepository extends JpaRepository<Patient, Long> {
+    public @NonNull Optional<Patient> findById(@NonNull Long id);
+
     @NonNull
-    Optional<Patient> findById(@NonNull Long id);
+    public List<Patient> findAll();
 }

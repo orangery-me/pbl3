@@ -14,11 +14,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name = "doctor")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Doctor {
 
     @Id
@@ -39,7 +45,7 @@ public class Doctor {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
-    private department _department;
+    private Department _department;
 
     @OneToMany(mappedBy = "_doctor", cascade = CascadeType.ALL)
     private List<schedule> listSchedule;
