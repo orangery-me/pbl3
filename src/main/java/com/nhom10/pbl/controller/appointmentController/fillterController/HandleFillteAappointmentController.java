@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
@@ -93,28 +94,41 @@ public class HandleFillteAappointmentController {
     }
 
     @GetMapping("/doctors/today/{departmentId}")
-    public String getListDoctorOfDepartmentToday(@PathVariable("departmentId") String departmentId, Model model) {
+    public String getListDoctorOfDepartmentToday(@PathVariable("departmentId") String departmentId,@RequestParam(value = "q", defaultValue = "") String doctorName, Model model) {
 
         List<doctorRespone> listDoctorResponeToday = _departmentServices.listDoctorToday(Long.parseLong(departmentId));
-        model.addAttribute("listDoctorOfDepartment", listDoctorResponeToday);
+        List<doctorRespone> finaListDoctor = _departmentServices.searchByNameDoctor(listDoctorResponeToday, doctorName);
+        model.addAttribute("listDoctorOfDepartment", finaListDoctor);
 
         return "homePage/homeComponent/listDoctor/listDoctorComponent";
     }
 
     @GetMapping("/doctors/tomorrow/{departmentId}")
-    public String getListDoctorOfDepartmentTomorrow(@PathVariable("departmentId") String departmentId, Model model) {
+    public String getListDoctorOfDepartmentTomorrow(@PathVariable("departmentId") String departmentId, @RequestParam(value = "q", defaultValue = "") String doctorName, Model model) {
 
         List<doctorRespone> listDoctorResponeTomorrow = _departmentServices.listDoctorTomorrow(Long.parseLong(departmentId));
-        model.addAttribute("listDoctorOfDepartment", listDoctorResponeTomorrow);
+        List<doctorRespone> finaListDoctor = _departmentServices.searchByNameDoctor(listDoctorResponeTomorrow, doctorName);
+        model.addAttribute("listDoctorOfDepartment", finaListDoctor);
 
         return "homePage/homeComponent/listDoctor/listDoctorComponent";
     }
 
     @GetMapping("/doctors/nextsevenday/{departmentId}")
-    public String getListDoctorOfDepartmentNextSevenDay(@PathVariable("departmentId") String departmentId, Model model) {
+    public String getListDoctorOfDepartmentNextSevenDay(@PathVariable("departmentId") String departmentId, @RequestParam(value = "q", defaultValue = "") String doctorName, Model model) {
 
         List<doctorRespone> listDoctorResponeNextSevenDay = _departmentServices.listDoctorNextSevenDay(Long.parseLong(departmentId));
-        model.addAttribute("listDoctorOfDepartment", listDoctorResponeNextSevenDay);
+        List<doctorRespone> finaListDoctor = _departmentServices.searchByNameDoctor(listDoctorResponeNextSevenDay, doctorName);
+        model.addAttribute("listDoctorOfDepartment", finaListDoctor);
+
+        return "homePage/homeComponent/listDoctor/listDoctorComponent";
+    }
+
+    @GetMapping("/doctors/byName/{departmentId}")
+    public String getListDoctorOfDepartmentByName(@PathVariable("departmentId") String departmentId, @RequestParam(value = "q", defaultValue = "") String doctorName, Model model) {
+
+        List<doctorRespone> listDoctorRespone = _departmentServices.getListDoctor(Long.parseLong(departmentId), false);
+        List<doctorRespone> finaListDoctor = _departmentServices.searchByNameDoctor(listDoctorRespone, doctorName);
+        model.addAttribute("listDoctorOfDepartment", finaListDoctor);
 
         return "homePage/homeComponent/listDoctor/listDoctorComponent";
     }

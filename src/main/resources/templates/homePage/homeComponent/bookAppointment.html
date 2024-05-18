@@ -9,9 +9,12 @@
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title" th:text="${doctor.id}"></h5>
-                  <p class="card-text" th:text="${doctor.description}"></p>
-                  <p class="card-text" th:text="${doctor.departmentRespone.getNameDepartment()}"><small class="text-body-secondary"></small></p>
+                  <h5 class="card-title" th:text="${doctor.position}"></h5>
+                  <p class="card-text" th:text="${doctor.departmentRespone.getNameDepartment()}"></p>
+                  <div class="servicePrices card-text">
+                    <p class="card-text">Phí dịch vụ</p>
+                    <p class="card-text txt-price" th:text="${doctor.ServicePrices}"><small class="text-body-secondary"></small></p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -22,7 +25,8 @@
         <div class="detail-and-booking">
 
             <section class="detail-doctor">
-                <h1>detail</h1>
+                <h5 class="title-detail">Thông tin chi tiết</h5>
+                <p class="detail-content" th:text="${doctor.description}"></p>
             </section>
 
               <div id="dynamic-booking-div">

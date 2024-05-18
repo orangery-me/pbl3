@@ -58,6 +58,7 @@ public class doctorServices {
         if(doctor.isPresent()){
             Doctor _doctor = _doctorr;
             doctorRespone.setId(_doctor.getId());
+            doctorRespone.setNameDoctor(_doctor.getUser().getFullName());
             doctorRespone.setDescription(_doctor.getDescription());
             doctorRespone.setListSchedule(getListScheduleResponsesOfDoctor(id));
             doctorRespone.setPosition(_doctor.getPosition());

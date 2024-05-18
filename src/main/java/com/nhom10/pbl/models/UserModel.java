@@ -37,10 +37,10 @@ public class UserModel {
     @Column(name = "telephone")
     private String telephone;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Doctor doctor;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private patient patient;
 
     public Doctor getDoctor() {

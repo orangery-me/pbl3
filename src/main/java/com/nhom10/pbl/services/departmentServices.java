@@ -14,10 +14,9 @@ import com.nhom10.pbl.repository.departmentRepository;
 import com.nhom10.pbl.repository.shiftRepository;
 
 import java.sql.Date;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-
 import java.util.*;
 
 @Service
@@ -69,9 +68,9 @@ public class departmentServices {
         if (departmentOptional.isPresent()) {
             List<Doctor> listDoctor = departmentOptional.get().getListDoctors();
             for (Doctor doctor : listDoctor) {
-
                 doctorRespone _DoctorRespone = new doctorRespone();
                 _DoctorRespone.setId(doctor.getId());
+                _DoctorRespone.setNameDoctor(doctor.getUser().getFullName());
                 _DoctorRespone.setDescription(doctor.getDescription());
                 _DoctorRespone.setPosition(doctor.getPosition());
                 _DoctorRespone.setRoomAddress(doctor.getRoomAddress());
@@ -107,6 +106,11 @@ public class departmentServices {
         
         List<doctorRespone> listDoctorToday = new ArrayList<>();
 
+        if(LocalDate.now().getDayOfWeek().equals(DayOfWeek.SATURDAY) 
+        || LocalDate.now().getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+            return listDoctorToday;
+        }
+
         for (doctorRespone doctor : listResponses) {
 
             List<shift> listShiftsBookedFromNow = new ArrayList<>();
@@ -114,7 +118,8 @@ public class departmentServices {
             for (scheduleRespone schedule  : doctor.getListSchedule()) {
 
                 if(schedule.getDate().equals(Date.valueOf(LocalDate.now())) 
-                && shiftRepository.findById(schedule.get_shiftId()).get().getTime_start().isAfter(LocalTime.now()))
+                && shiftRepository.findById(schedule.get_shiftId()).get().getTime_start().isAfter(LocalTime.now())
+                )
                 {
                     listShiftsBookedFromNow.add(shiftRepository.findById(schedule.get_shiftId()).get());
                 }
@@ -188,5 +193,20 @@ public class departmentServices {
             }
         }
         return listDoctorNextSevenDay;
+    }
+
+    public List<doctorRespone> searchByNameDoctor(List<doctorRespone> listDoctor, String name){
+        List<doctorRespone> resuList = new ArrayList<>();
+        if(name == null || name == ""){
+            return listDoctor;
+        }
+
+        for (doctorRespone doctorRespone : listDoctor) {
+            if(doctorRespone.getNameDoctor().toLowerCase().contains(name.toLowerCase()))
+            {
+                resuList.add(doctorRespone);
+            }
+        }
+        return resuList;
     }
 }

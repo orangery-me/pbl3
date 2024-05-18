@@ -9,10 +9,11 @@ import lombok.Data;
 public class doctorRespone {
     private Long id;
 
+    private String nameDoctor;
     private String position;
     private String description;
     private String RoomAddress;
-    private String ServicePrices;
+    private Integer ServicePrices;
 
     private departmentRespone departmentRespone;
     

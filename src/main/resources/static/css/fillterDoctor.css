@@ -82,7 +82,7 @@
 .cover-two-div .input-fillter{
     display: flex;
     position: relative;
-    width: 700px;
+    width: 530px;
     margin-bottom: 90px;
     flex-direction: column;
 }
@@ -104,3 +104,29 @@
    font-size: large;
    margin-bottom: 7px;
 }
+
+.input-and-btn{
+    display: flex;
+}
+#search-btn{
+    width: 96px;
+    height: 49px;
+    margin-top: 33px;
+    border-radius: 8px;
+    background-color: rgb(45,135,243);
+    color: white;   
+    border: 0.7px solid rgba(179, 191, 193, 0.944);
+
+}
+
+.reset-filter{
+    margin-left: 120px;
+    margin-top: 6px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.reset-filter:hover{
+    opacity: 1;
+}
+

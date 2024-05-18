@@ -3,6 +3,7 @@ package com.nhom10.pbl.models;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,9 +25,12 @@ public class Doctor {
     private Long id;
 
     private String position;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+
     private String RoomAddress;
-    private String ServicePrices;
+    private Integer ServicePrices;
 
     @OneToOne
     @JoinColumn(name = "user_id")
