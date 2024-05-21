@@ -45,6 +45,63 @@
                                 </div>
                                 <div class="col-md-3 col-sm-4 inline-element">
                                     <button class="btn btn-default btn-search">Tìm kiếm</button>
+                                    <button class="btn btn-default btn-add" id="trigger-modal-new-account">Thêm khoa
+                                        mới</button>
+                                    <div class="modal fade" id="newDepartmentModalScrollable" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="newDepartmentModalScrollableTitle">Thêm
+                                                        khoa mới
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" id="newDepartmentModalScrollableBody">
+                                                    <!-- form hiện thông tin -->
+                                                    <form id="form">
+                                                        <div class="form-group row">
+                                                            <label for="departmentName3"
+                                                                class="col-sm-2 col-form-label">Tên khoa: </label>
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" id="departmentName3"
+                                                                    placeholder="Department name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="departmentDescription3"
+                                                                class="col-sm-2 col-form-label">Thông tin mô tả:
+                                                            </label>
+                                                            <div class="col-sm-10">
+                                                                <textarea class="form-control"
+                                                                    id="departmentDescription3"
+                                                                    placeholder="Department description"
+                                                                    style="overflow-y: scroll;" rows="6">
+                                                                </textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="location3" class="col-sm-2 col-form-label">Địa
+                                                                điểm: </label>
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" id="location3"
+                                                                    placeholder="Location">
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer" id="newDepartmentModalScrollableFooter">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Đóng</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                        id="save-new-dep">Thêm khoa</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

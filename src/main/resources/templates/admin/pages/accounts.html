@@ -30,6 +30,7 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title">Quản lý tài khoản người dùng</h3>
                             </div>
+                            <!-- search bar and add new account button -->
                             <div class="search-bar">
                                 <p>Tìm kiếm theo: </p>
                                 <div class="col-md-2 inline-element">
@@ -45,13 +46,128 @@
                                 </div>
                                 <div class="col-md-3 col-sm-4 inline-element">
                                     <button class="btn btn-default btn-search">Tìm kiếm</button>
+                                    <button class="btn btn-default btn-add" id="trigger-modal-new-account">Thêm tài
+                                        khoản</button>
+                                    <div class="modal fade" id="newAccountModalScrollable" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="newAccountModalScrollableTitle">Thêm tài
+                                                        khoản mới
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" id="newAccountModalScrollableBody">
+                                                    <!-- form hiện thông tin -->
+                                                    <form>
+                                                        <div class="form-group row">
+                                                            <label for="inputFullname3"
+                                                                class="col-sm-2 col-form-label">Họ tên: </label>
+                                                            <div class="col-sm-10">
+                                                                <input type="Fullname" class="form-control"
+                                                                    id="inputFullname3" placeholder="Fullname">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputUsername3"
+                                                                class="col-sm-2 col-form-label">Tên tài khoản: </label>
+                                                            <div class="col-sm-10">
+                                                                <input type="Username" class="form-control"
+                                                                    id="inputUsername3" placeholder="Username">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputPassword3"
+                                                                class="col-sm-2 col-form-label">Mật khẩu</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="password" class="form-control"
+                                                                    id="inputPassword3" placeholder="Password">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3"
+                                                                class="col-sm-2 col-form-label">Email: </label>
+                                                            <div class="col-sm-10">
+                                                                <input type="Email" class="form-control"
+                                                                    id="inputEmail3" placeholder="Email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputPhone3" class="col-sm-2 col-form-label">Số
+                                                                điện thoại: </label>
+                                                            <div class="col-sm-10">
+                                                                <input type="Phone" class="form-control"
+                                                                    id="inputPhone3" placeholder="Phone">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="birthday" class="col-sm-2 col-form-label">Ngày
+                                                                sinh:</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="date" id="birthday" name="birthday">
+                                                            </div>
+
+                                                        </div>
+                                                        <fieldset class="form-group" id="gender-form">
+                                                            <div class="row">
+                                                                <label for="birthday"
+                                                                    class="col-sm-2 col-form-label">Giới tính:</label>
+                                                                <div class="col-sm-10">
+                                                                    <div class="gender-form-check">
+                                                                        <input class="gender-form-check-input"
+                                                                            type="radio" name="gridRadios"
+                                                                            id="gridRadios1" value="option1" checked>
+                                                                        <label class="form-check-label"
+                                                                            for="gridRadios1">
+                                                                            Nam
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="gender-form-check">
+                                                                        <input class="gender-form-check-input"
+                                                                            type="radio" name="gridRadios"
+                                                                            id="gridRadios2" value="option2">
+                                                                        <label class="form-check-label"
+                                                                            for="gridRadios2">
+                                                                            Nữ
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <div class="form-group row">
+                                                            <label for="inputRole3"
+                                                                class="col-sm-2 col-form-label">Role: </label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" id="role-form-control">
+                                                                    <option value="PATIENT">PATIENT</option>
+                                                                    <option value="DOCTOR">DOCTOR</option>
+                                                                    <option value="ADMIN">ADMIN</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer" id="newAccountModalScrollableFooter">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Đóng</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                        id="save-new-account">Thêm tài khoản</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- table -->
                             <div class="box-body no-padding">
                                 <div class="row" style="width: 100%">
                                     <div class="col-md-9 col-sm-8">
                                         <div class="table-editable">
-                                            <table>
+                                            <table class="table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th class="id_user">id</th>
@@ -70,32 +186,132 @@
                                                 <tbody id="tableBody">
                                                 </tbody>
                                             </table>
-                                            <div class="btn-end">
-                                                <button class="btn btn-default">Save changes</button>
-                                            </div>
-                                            <script th:src="@{/js/admin/accounts-management.js}"> </script>
                                             <div id="world-map-markers" style="height: 325px;"></div>
                                         </div>
                                     </div>
-                                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                    <div class="modal fade" id="detailAccountModalScrollable" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title
+                                                    <h5 class="modal-title" id="detailAccountModalScrollableTitle">Thêm
+                                                        tài khoản mới
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body" id="exampleModalScrollableBody">
-                                                    ...
+                                                <div class="modal-body" id="detailAccountModalScrollableBody">
+                                                    <!-- form hiện thông tin -->
+                                                    <form>
+                                                        <div class="form-group row">
+                                                            <label for="inputFullname3"
+                                                                class="col-sm-2 col-form-label">Họ tên: </label>
+                                                            <div class="col-sm-10">
+                                                                <input type="Fullname" class="form-control"
+                                                                    id="inputFullname4" placeholder="Fullname">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputUsername3"
+                                                                class="col-sm-2 col-form-label">Tên tài khoản: </label>
+                                                            <div class="col-sm-10">
+                                                                <input type="Username" class="form-control"
+                                                                    id="inputUsername4" placeholder="Username"
+                                                                    readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputPassword3"
+                                                                class="col-sm-2 col-form-label">Mật khẩu</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="password" class="form-control"
+                                                                    id="inputPassword4" placeholder="Password">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3"
+                                                                class="col-sm-2 col-form-label">Email: </label>
+                                                            <div class="col-sm-10">
+                                                                <input type="Email" class="form-control"
+                                                                    id="inputEmail4" placeholder="Email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputPhone3" class="col-sm-2 col-form-label">Số
+                                                                điện thoại: </label>
+                                                            <div class="col-sm-10">
+                                                                <input type="Phone" class="form-control"
+                                                                    id="inputPhone4" placeholder="Phone">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="birthday" class="col-sm-2 col-form-label">Ngày
+                                                                sinh:</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="date" id="birthday4" name="birthday">
+                                                            </div>
+
+                                                        </div>
+                                                        <fieldset class="form-group" id="gender-form4">
+                                                            <div class="row">
+                                                                <label for="birthday"
+                                                                    class="col-sm-2 col-form-label">Giới tính:</label>
+                                                                <div class="col-sm-10">
+                                                                    <div class="gender-form-check">
+                                                                        <input class="gender-form-check-input"
+                                                                            type="radio" name="gridRadios"
+                                                                            id="gridRadios1" value="option1" checked>
+                                                                        <label class="form-check-label"
+                                                                            for="gridRadios1">
+                                                                            Nam
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="gender-form-check">
+                                                                        <input class="gender-form-check-input"
+                                                                            type="radio" name="gridRadios"
+                                                                            id="gridRadios2" value="option2">
+                                                                        <label class="form-check-label"
+                                                                            for="gridRadios2">
+                                                                            Nữ
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <div class="form-group row">
+                                                            <label for="inputRole3"
+                                                                class="col-sm-2 col-form-label">Role: </label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" id="role-form-control4">
+                                                                    <option value="PATIENT">PATIENT</option>
+                                                                    <option value="DOCTOR">DOCTOR</option>
+                                                                    <option value="ADMIN">ADMIN</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="enabled4" class="col-sm-2 col-form-label">Kích
+                                                                hoạt ?</label>
+                                                            <div class="col-sm-10">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        id="gridCheck4">
+                                                                    <label class="form-check-label" for="gridCheck1">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <div class="modal-footer">
+                                                <div class="modal-footer" id="detailAccountModalScrollableFooter">
                                                     <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                        data-dismiss="modal">Đóng</button>
+                                                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                        id="save-changes-account">Lưu thay đổi</button> -->
+                                                    <button type="button" class="btn btn-primary"
+                                                        id="save-changes-account">Lưu thay đổi</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,6 +354,7 @@
     <script th:src="@{/js/admin/jquery.sparkline.min.js}"></script>
 
     <script th:src="@{/js/admin/jquery-jvectormap-1.2.2.min.js}"></script>
+
     <script th:src="@{/js/admin/jquery-jvectormap-world-mill-en.js}"></script>
 
     <script th:src="@{/js/admin/jquery.slimscroll.min.js}"></script>
@@ -147,6 +364,8 @@
     <script th:src="@{/js/admin/dashboard2.js}"></script>
 
     <script th:src="@{/js/admin/demo.js}"></script>
+
+    <script th:src="@{/js/admin/accounts-management.js}"> </script>
 </body>
 
 </html>

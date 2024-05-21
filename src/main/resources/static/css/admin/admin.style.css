@@ -4114,6 +4114,16 @@ table.text-center th {
     border-color: rgba(0, 0, 0, 0.2)
 }
 
+.btn-add {
+    background-color: #0089db;
+    color: #fff;
+}
+
+.btn-add:hover {
+    background-color: #00c0ef;
+    color: #fff;
+}
+
 .btn-adn:active,
 .btn-adn.active,
 .open>.dropdown-toggle.btn-adn {

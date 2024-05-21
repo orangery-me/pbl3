@@ -110,7 +110,6 @@ public class AuthenticateService {
         var token = jwtService.generateToken(CustomUserDetails.build(user));
 
         return AuthenticationResponse.builder().token(token).build();
-        // return UserResponse.mapToUserResponse(user);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {

@@ -7,11 +7,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 @Entity
 @Builder
 @Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username")
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email"),
+        @UniqueConstraint(columnNames = "telephone"),
 })
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,20 +24,27 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "username")
+    @NonNull
     private String userName;
     @Column(name = "password")
+    @NonNull
     private String passWord;
     @Column(name = "enabled")
     private Boolean enabled;
     @Column(name = "fullname")
+    @NonNull
     private String fullName;
     @Column(name = "gender")
+    @NonNull
     private Boolean gender;
     @Column(name = "birthday")
+    @NonNull
     private Date birthday;
     @Column(name = "email")
+    @NonNull
     private String email;
     @Column(name = "telephone")
+    @NonNull
     private String telephone;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
@@ -61,6 +71,7 @@ public class UserModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_role")
+    @NonNull
     private Role role;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)

@@ -1,4 +1,3 @@
-
 const tableBody = document.getElementById('tableBody');
 function loadData (data) {
     tableBody.innerHTML = '';
@@ -10,7 +9,7 @@ function loadData (data) {
         <td>${dep.descriptionDepartment}</td>
         <td>${dep.location}</td>
         <td>
-                <a href="#" id="show-article">Xem</a>
+                <a href="#" id="show-deps">Xem</a>
                 <button class="btn btn-remove"><i class="fa fa-remove"></i></button>
         </td>
         `;
@@ -18,39 +17,67 @@ function loadData (data) {
     });
 }
 
+// Mở bảng thêm khoa mới
+const newAccountBtn = document.getElementById('trigger-modal-new-account');
+newAccountBtn.addEventListener('click', function (event) {
+    const modal = document.getElementById('newDepartmentModalScrollable');
+    $(modal).modal('show');
+});
+
+// Lưu khoa mới thêm
+const saveNewAccountBtn = document.getElementById('save-new-dep');
+saveNewAccountBtn.addEventListener('click', function (event) {
+    const name = document.getElementById('departmentName3').value;
+    console.log(name);
+    const des = document.getElementById('departmentDescription3').value;
+    console.log(des);
+    const loc = document.getElementById('location3').value;
+    console.log(loc);
+    const form = document.getElementById('form').value;
+    const formData = new FormData(form, saveNewAccountBtn);
+
+    fetch('/api/clinic/departments/newDepartment',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nameDepartment: name,
+                descriptionDepartment: des,
+                location: loc
+            })
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                alert('Đã có lỗi xảy ra, vui lòng thử lại sau');
+            }
+        }).catch(error => console.error('Error fetching data:', error))
+});
+
+// Xem chi tiết bài viết
 tableBody.addEventListener('click', function (event) {
     const target = event.target;
-    if (target.id === 'trigger-modal') {
+    if (target.id === 'show-deps') {
         const row = target.closest('tr');
-        const title = row.children[1].textContent;
-        const content = row.children[2].textContent;
-        const author = row.children[3].textContent;
-        const createAt = row.children[4].textContent;
-        var modalTitle = document.getElementById('exampleModalScrollableTitle');
-        var modalBody = document.getElementById('exampleModalScrollableBody');
-        const modal = document.getElementById('exampleModalScrollable');
+        const depName = row.children[1].textContent;
+        const depDes = row.children[2].textContent;
+        const loc = row.children[3].textContent;
+        var modalTitle = document.getElementById('newDepartmentModalScrollableTitle');
+        var modalBody = document.getElementById('newDepartmentModalScrollableBody');
+        const modal = document.getElementById('newDepartmentModalScrollable');
         $(modal).modal('show');
         modalTitle.innerHTML = `
-            <h4 style="text-align: center; font-weight: bold"> ${title}</h4>
+            <h4 style="text-align: center; font-weight: bold">Thông tin về khoa ${depName}</h4>
         `;
         modalBody.innerHTML = `
-            <p style="text-align: right" >${createAt}</p>
-            <p>${content}</p>
-            <p style="text-align: right; font-weight: bold">Tác giả: ${author}</p>
+            <p style="text-align: left">Mô tả: ${depDes}</p>
+            <p style="text-align: left">Địa điểm: ${loc}</p>
         `;
     }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    // click to show the article
-    const showArticle = document.getElementById('show-article');
-    const popup = document.getElementsByClassName('js-model');
-
-    showArticle.addEventListener('click', function (event) {
-        event.preventDefault();
-        popup.style.display = 'block';
-    });
-});
 
 // load all articles
 fetch('/api/clinic/departments/all')
