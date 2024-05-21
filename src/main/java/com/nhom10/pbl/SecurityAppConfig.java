@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,7 @@ import com.nhom10.pbl.security.jwt.JWTAuthFilter;
 import com.nhom10.pbl.security.service.CustomUserDetailsService;
 
 @Configuration // This annotation indicates that this class is a configuration class (cau hinh
+// spring security)
 // spring security)
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -39,6 +41,11 @@ public class SecurityAppConfig {
                                 org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(
+                        (authorizeHttpRequests) -> authorizeHttpRequests
+                                .requestMatchers("/api/auth/**", "/login")
+                                .permitAll()
+                                .anyRequest().authenticated())
                 .authorizeHttpRequests(
                         (authorizeHttpRequests) -> authorizeHttpRequests
                                 .requestMatchers("/api/auth/**", "/login")

@@ -47,6 +47,14 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(401).build();
         }
+
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request,
+            HttpServletResponse response) {
+        try {
+            return ResponseEntity.ok(authenticationService.authenticate(request, response));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).build();
+        }
     }
 
 }

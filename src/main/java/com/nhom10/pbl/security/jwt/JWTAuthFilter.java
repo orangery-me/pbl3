@@ -43,11 +43,27 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
         if (jwt == null) {
             // if the authorization header is null then continue to the next filter
+
+        String jwt = null;
+        String userName = null;
+
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("accessToken")) {
+                    jwt = cookie.getValue();
+                }
+            }
+        }
+
+        if (jwt == null) {
+            // if the authorization header is null then continue to the next filter
             filterChain.doFilter(request, response);
             return;
         }
 
         userName = jwtService.extractUserName(jwt);// extract the username from the jwt
+        if (userName != null &&
+                SecurityContextHolder.getContext().getAuthentication() == null) {
         if (userName != null &&
                 SecurityContextHolder.getContext().getAuthentication() == null) {
             // if the username is not null and the user is not authenticated
@@ -58,6 +74,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
                         null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+
 
             }
         }

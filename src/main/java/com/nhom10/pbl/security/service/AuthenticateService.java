@@ -19,6 +19,7 @@ import com.nhom10.pbl.models.Role;
 import com.nhom10.pbl.models.UserModel;
 import com.nhom10.pbl.payload.response.AuthenticationResponse;
 import com.nhom10.pbl.payload.response.UserResponse;
+import com.nhom10.pbl.payload.response.UserResponse;
 import com.nhom10.pbl.payload.resquest.AuthenticationRequest;
 import com.nhom10.pbl.payload.resquest.RegisterRequest;
 import com.nhom10.pbl.repository.RoleRepository;
@@ -47,7 +48,22 @@ public class AuthenticateService {
     private JWTService jwtService;
 
     @Autowired
+    @Autowired
     private final AuthenticationManager authenticationManager;
+
+    public UserResponse getUserFromCookie(HttpServletRequest request) throws UsernameNotFoundException {
+        String username = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("accessToken")) {
+                    username = jwtService.extractUserName(cookie.getValue());
+                }
+            }
+        }
+        var user = userRepository.findByUserName(username).orElseThrow();
+        return UserResponse.mapToUserResponse(user);
+    }
 
     public UserResponse getUserFromCookie(HttpServletRequest request) throws UsernameNotFoundException {
         String username = null;
@@ -110,7 +126,11 @@ public class AuthenticateService {
         var token = jwtService.generateToken(CustomUserDetails.build(user));
 
         return AuthenticationResponse.builder().token(token).build();
+        // return UserResponse.mapToUserResponse(user);
     }
+
+    public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
+        Authentication authentication = authenticationManager
 
     public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
         Authentication authentication = authenticationManager
@@ -123,7 +143,18 @@ public class AuthenticateService {
             ResponseCookie cookie = ResponseCookie.from("accessToken", token).httpOnly(true).maxAge(3600).path("/")
                     .build();
             response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            if (authentication.isAuthenticated()) {
+                // user is authenticated
+                var user = userRepository.findByUserName(request.getUsername()).orElseThrow();
+                var token = jwtService.generateToken(CustomUserDetails.build(user));
+                ResponseCookie cookie = ResponseCookie.from("accessToken", token).httpOnly(true).maxAge(3600).path("/")
+                        .build();
+                response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
+                return AuthenticationResponse.builder().token(token).build();
+            } else {
+                throw new UsernameNotFoundException("Authentication failed");
+            }
             return AuthenticationResponse.builder().token(token).build();
         } else {
             throw new UsernameNotFoundException("Authentication failed");

@@ -75,7 +75,14 @@ public class UserModel {
     private Role role;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Article> articles;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Patient patient;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Doctor doctor;

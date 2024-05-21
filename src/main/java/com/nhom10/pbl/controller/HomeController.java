@@ -23,6 +23,8 @@ public class HomeController {
 
     private final DepartmentServices departmentServices;
     private final AuthenticateService authenticateService;
+    private final DepartmentServices departmentServices;
+    private final AuthenticateService authenticateService;
 
     @GetMapping("/home")
     public String getHomePage(Model model, HttpServletRequest request) {
@@ -45,9 +47,16 @@ public class HomeController {
         return "homePage/index";
     }
 
+    }
+
     @RequestMapping("/login")
     public String login() {
         return "auth/login/login";
+    }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "homePage/index";
     }
 
     @RequestMapping("/logout")
