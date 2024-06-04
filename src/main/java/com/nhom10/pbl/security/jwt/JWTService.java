@@ -15,10 +15,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class JWTService {
-
     private static final String SECRET_KEY = "892BB8100E1162FA0C0FD35A628A2225590D1B935E4C2F8D307B2833F760DDAD";
 
     // generate a jwt token for the user
@@ -31,7 +32,7 @@ public class JWTService {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 2))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 *60*60*6))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -42,7 +43,7 @@ public class JWTService {
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(jwt));
     }
 
-    private boolean isTokenExpired(String jwt) {
+    public boolean isTokenExpired(String jwt) {
         return extractClaim(jwt, Claims::getExpiration).before(new Date(System.currentTimeMillis()));
     }
 
@@ -70,4 +71,38 @@ public class JWTService {
                                              // on the specified key byte array.
     }
 
+    public String extractTokenFromCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("accessToken".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    public String extractUserNameFromTokenCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("accessToken".equals(cookie.getName())) {
+                    return extractUserName(cookie.getValue());
+                }
+            }
+        }
+        return null;
+    }
+    // public void createTokenCookie(String token, HttpServletResponse response) {
+    //     Cookie cookie = new Cookie("auth_token", token);
+    //     cookie.setHttpOnly(true);
+    //     cookie.setSecure(true);
+    //     cookie.setPath("/");
+    //     cookie.setMaxAge(60*60); // Thời gian sống của cookie là 1 tuần
+
+    //     response.addCookie(cookie);
+    //     String cookieHeader = String.format("%s; SameSite=Strict", response.getHeader("Set-Cookie"));
+    //     response.setHeader("Set-Cookie", cookieHeader);
+    // }
 }

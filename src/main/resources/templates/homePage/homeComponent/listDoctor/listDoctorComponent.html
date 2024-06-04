@@ -1,0 +1,10 @@
+<div class="list-doctor-department">
+    <div class="card w-100 mb-5 card-doctor" th:each="doctor : ${listDoctorOfDepartment}">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${doctor.nameDoctor}"></h5>
+          <p class="card-text" th:text="${doctor.departmentRespone.getNameDepartment()}"></p>
+          <p class="card-text" th:text="${doctor.ServicePrices}"></p>
+          <a th:href="@{'/home/user/appointment/doctor/' + ${doctor.id}}" class="btn btn-primary">Đặt lịch ngay</a>
+        </div>
+    </div>
+</div>

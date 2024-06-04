@@ -37,6 +37,28 @@ public class UserModel {
     @Column(name = "telephone")
     private String telephone;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private patient patient;
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(patient patient) {
+        this.patient = patient;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_role")
     private Role role;

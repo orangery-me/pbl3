@@ -1,0 +1,118 @@
+<div class="booking-body" th:fragment="bookAppointment">
+    
+    <div class="container container-custom4">
+
+          <div class="card mb-3" style="max-width: 1080px; max-height: 100px;" th:object="${doctor}">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img id="avatar-doctor" src="https://cdn-healthcare.hellohealthgroup.com/2023/05/1684833144_646c837859acb0.23322566.jpg?w=96&q=100" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title" th:text="${doctor.position}"></h5>
+                  <p class="card-text" th:text="${doctor.departmentRespone.getNameDepartment()}"></p>
+                  <div class="servicePrices card-text">
+                    <p class="card-text">Phí dịch vụ</p>
+                    <p class="card-text txt-price" th:text="${doctor.ServicePrices}"><small class="text-body-secondary"></small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="divider"></div>
+
+        <div class="detail-and-booking">
+
+            <section class="detail-doctor">
+                <h5 class="title-detail">Thông tin chi tiết</h5>
+                <p class="detail-content" th:text="${doctor.description}"></p>
+            </section>
+
+              <div id="dynamic-booking-div">
+                <div class="booking-doctor">
+                  <div class="input-date">
+                    <input id = "input-date" type="date">
+                  </div>
+
+                  <div class="view-booking">
+                      <div class="booking-model">
+                        <i id="left-click" class="fa-solid fa-chevron-left"></i>
+                        <div class="view-booking-model" th:each = "bookingItem, iterStat : ${ListbookingAvailable}" style="left: 0px;">
+
+                          <div class="date-and-countAvailable" th:data-value="${#dates.format(bookingItem.day, 'yyyy-MM-dd')}" th:classappend="${iterStat.first} ? 'active'">
+                            <div class="date-and-count">
+                              <div class="dayOfweek" th:text="${#dates.format(bookingItem.day, 'EEEE')}"></div>
+                              <div class="bookingItem" th:text="${#dates.format(bookingItem.day, 'dd/MM')}"></div>
+                              <div class="cout-available" th:text="${bookingItem.ListShift.size()} + ' trống'" th:classappend="${bookingItem.ListShift.size() > 0} ? 'isavailable' : ''"></div>
+                            </div>
+                          </div>
+
+                          <div class="shift-hidden-available">
+                            <div class="container morning-shift">
+                              <div class="shift-item" th:each="shiftItem : ${bookingItem.ListShift}" th:if="${shiftItem.Id le 7}" th:text="${shiftItem.timeStart} + ' : ' + ${shiftItem.timeEnd}" th:data-value="${shiftItem.Id}"></div>
+                            </div>
+      
+                            <div class="container afternoon-shift">
+                              <div class="shift-item"  th:each="shiftItem : ${bookingItem.ListShift}" th:unless="${shiftItem.Id le 7}" th:text="${shiftItem.timeStart} + ' : ' + ${shiftItem.timeEnd}" th:data-value="${shiftItem.Id}"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <i id="right-click" class="fa-solid fa-chevron-right"></i>
+                      </div>
+
+                      <div class="view-shift-available">
+                        <div class="morning">
+                          <span class="txt-morning">Sáng</span>
+                        </div>
+
+                        <div class="afternoon">
+                          <span class="txt-afternoon">Chiều</span>
+                        </div>
+                      </div>
+                      <div class="list-shift"></div>
+                      <div class="price">
+                          <i class="fa-solid fa-dollar-sign"></i>
+                          <span class="txt-price">Phí dịch vụ </span>
+                          <span class="doctor-price" th:text="${doctor.ServicePrices}"></span>
+                      </div>
+                      <button class="btn-submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Xác nhận lịch hẹn</button>
+                  </div>
+                </div>
+              </div>
+
+            <form class="form-hidden" th:action="'/user/appointment/' + ${doctor.id}" th:object="${scheduleRequest}" method="post">
+                <input type="text" id="Date" th:field="*{date}">
+
+                <input type="number" id="State" th:field="*{state}" th:data-value="1">
+
+                <input type="number" id="id_doctor" th:field="*{doctorID}" th:data-value="${doctor.id}">
+
+                <input type="number" id="id_benhnhan" th:field="*{patientID}">
+
+                <input type="number" id="id_shift" th:field="*{shiftID}">
+
+                <input type="number" id="id_benhnhan_toGet" th:object="${user}" th:data-value="${user.patient.id}">
+
+            </form>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận lịch hẹn</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body modal-body-content">
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-closeee" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary btn-confirm">Xác nhận</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
