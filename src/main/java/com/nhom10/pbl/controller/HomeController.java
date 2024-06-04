@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nhom10.pbl.dto.respone.departmentRespone;
+import com.nhom10.pbl.models.Doctor;
+import com.nhom10.pbl.models.ERole;
 import com.nhom10.pbl.models.UserModel;
 import com.nhom10.pbl.security.jwt.JWTService;
 import com.nhom10.pbl.services.departmentServices;
+import com.nhom10.pbl.services.doctorServices;
 import com.nhom10.pbl.security.service.CustomUserDetails;
 import com.nhom10.pbl.security.service.CustomUserDetailsService;
 
@@ -23,6 +26,7 @@ public class HomeController {
     private final CustomUserDetailsService customUserDetailsService;
     private final departmentServices _departmentServices;
     private final JWTService jwtService;
+    private final doctorServices doctorServices;
 
     @GetMapping("/home")
     public String getHomePage(Model model, HttpServletRequest request) {
@@ -32,15 +36,21 @@ public class HomeController {
 
         model.addAttribute("view", "homePage/homeComponent/homePage");
         model.addAttribute("file", "homePage");
-        model.addAttribute("nav", "homePage/partials/navLogged");
-        model.addAttribute("navState", "navLogged");
+        
 
         if(username != null){
             CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
             UserModel currUser = userDetails.getUser();
+            if(currUser.getRole().getName().equals(ERole.DOCTOR)){
+                model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                model.addAttribute("navState", "navDoctorLogged");
+            }else if(currUser.getRole().getName().equals(ERole.PATIENT)){
+                model.addAttribute("nav", "homePage/partials/navLogged");
+                model.addAttribute("navState", "navLogged");
+                List<departmentRespone> listDepartmentRespones =  _departmentServices.getAllDepartmentRespones();
+                model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+            }
             model.addAttribute("user", currUser);
-            List<departmentRespone> listDepartmentRespones =  _departmentServices.getAllDepartmentRespones();
-            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
         }
 
         return "homePage/index";

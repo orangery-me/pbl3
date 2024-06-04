@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.nhom10.pbl.dto.respone.departmentRespone;
 import com.nhom10.pbl.dto.respone.doctorRespone;
 import com.nhom10.pbl.dto.respone.scheduleRespone;
+import com.nhom10.pbl.dto.respone.shiftRespone;
 import com.nhom10.pbl.models.Doctor;
 import com.nhom10.pbl.models.department;
 import com.nhom10.pbl.models.schedule;
@@ -71,6 +72,7 @@ public class departmentServices {
                 doctorRespone _DoctorRespone = new doctorRespone();
                 _DoctorRespone.setId(doctor.getId());
                 _DoctorRespone.setNameDoctor(doctor.getUser().getFullName());
+                _DoctorRespone.setGender(doctor.getUser().getGender());
                 _DoctorRespone.setDescription(doctor.getDescription());
                 _DoctorRespone.setPosition(doctor.getPosition());
                 _DoctorRespone.setRoomAddress(doctor.getRoomAddress());
@@ -182,7 +184,7 @@ public class departmentServices {
             for (scheduleRespone schedule  : doctor.getListSchedule()) {
 
                 if(schedule.getDate().after(Date.valueOf(LocalDate.now().plusDays(1)))
-                && schedule.getDate().before(Date.valueOf(LocalDate.now().plusDays(7))))
+                && schedule.getDate().before(Date.valueOf(LocalDate.now().plusDays(8))))
                 {
                     listShiftsBookedNextSevenDay.add(shiftRepository.findById(schedule.get_shiftId()).get());
                 }
@@ -205,6 +207,126 @@ public class departmentServices {
             if(doctorRespone.getNameDoctor().toLowerCase().contains(name.toLowerCase()))
             {
                 resuList.add(doctorRespone);
+            }
+        }
+        return resuList;
+    }
+
+    public boolean checkFilterDay(Date date, String type){
+        switch (type) {
+            case "today":
+                if(date.equals(Date.valueOf(LocalDate.now())))
+                    return true;
+                break;
+
+            case "tomorrow":
+                if(date.equals(Date.valueOf(LocalDate.now().plusDays(1))))
+                    return true;
+                break;
+
+            case "nextseven":
+                if(date.after(Date.valueOf(LocalDate.now().plusDays(1)))
+                && date.before(Date.valueOf(LocalDate.now().plusDays(8))))
+                    return true;
+                break;
+
+            default:
+                if(date.equals(Date.valueOf(LocalDate.now()))
+                || date.after(Date.valueOf(LocalDate.now())))
+                    return true;
+        }
+        return false;
+    }
+
+    public List<doctorRespone> filterDoctorByGenderAndShift(List<doctorRespone> listDoctor, Boolean gender, String _Shift, String type){
+        if(gender == null && _Shift.equals("")) {
+            return listDoctor;
+        }
+        List<shift> listAllShifts = shiftServices.getShiftList();
+        List<doctorRespone> resuList = new ArrayList<>();
+       
+        for (doctorRespone doctorRespone : listDoctor) {
+            List<shift> listShiftBooked = new ArrayList<>();
+            List<shift> listShiftAvailable = new ArrayList<>();
+
+            if(gender == null){
+                if(_Shift.equals("morning")){
+                    if(type.equals("none")){
+                        resuList.add(doctorRespone);
+                    }else{
+                        for (scheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
+                            if(checkFilterDay(scheduleRespone.getDate(), type)){
+                                shift shiftofSchedule = shiftRepository.findById(scheduleRespone.get_shiftId()).get();
+                                listShiftBooked.add(shiftofSchedule);
+                            }
+                        }
+                        for (shift shift : listAllShifts) {
+                            if(shift.getId() <= 7 && !listShiftBooked.contains(shift)){
+                                listShiftAvailable.add(shift);
+                            }
+                        }
+                        if(listShiftAvailable.size() > 0) resuList.add(doctorRespone);
+                    }
+                }else if(_Shift.equals("afternoon")){
+                    if(type.equals("none")){
+                        resuList.add(doctorRespone);
+                    }else{
+                        for (scheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
+                            if(checkFilterDay(scheduleRespone.getDate(), type)){
+                                shift shiftofSchedule = shiftRepository.findById(scheduleRespone.get_shiftId()).get();
+                                listShiftBooked.add(shiftofSchedule);
+                            }
+                        }
+                        for (shift shift : listAllShifts) {
+                            if(shift.getId() > 7 && !listShiftBooked.contains(shift)){
+                                listShiftAvailable.add(shift);
+                            }
+                        }
+                        if(listShiftAvailable.size() > 0) resuList.add(doctorRespone);
+                    }
+                }else{
+                    resuList.add(doctorRespone);
+                }
+            }
+            
+            if(doctorRespone.getGender().equals(gender)){
+                if(_Shift.equals("morning")){
+                    if(type.equals("none")){
+                        resuList.add(doctorRespone);
+                    }else{
+                        for (scheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
+                            if(checkFilterDay(scheduleRespone.getDate(), type)){
+                                shift shiftofSchedule = shiftRepository.findById(scheduleRespone.get_shiftId()).get();
+                                listShiftBooked.add(shiftofSchedule);
+                            }
+                        }
+                        for (shift shift : listAllShifts) {
+                            if(shift.getId() <= 7 && !listShiftBooked.contains(shift)){
+                                listShiftAvailable.add(shift);
+                            }
+                        }
+                        if(listShiftAvailable.size() > 0) resuList.add(doctorRespone);
+                    }
+                }else if(_Shift.equals("afternoon")){
+                    if(type.equals("none")){
+                        resuList.add(doctorRespone);
+                    }else{
+                        for (scheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
+                            if(checkFilterDay(scheduleRespone.getDate(), type)){
+                                shift shiftofSchedule = shiftRepository.findById(scheduleRespone.get_shiftId()).get();
+                                listShiftBooked.add(shiftofSchedule);
+                            }
+                        }
+                        for (shift shift : listAllShifts) {
+                            if(shift.getId() > 7 && !listShiftBooked.contains(shift)){
+                                listShiftAvailable.add(shift);
+                            }
+                        }
+                        if(listShiftAvailable.size() > 0) resuList.add(doctorRespone);
+                    }
+                }else{
+                    resuList.add(doctorRespone);
+                }
             }
         }
         return resuList;

@@ -14,6 +14,7 @@ import com.nhom10.pbl.dto.respone.bookingModel;
 import com.nhom10.pbl.dto.respone.departmentRespone;
 import com.nhom10.pbl.dto.respone.doctorRespone;
 import com.nhom10.pbl.dto.respone.scheduleRespone;
+import com.nhom10.pbl.models.Doctor;
 import com.nhom10.pbl.models.UserModel;
 import com.nhom10.pbl.security.jwt.JWTService;
 import com.nhom10.pbl.security.service.CustomUserDetails;
@@ -94,40 +95,57 @@ public class HandleFillteAappointmentController {
     }
 
     @GetMapping("/doctors/today/{departmentId}")
-    public String getListDoctorOfDepartmentToday(@PathVariable("departmentId") String departmentId,@RequestParam(value = "q", defaultValue = "") String doctorName, Model model) {
+    public String getListDoctorOfDepartmentToday(@PathVariable("departmentId") String departmentId,
+                @RequestParam(value = "q", defaultValue = "") String doctorName,
+                @RequestParam(value = "gender", defaultValue = "") Boolean gender,
+                @RequestParam(value = "shift", defaultValue = "") String shift, Model model) {
 
         List<doctorRespone> listDoctorResponeToday = _departmentServices.listDoctorToday(Long.parseLong(departmentId));
-        List<doctorRespone> finaListDoctor = _departmentServices.searchByNameDoctor(listDoctorResponeToday, doctorName);
+        List<doctorRespone> searchByName = _departmentServices.searchByNameDoctor(listDoctorResponeToday, doctorName);
+        List<doctorRespone> finaListDoctor = _departmentServices.filterDoctorByGenderAndShift(searchByName, gender, shift, "today");
         model.addAttribute("listDoctorOfDepartment", finaListDoctor);
 
         return "homePage/homeComponent/listDoctor/listDoctorComponent";
     }
 
     @GetMapping("/doctors/tomorrow/{departmentId}")
-    public String getListDoctorOfDepartmentTomorrow(@PathVariable("departmentId") String departmentId, @RequestParam(value = "q", defaultValue = "") String doctorName, Model model) {
+    public String getListDoctorOfDepartmentTomorrow(@PathVariable("departmentId") String departmentId, 
+                @RequestParam(value = "q", defaultValue = "") String doctorName,
+                @RequestParam(value = "gender", defaultValue = "") Boolean gender,
+                @RequestParam(value = "shift", defaultValue = "") String shift, Model model) {
 
         List<doctorRespone> listDoctorResponeTomorrow = _departmentServices.listDoctorTomorrow(Long.parseLong(departmentId));
-        List<doctorRespone> finaListDoctor = _departmentServices.searchByNameDoctor(listDoctorResponeTomorrow, doctorName);
+        List<doctorRespone> searchByName = _departmentServices.searchByNameDoctor(listDoctorResponeTomorrow, doctorName);
+        System.out.println(searchByName + "========================");
+        List<doctorRespone> finaListDoctor = _departmentServices.filterDoctorByGenderAndShift(searchByName, gender, shift, "tomorrow");
         model.addAttribute("listDoctorOfDepartment", finaListDoctor);
 
         return "homePage/homeComponent/listDoctor/listDoctorComponent";
     }
 
     @GetMapping("/doctors/nextsevenday/{departmentId}")
-    public String getListDoctorOfDepartmentNextSevenDay(@PathVariable("departmentId") String departmentId, @RequestParam(value = "q", defaultValue = "") String doctorName, Model model) {
+    public String getListDoctorOfDepartmentNextSevenDay(@PathVariable("departmentId") String departmentId, 
+                @RequestParam(value = "q", defaultValue = "") String doctorName,
+                @RequestParam(value = "gender", defaultValue = "") Boolean gender,
+                @RequestParam(value = "shift", defaultValue = "") String shift, Model model) {
 
         List<doctorRespone> listDoctorResponeNextSevenDay = _departmentServices.listDoctorNextSevenDay(Long.parseLong(departmentId));
-        List<doctorRespone> finaListDoctor = _departmentServices.searchByNameDoctor(listDoctorResponeNextSevenDay, doctorName);
+        List<doctorRespone> searchByName = _departmentServices.searchByNameDoctor(listDoctorResponeNextSevenDay, doctorName);
+        List<doctorRespone> finaListDoctor = _departmentServices.filterDoctorByGenderAndShift(searchByName, gender, shift, "nextseven");
         model.addAttribute("listDoctorOfDepartment", finaListDoctor);
 
         return "homePage/homeComponent/listDoctor/listDoctorComponent";
     }
 
     @GetMapping("/doctors/byName/{departmentId}")
-    public String getListDoctorOfDepartmentByName(@PathVariable("departmentId") String departmentId, @RequestParam(value = "q", defaultValue = "") String doctorName, Model model) {
+    public String getListDoctorOfDepartmentByName(@PathVariable("departmentId") String departmentId, 
+                @RequestParam(value = "q", defaultValue = "") String doctorName, 
+                @RequestParam(value = "gender", defaultValue = "") Boolean gender,
+                @RequestParam(value = "shift", defaultValue = "") String shift, Model model) {
 
-        List<doctorRespone> listDoctorRespone = _departmentServices.getListDoctor(Long.parseLong(departmentId), false);
-        List<doctorRespone> finaListDoctor = _departmentServices.searchByNameDoctor(listDoctorRespone, doctorName);
+        List<doctorRespone> listDoctorRespone = _departmentServices.getListDoctor(Long.parseLong(departmentId), true);
+        List<doctorRespone> searchByName = _departmentServices.searchByNameDoctor(listDoctorRespone, doctorName);
+        List<doctorRespone> finaListDoctor = _departmentServices.filterDoctorByGenderAndShift(searchByName, gender, shift, "none");
         model.addAttribute("listDoctorOfDepartment", finaListDoctor);
 
         return "homePage/homeComponent/listDoctor/listDoctorComponent";

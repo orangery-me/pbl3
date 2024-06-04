@@ -1,7 +1,7 @@
-<div th:fragment="navLogged">
+<div th:fragment="navDoctorLogged">
     <nav>
         <div class="nav-link">
-            <div class="container container-custom navLogged">
+            <div class="container container-custom navLogged" th:object="${user}">
                 <a class="link" th:href="@{/}">
                     <i class="fa-solid fa-house"></i>
                 </a>
@@ -12,8 +12,8 @@
                 <a class="link" href="#">THÀNH TỰU</a>
                 <a class="link" href="#">TIN TỨC</a>
                 <a class="link" href="#">LIÊN HỆ</a>
-                <div id="link-popup" class="link">ĐẶT LỊCH NGAY</div>
-                <a class="link" th:href="@{/auth/register}"  th:object="${user}" th:text="${user.userName}"></a>
+                <a class="link url-get-medical" th:href="@{/home/doctor/medical}" >LỊCH ĐẶT KHÁM</a>
+                <a class="link" th:href="@{/auth/register}" th:text="${user.userName}"></a>
                 <!-- <li class="link dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  th:object="${user}" th:text="${user.userName}"></a>
                     <ul class="dropdown-menu">

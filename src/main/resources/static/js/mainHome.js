@@ -9,7 +9,62 @@ var btnDK = document.querySelector('#link-popup');
 var formCheckToday = document.querySelector('#form-check-today');
 var inputCheckToday = document.querySelector('#check-today');
 
-console.log('hello')
+function scrollToElement(elementId) {
+    var element = document.getElementById(elementId);
+    console.log(elementId)
+    if (element) {
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+function toast({
+    title = '',
+    msg = '',
+    type = 'info',
+    duration = 3000
+}) {
+    const main = document.getElementById('toasts_show');
+    if (main) {
+        const icons = {
+            succeces: 'fa-circle-check',
+            warnming: 'fa-triangle-exclamation'
+        }
+        const icon = icons[type];
+        const toast = document.createElement('div');
+        const delay = (duration / 1000).toFixed(2);
+
+        const myTimeOut = setTimeout(function () {
+            main.removeChild(toast);
+        }, duration + 1000);
+
+        toast.onclick = function (e) {
+            if (e.target.classList[0] === 'fa-regular') {
+                main.removeChild(toast);
+                clearTimeout(myTimeOut);
+            }
+        }
+
+        toast.classList.add('toast_show', `toast--${type}`);
+
+        toast.innerHTML = ` 
+        <div class="toast__icon">
+            <i class="fa-solid ${icon}"></i>
+        </div>
+        <div class="toast__body">
+            <h3 class="toast__title">${title}</h3> 
+            <p class="toast__msg">${msg}</p>
+        </div>
+        <div class="toast__close">
+            <i class="fa-regular fa-circle-xmark"></i>
+        </div>
+        `
+        main.appendChild(toast);
+        toast.style.animation = `slideInleft ease .3s, fadeOut ease 1s ${delay}s forwards`;
+    }
+}
 
 const storage =  {
     get() {
@@ -38,12 +93,12 @@ document.onscroll = () => {
     storage.setPositionScroll(window.scrollY)
 }
 
-navLink[0].classList.value = 'link active';
+navLink[0].classList.add('active');
 
 for(let i=0; i < navLink.length; i++) {
-    if(navLink[i].classList.value === 'link active' && storage.get()){
+    if(navLink[i].classList.contains('active') && storage.get()){
         navLink[i].classList.remove('active');
-        navLink[storage.get()].classList.value = 'link active' 
+        navLink[storage.get()].classList.add('active')
         break;
     }
 }
@@ -67,6 +122,9 @@ navLink.forEach((link, index) =>{
     link.onclick = () =>{
         if (index == 0) {
             lines.style.display = 'none';
+        }
+        if(link.classList.contains('team-of-doctors')){
+            scrollToElement('list-bs')
         }
         for (var i = 0; i < navLink.length; i++) {
             if (navLink[i].classList.value.includes('active')) {

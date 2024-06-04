@@ -13,7 +13,9 @@
     var txtAfternoon = document.querySelector('.txt-afternoon')
     const btnSubmit = document.querySelector('.btn-submit')
     const form = document.querySelector('.form-hidden')
-
+    const confirm = document.querySelector('.btn-confirm')
+    const btnClose = document.querySelector('.btn-closeee')
+    const exampleModal = document.getElementById('exampleModal')
 
     var today = new Date();
     var yyyy = today.getFullYear();
@@ -21,15 +23,15 @@
     var dd = String(today.getDate()).padStart(2, '0');
     var currentDate = yyyy + '-' + mm + '-' + dd;
 
-    inputDate.value = currentDate;
+    if(inputDate) inputDate.value = currentDate;
 
 
     const maxDate = new Date();
     maxDate.setDate(maxDate.getDate() + 29);
     const maxDateString = maxDate.toISOString().slice(0, 10);
 
-    inputDate.setAttribute("min", currentDate);
-    inputDate.setAttribute("max", maxDateString);
+    inputDate && inputDate.setAttribute("min", currentDate);
+    inputDate && inputDate.setAttribute("max", maxDateString);
 
     let plus = 0
     rightClick.onclick = () => {
@@ -200,49 +202,81 @@
     btnSubmit.onclick = () => {
         var listSHiftOnScreen = document.querySelectorAll('.list-shift .shift-item')
 
+        var shiftValue = '';
         var isChooseDate = [...date].find(element => element.classList.contains('active'));
         var isChooseShift = [...listSHiftOnScreen].find(element => element.classList.contains('active'));
+        isChooseShift && [...listSHiftOnScreen].forEach((e) => {
+            if(e.classList.contains('active')){
+                shiftValue = e.textContent;
+            }
+        })
+        const modal = document.querySelector('.modal-body');
 
         if (isChooseShift && isChooseDate) {
+            confirm.style.display = 'block'
+
+            const date = document.getElementById('Date');
+
+            date.value = isChooseDate.dataset.value
+
+            modal.innerHTML = '';
+            modal.innerHTML = `<h6>Đặt lịch hẹn vào : Ngày ${date.value} Lúc ${shiftValue}
+                                </h6>`
+        }else{
+            
+            modal.innerHTML = '';
+            modal.innerHTML = `<h5>Vui lòng chọn lịch hẹn</h5>`
+            confirm.style.display = 'none'
+        }
+        confirm.onclick = () => {
             const ipputIdShift = document.getElementById('id_shift');
             const date = document.getElementById('Date');
             const state = document.getElementById('State');
             const id_doctor = document.getElementById('id_doctor');
             const id_benhnhan = document.getElementById('id_benhnhan');
             const id_benhnhan_toGet = document.getElementById('id_benhnhan_toGet');
+            
 
             id_doctor.value = id_doctor.dataset.value
             id_benhnhan.value = id_benhnhan_toGet.dataset.value
             state.value = state.dataset.value
             date.value = isChooseDate.dataset.value
             ipputIdShift.value = isChooseShift.dataset.value
-
-            //form.submit()
-
+            
             var _url = form.getAttribute('action');
             var formData = new FormData(form);
 
-            $.ajax({
-                url: _url,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (result) {
-                    console.log("abcd")
-                    $("#dynamic-booking-div").html(result);
+            btnClose.click()
+            
+            setTimeout(() => {
+                toast({
+                    title: 'Thành công',
+                    msg: 'Lịch khám đã được thêm thành công!',
+                    type: 'succeces',
+                    duration: 7000
+                })
 
-                    $('script[src="/js/handleBookingPage.js"]').remove();
-
-                    // Tạo và thêm phần tử <script> mới vào DOM
-                    var script = document.createElement('script');
-                    script.src = '/js/handleBookingPage.js'; // Đường dẫn đến file JavaScript
-                    script.onload = function () {
-                        console.log('Script loaded and executed.');
-                    };
-                    document.head.appendChild(script);
-                }
-            });
+                $.ajax({
+                    url: _url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        console.log("abcd")
+                        $("#dynamic-booking-div").html(result);
+    
+                        $('script[src="/js/handleBookingPage.js"]').remove();
+    
+                        var script = document.createElement('script');
+                        script.src = '/js/handleBookingPage.js'; 
+                        script.onload = function () {
+                            console.log('Script loaded and executed.');
+                        };
+                        document.head.appendChild(script);
+                    }
+                });
+            }, 500)
         }
     }
 

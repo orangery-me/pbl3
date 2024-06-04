@@ -28,6 +28,10 @@ public class doctorServices {
     @Autowired
     private doctorRepository doctorRepository;
 
+    public List<Doctor> getAllDoctors(){
+        return doctorRepository.findAll();
+    }
+
     public List<scheduleRespone> getListScheduleResponsesOfDoctor(Long doctorId){
         Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorId);
         List<scheduleRespone> listSchedulesRespones = new ArrayList<>();
@@ -59,6 +63,7 @@ public class doctorServices {
             Doctor _doctor = _doctorr;
             doctorRespone.setId(_doctor.getId());
             doctorRespone.setNameDoctor(_doctor.getUser().getFullName());
+            doctorRespone.setGender(_doctor.getUser().getGender());
             doctorRespone.setDescription(_doctor.getDescription());
             doctorRespone.setListSchedule(getListScheduleResponsesOfDoctor(id));
             doctorRespone.setPosition(_doctor.getPosition());

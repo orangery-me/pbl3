@@ -12,6 +12,7 @@ public class doctorRespone {
     private String nameDoctor;
     private String position;
     private String description;
+    private Boolean gender;
     private String RoomAddress;
     private Integer ServicePrices;
 

@@ -40,7 +40,7 @@ public class SecurityAppConfig {
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
         .authorizeHttpRequests(
                 (authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/api/auth/**", "/login", "/auth/register")
+                        .requestMatchers("/api/auth/**", "/login", "/auth/register", "/api/medical_record/**")
                         .permitAll()
                         .anyRequest().authenticated())
         .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")

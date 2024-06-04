@@ -76,7 +76,7 @@
                           <span class="txt-price">Phí dịch vụ </span>
                           <span class="doctor-price" th:text="${doctor.ServicePrices}"></span>
                       </div>
-                      <button class="btn-submit">Xác nhận lịch hẹn</button>
+                      <button class="btn-submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Xác nhận lịch hẹn</button>
                   </div>
                 </div>
               </div>
@@ -96,7 +96,23 @@
 
             </form>
 
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận lịch hẹn</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body modal-body-content">
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-closeee" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary btn-confirm">Xác nhận</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
-      
     </div>
 </div>

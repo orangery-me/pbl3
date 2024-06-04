@@ -1,0 +1,22 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">stt</th>
+      <th scope="col">Tên bệnh nhân</th>
+      <th scope="col">Ngày khám</th>
+      <th scope="col">Ca khám</th>
+      <th scope="col">Kết luận của bác sĩ</th>
+    </tr>
+  </thead>
+  <tbody th:if="${listMedicalRecordRespone != null && !(#lists.isEmpty(listMedicalRecordRespone))}" th:each="medicalRecord, iterStat : ${listMedicalRecordRespone}">
+    <tr class="row-medicalrecord">
+      <th scope="row" th:text="${iterStat.count}"></th>
+      <td id="name-patinet" th:text="${medicalRecord.patientName}"></td>
+      <td id="medical-id" th:text="${medicalRecord.medicalRecordId}" style="display: none;"></td>
+      <td id="schedule-date-value" th:text="${#dates.format(medicalRecord.date, 'dd/MM/yyyy')}"></td>
+      <td id="schedule-shift-value" th:text="${medicalRecord.shift.timeStart} + ' : ' + ${medicalRecord.shift.timeEnd}"></td>
+      <td id="medicalRecord-value"><span class="diagnosis-content" th:text="@{ (${medicalRecord.diagnosis == null || medicalRecord.diagnosis == ''}) ? 'trống' : ${medicalRecord.diagnosis}}"></span></td>
+      <td><a class="detail-content" data-bs-toggle="modal" data-bs-target="#medicalRecord">Chi tiết</a></td>
+    </tr>
+  </tbody>
+</table>

@@ -46,18 +46,54 @@
             <div class="container-radio">
 
                 <div class="check-item radio-today">
-                    <input class="input-check" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/today/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-today" name="check" type="radio">
+                    <input class="input-check check-day" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/today/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-today" name="check" type="radio">
                     <label class="lable-check" for="check-today">Hôm nay</label>
                 </div>
     
                 <div class="check-item radio-tomorrow">
-                    <input class="input-check" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/tomorrow/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-tomorrow" name="check" type="radio">               
+                    <input class="input-check check-day" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/tomorrow/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-tomorrow" name="check" type="radio">               
                     <label class="lable-check" for="check-tomorrow">Ngày mai</label>
                 </div>
 
                 <div class="check-item radio-nextsevenday">
-                    <input class="input-check" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/nextsevenday/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-nextsevenday" name="check" type="radio">               
+                    <input class="input-check check-day" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/nextsevenday/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-nextsevenday" name="check" type="radio">               
                     <label class="lable-check" for="check-nextsevenday">Bảy ngày tới</label>
+                </div>
+            </div>
+
+            <div class="available">
+                <span class="available-bf"></span>
+                <span class="available-at">CA KhÁM</span>
+            </div>
+
+            <div class="container-radio">
+
+                <div class="check-item radio-today">
+                    <input class="input-check check-session" data-value="morning" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/today/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-morning" name="check1" type="radio">
+                    <label class="lable-check" for="check-today">Sáng</label>
+                </div>
+    
+                <div class="check-item radio-tomorrow">
+                    <input class="input-check check-session" data-value="afternoon" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/tomorrow/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-afternoon" name="check1" type="radio">               
+                    <label class="lable-check" for="check-tomorrow">Chiều</label>
+                </div>
+            </div>
+
+            <div class="available">
+                <span class="available-bf"></span>
+                <span class="available-at">GIỚI TÍNH</span>
+            </div>
+
+            <div class="container-radio">
+
+                <div class="check-item radio-today">
+                    <input class="input-check check-gender" data-value="true" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/today/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-morning" name="check2" type="radio">
+                    <label class="lable-check" for="check-today">Nam</label>
+                </div>
+    
+                <div class="check-item radio-tomorrow">
+                    <input class="input-check check-gender" data-value="false" th:value="@{ (${#lists.isEmpty(listDoctorOfDepartment)}) ? '' : '/home/user/appointment/doctors/tomorrow/' + ${listDoctorOfDepartment[0].departmentRespone.getId()}}" id="check-afternoon" name="check2" type="radio">               
+                    <label class="lable-check" for="check-tomorrow">Nữ</label>
                 </div>
             </div>
         </div>
@@ -65,17 +101,25 @@
     <script>
         {       
 
-                const checks = document.querySelectorAll('.input-check')
+                const checks = document.querySelectorAll('.check-day')
+                const checksSession = document.querySelectorAll('.check-session')
+                const checksGender = document.querySelectorAll('.check-gender')
                 const btnSearch = document.getElementById('search-btn')
                 const inputSearch = document.getElementById('fillter-doctor') 
                 const resetFilter = document.querySelector('.reset-filter')
 
                 resetFilter.onclick = () =>{
                     checks.forEach(check => check.checked = false)
+                    checksGender.forEach(check => check.checked = false)
+                    checksSession.forEach(check => check.checked = false)
                     inputSearch.value = ''
+
+                    var gender = ''
+                    var shift = ''
+                    
                     var _url = btnSearch.getAttribute('value')
-                    var queryParam = encodeURIComponent(''); // Mã hóa giá trị để sử dụng trong URL
-                    var finalUrl = _url + "?q=" + queryParam;
+                    var queryParam = encodeURIComponent(''); 
+                    var finalUrl =`${_url}?q=${queryParam}&gender=${gender}&shift=${shift}`;
 
                     console.log(finalUrl)
                     $.ajax({
@@ -91,12 +135,23 @@
 
                     btnSearch.onclick = () => {
                         var searchText = inputSearch.value;
+
+                        var gender = ''
+                        var shift = ''
+
+                        checksGender.forEach(check => {
+                            if (check.checked) gender = check.dataset.value
+                        });
+
+                        checksSession.forEach(check => {
+                            if (check.checked) shift = check.dataset.value
+                        });
                         var ischecked = Array.from(checks).some(check => check.checked)
                         
                         if(!ischecked){
                             var _url = btnSearch.getAttribute('value')
-                            var queryParam = encodeURIComponent(searchText); // Mã hóa giá trị để sử dụng trong URL
-                            var finalUrl = _url + "?q=" + queryParam;
+                            var queryParam = encodeURIComponent(searchText); 
+                            var finalUrl =`${_url}?q=${queryParam}&gender=${gender}&shift=${shift}`;
                             console.log("no checked")
                             $.ajax({
                                 url: finalUrl,
@@ -110,8 +165,8 @@
                             if(check.checked){
                                 var _url = check.getAttribute('value')
 
-                                var queryParam = encodeURIComponent(searchText); // Mã hóa giá trị để sử dụng trong URL
-                                var finalUrl = _url + "?q=" + queryParam; // Thêm tham số truy vấn vào URL
+                                var queryParam = encodeURIComponent(searchText);
+                                var finalUrl =`${_url}?q=${queryParam}&gender=${gender}&shift=${shift}`; 
                                 $.ajax({
                                     url: finalUrl,
                                     
@@ -126,10 +181,101 @@
                     checks.forEach((check, index) => {
                         check.onclick = function () {
                             inputSearch.value = ""
-                            console.log(inputSearch.value)
+                            var searchText = inputSearch.value
+                            console.log(searchText)
+
+                            var gender = ''
+                            var shift = ''
+
+                            checksGender.forEach(check => {
+                                if(check.checked) gender = check.dataset.value
+                            });
+
+                            checksSession.forEach(check => {
+                                if(check.checked) shift = check.dataset.value
+                            });
+
                             var _url = check.getAttribute('value')
+
+                            var queryParam = encodeURIComponent(searchText); 
+                            var finalUrl = `${_url}?q=${queryParam}&gender=${gender}&shift=${shift}`
+
+                            console.log(finalUrl)
                             $.ajax({
-                                url: _url,
+                                url: finalUrl,
+                                success: function (result) {
+                                    $("#dynamic-content").html(result);
+                                }
+                            });
+                        };
+                    })
+
+                    checksGender.forEach((check, index) => {
+                        check.onclick = function () {
+                            inputSearch.value = ""
+                            var searchText = inputSearch.value
+                            console.log(searchText)
+
+                            var gender = check.dataset.value
+                            var shift = ''
+
+                            checksSession.forEach(check => {
+                                if(check.checked) shift = check.dataset.value
+                            });
+
+                            var ischecked = Array.from(checks).some(check => check.checked)
+                            
+                            var _url = btnSearch.getAttribute('value');
+                            if(ischecked) {
+                                checks.forEach(e => {
+                                    if(e.checked) _url = e.getAttribute('value')
+                                });
+                                console.log(_url)
+                            }
+
+
+                            var queryParam = encodeURIComponent(searchText); 
+                            var finalUrl = `${_url}?q=${queryParam}&gender=${gender}&shift=${shift}`
+
+                            console.log(finalUrl)
+                            $.ajax({
+                                url: finalUrl,
+                                success: function (result) {
+                                    $("#dynamic-content").html(result);
+                                }
+                            });
+                        };
+                    })
+
+                    checksSession.forEach((check, index) => {
+                        check.onclick = function () {
+                            inputSearch.value = ""
+                            var searchText = inputSearch.value
+                            console.log(searchText)
+
+                            var gender = ''
+                            var shift = check.dataset.value
+
+                            checksGender.forEach(check => {
+                                if(check.checked) gender = check.dataset.value
+                            });
+
+                            var ischecked = Array.from(checks).some(check => check.checked)
+                            
+                            var _url = btnSearch.getAttribute('value');
+                            if(ischecked) {
+                                checks.forEach(e => {
+                                    if(e.checked) _url = e.getAttribute('value')
+                                });
+                                console.log(_url)
+                            }
+
+                            var queryParam = encodeURIComponent(searchText); 
+                            var finalUrl = `${_url}?q=${queryParam}&gender=${gender}&shift=${shift}`
+
+                            console.log(finalUrl)
+                            $.ajax({
+                                url: finalUrl,
                                 success: function (result) {
                                     $("#dynamic-content").html(result);
                                 }
