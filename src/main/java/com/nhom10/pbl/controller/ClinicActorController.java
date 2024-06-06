@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.nhom10.pbl.models.Shift;
 import com.nhom10.pbl.payload.response.DepartmentRespone;
 import com.nhom10.pbl.payload.response.DoctorInfoResponse;
-import com.nhom10.pbl.payload.response.DoctorRespone;
+import com.nhom10.pbl.payload.response.DoctorResponse;
 import com.nhom10.pbl.payload.response.ScheduleInfoResponse;
-import com.nhom10.pbl.payload.resquest.DepartmentRequest;
+import com.nhom10.pbl.payload.request.DepartmentRequest;
 import com.nhom10.pbl.services.DepartmentServices;
 import com.nhom10.pbl.services.DoctorServices;
 import com.nhom10.pbl.services.ScheduleServices;
@@ -81,7 +81,7 @@ public class ClinicActorController {
     }
 
     @GetMapping("/doctors")
-    public ResponseEntity<List<DoctorRespone>> getListDoctorOfDepartment(@RequestParam String departmentId,
+    public ResponseEntity<List<DoctorResponse>> getListDoctorOfDepartment(@RequestParam String departmentId,
             Model model) {
         try {
             return ResponseEntity.ok(_departmentServices.getListDoctor(Long.parseLong(departmentId), false));

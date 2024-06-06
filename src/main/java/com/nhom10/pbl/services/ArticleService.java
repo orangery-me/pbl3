@@ -12,7 +12,7 @@ import com.nhom10.pbl.models.Article;
 import com.nhom10.pbl.models.Status;
 import com.nhom10.pbl.models.UserModel;
 import com.nhom10.pbl.payload.response.ArticleResponse;
-import com.nhom10.pbl.payload.resquest.ArticleRequest;
+import com.nhom10.pbl.payload.request.ArticleRequest;
 import com.nhom10.pbl.repository.ArticleRepository;
 import com.nhom10.pbl.repository.UserRepository;
 

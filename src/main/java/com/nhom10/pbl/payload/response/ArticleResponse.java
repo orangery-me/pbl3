@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.nhom10.pbl.models.Article;
 import com.nhom10.pbl.models.Status;
-import com.nhom10.pbl.payload.resquest.UserDTO;
+import com.nhom10.pbl.payload.request.UserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

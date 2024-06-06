@@ -9,6 +9,6 @@ import lombok.Data;
 public class BookingModel {
 
     private Date day;
-    private List<ShiftRespone> ListShift;
+    private List<ShiftResponse> ListShift;
 
 }

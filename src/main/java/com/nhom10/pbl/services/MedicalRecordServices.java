@@ -11,7 +11,7 @@ import com.nhom10.pbl.models.MedicalRecord;
 import com.nhom10.pbl.models.Schedule;
 import com.nhom10.pbl.payload.request.MedicalRecordRequest;
 import com.nhom10.pbl.payload.response.MedicalRecordResponeModel;
-import com.nhom10.pbl.payload.response.ShiftRespone;
+import com.nhom10.pbl.payload.response.ShiftResponse;
 import com.nhom10.pbl.repository.MedicalRecordRepository;
 
 import lombok.AllArgsConstructor;
@@ -95,7 +95,7 @@ public class MedicalRecordServices {
             model.setPatientName(medicalRecord.getSchedule().getPatient().getUser().getFullName());
             model.setDate(medicalRecord.getSchedule().getDate());
 
-            ShiftRespone shift = new ShiftRespone();
+            ShiftResponse shift = new ShiftResponse();
             shift.setId(medicalRecord.getSchedule().getShift().getId());
             shift.setTimeStart(medicalRecord.getSchedule().getShift().getTime_start());
             shift.setTimeEnd(medicalRecord.getSchedule().getShift().getTime_end());

@@ -13,7 +13,7 @@ public class MedicalRecordResponeModel {
 
     private Date date;
 
-    private ShiftRespone shift;
+    private ShiftResponse shift;
 
     private String diagnosis;
 

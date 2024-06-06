@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.nhom10.pbl.models.Schedule;
 import com.nhom10.pbl.payload.response.ScheduleInfoResponse;
 import com.nhom10.pbl.payload.response.ScheduleRespone;
-import com.nhom10.pbl.payload.resquest.ScheduleRequest;
+import com.nhom10.pbl.payload.request.ScheduleRequest;
 import com.nhom10.pbl.repository.DoctorRepository;
 import com.nhom10.pbl.repository.PatientRepository;
 import com.nhom10.pbl.repository.ScheduleRepository;

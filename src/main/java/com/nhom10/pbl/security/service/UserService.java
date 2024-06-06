@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.nhom10.pbl.models.UserModel;
 import com.nhom10.pbl.payload.response.UserResponse;
-import com.nhom10.pbl.payload.resquest.UserDTO;
+import com.nhom10.pbl.payload.request.UserDTO;
 import com.nhom10.pbl.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

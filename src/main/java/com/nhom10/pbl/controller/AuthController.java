@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nhom10.pbl.payload.response.AuthenticationResponse;
-import com.nhom10.pbl.payload.resquest.AuthenticationRequest;
-import com.nhom10.pbl.payload.resquest.RegisterRequest;
+import com.nhom10.pbl.payload.request.AuthenticationRequest;
+import com.nhom10.pbl.payload.request.RegisterRequest;
 import com.nhom10.pbl.security.service.AuthenticateService;
 
 import jakarta.persistence.EntityExistsException;

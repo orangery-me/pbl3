@@ -17,9 +17,9 @@ import com.nhom10.pbl.models.Shift;
 import com.nhom10.pbl.models.UserModel;
 import com.nhom10.pbl.payload.response.BookingModel;
 import com.nhom10.pbl.payload.response.DoctorInfoResponse;
-import com.nhom10.pbl.payload.response.DoctorRespone;
+import com.nhom10.pbl.payload.response.DoctorResponse;
 import com.nhom10.pbl.payload.response.ScheduleRespone;
-import com.nhom10.pbl.payload.response.ShiftRespone;
+import com.nhom10.pbl.payload.response.ShiftResponse;
 import com.nhom10.pbl.repository.DoctorRepository;
 
 @Service
@@ -63,10 +63,10 @@ public class DoctorServices {
         return listSchedulesRespones;
     }
 
-    public DoctorRespone getDoctorResponeById(Long id) {
+    public DoctorResponse getDoctorResponeById(Long id) {
         Optional<Doctor> doctor = doctorRepository.findById(id);
         Doctor _doctorr = doctor.orElseThrow(() -> new RuntimeException("not found"));
-        DoctorRespone doctorRespone = new DoctorRespone();
+        DoctorResponse doctorRespone = new DoctorResponse();
         if (doctor.isPresent()) {
             Doctor _doctor = _doctorr;
             doctorRespone.setId(_doctor.getId());
@@ -83,13 +83,13 @@ public class DoctorServices {
     }
 
     public List<BookingModel> getListBookingModelsOfDoctor(Long id) {
-        DoctorRespone doctorRespone = getDoctorResponeById(id);
+        DoctorResponse doctorRespone = getDoctorResponeById(id);
         List<BookingModel> ListBookingModel = new ArrayList<>();
         List<Shift> lShifts = shiftServices.getShiftList();
-        List<ShiftRespone> lShiftsrRespones = new ArrayList<>();
+        List<ShiftResponse> lShiftsrRespones = new ArrayList<>();
 
         for (Shift shift : lShifts) {
-            ShiftRespone i = new ShiftRespone();
+            ShiftResponse i = new ShiftResponse();
             i.setId(shift.getId());
             i.setTimeStart(shift.getTime_start());
             i.setTimeEnd(shift.getTime_end());
@@ -103,11 +103,11 @@ public class DoctorServices {
             DayOfWeek dayOfWeek = LocalDate.now().plusDays(i).getDayOfWeek();
 
             if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-                bookingModel.setListShift(new ArrayList<ShiftRespone>());
+                bookingModel.setListShift(new ArrayList<ShiftResponse>());
 
             } else {
 
-                List<ShiftRespone> ShiftScheduleResponeOfDay = new ArrayList<>();
+                List<ShiftResponse> ShiftScheduleResponeOfDay = new ArrayList<>();
                 for (ScheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
                     if (scheduleRespone.getDate().equals(Date.valueOf(LocalDate.now().plusDays(i)))) {
 
@@ -116,10 +116,10 @@ public class DoctorServices {
                     }
                 }
 
-                List<ShiftRespone> ListShiftAvailable = new ArrayList<>();
+                List<ShiftResponse> ListShiftAvailable = new ArrayList<>();
                 if (bookingModel.getDay().equals(Date.valueOf(LocalDate.now()))) {
 
-                    for (ShiftRespone shiftRespone : lShiftsrRespones) {
+                    for (ShiftResponse shiftRespone : lShiftsrRespones) {
                         if (!ShiftScheduleResponeOfDay.contains(shiftRespone)
                                 && LocalTime.now().isBefore(shiftRespone.getTimeStart().minusMinutes(20))) {
 
@@ -128,7 +128,7 @@ public class DoctorServices {
                     }
                 } else {
 
-                    for (ShiftRespone shiftRespone : lShiftsrRespones) {
+                    for (ShiftResponse shiftRespone : lShiftsrRespones) {
                         if (!ShiftScheduleResponeOfDay.contains(shiftRespone)) {
                             ListShiftAvailable.add(shiftRespone);
                         }

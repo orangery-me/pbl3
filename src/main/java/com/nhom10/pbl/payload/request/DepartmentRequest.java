@@ -1,4 +1,4 @@
-package com.nhom10.pbl.payload.resquest;
+package com.nhom10.pbl.payload.request;
 
 import com.nhom10.pbl.models.Department;
 

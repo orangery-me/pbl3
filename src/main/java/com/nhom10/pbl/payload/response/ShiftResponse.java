@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import lombok.Data;
 
 @Data
-public class ShiftRespone {
+public class ShiftResponse {
 
     private Long Id;
 

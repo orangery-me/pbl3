@@ -1,4 +1,4 @@
-package com.nhom10.pbl.payload.resquest;
+package com.nhom10.pbl.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

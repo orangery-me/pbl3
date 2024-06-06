@@ -6,7 +6,7 @@ import com.nhom10.pbl.models.Department;
 import lombok.Data;
 
 @Data
-public class DoctorRespone {
+public class DoctorResponse {
     private Long id;
 
     private String nameDoctor;
