@@ -828,7 +828,7 @@
 .form-group {
   display: flex;
   margin-bottom: 16px;
-  width: 450px;
+  /* width: 450px; */
   flex-direction: column;
 }
 
@@ -909,11 +909,11 @@
 .content {
   display: flex;
   padding: 20px;
-  margin-top: 255px;
+  margin-top: 220px;
 }
 
 .sidebar {
-  width: 200px;
+  width: 25%;
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
   padding: 20px;
@@ -933,11 +933,14 @@
 }
 
 .main-content {
-  flex: 1;
-  padding: 20px;
+  display: flex;
+  padding: 0px 20px 20px 40px;
   background-color: #ffffff;
   border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
 }
 
 .user-title-main {
@@ -945,10 +948,11 @@
   margin-bottom: 20px;
 }
 
-.user-form {
+user-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  width: 100%;
+  column-gap: 80px;
 }
 
 .form-group {
@@ -966,6 +970,18 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.form-control1 {
+  padding: 0 10px;
+  /* Giảm padding-top */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 100px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  line-height: 1.2;
 }
 
 .gender-selection {
@@ -1039,6 +1055,6 @@
   border-radius: 10px;
   background-color: #f9f9f9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 114%;
   max-width: 1215px;
+  width: 100%;
 }

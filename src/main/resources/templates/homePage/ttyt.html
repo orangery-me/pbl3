@@ -15,9 +15,15 @@
 <body>
   <div class="content">
     <aside class="sidebar">
-      <div class="sidebar-item active">Sức khỏe của tôi</div>
-      <!-- <a class="sidebar-item active" th:href="@{/new-content}"> Sức khỏe của tôi </a> -->
       <div class="sidebar-item">Hồ sơ của tôi</div>
+      <div class="sidebar-item actives " onclick="navigate()">Sức khỏe của tôi
+        <script>
+          function navigate() {
+            window.location.href = "http://localhost:8080/new-content";
+          }
+        </script>
+      </div>
+      <!-- <a class="sidebar-item active" th:href="@{/new-content}"> Sức khỏe của tôi </a> -->
       <div class="sidebar-item">Lịch sử đặt lịch</div>
       <div class="sidebar-item">Trợ giúp</div>
       <div class="sidebar-item">Đăng xuất</div>
@@ -41,16 +47,18 @@
           </div>
 
           <div class="form-group">
+            <label for="benhnen" class="form-label1">Benh nen</label>
+            <input id="benhnen" name="benhnen" type="text" placeholder="Chi nhap ten benh nen" class="form-control1"
+              autocomplete="off" th:value="${patient.benhnen}">
+          </div>
+
+          <div class="form-group">
             <label for="nhommau" class="form-label1">Nhom mau</label>
             <input id="nhommau" name="nhommau" type="text" placeholder="Nhom mau" class="form-control"
               autocomplete="off" th:value="${patient.nhommau}">
           </div>
 
-          <div class="form-group">
-            <label for="benhnen" class="form-label1">Benh nen</label>
-            <input id="benhnen" name="benhnen" type="text" placeholder="Chi nhap ten benh nen" class="form-control"
-              autocomplete="off" th:value="${patient.benhnen}">
-          </div>
+
           <div class="form-group">
             <button type="submit" class="update-btn">Cập nhật</button>
           </div>

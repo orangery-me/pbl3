@@ -15,7 +15,8 @@ public class PatientController {
     private PatientService patientService;
 
     @PutMapping("/save-or-update/{id}")
-    public ResponseEntity<?> saveOrUpdatePatient(@PathVariable Long id,
+    public ResponseEntity<?> saveOrUpdatePatient(@PathVariable("id") Long id,
+
             @RequestBody PatientUpdateRequest updateRequest) {
         try {
             patientService.updatePatientInfo(id, updateRequest.getNhommau(), updateRequest.getCannang(),

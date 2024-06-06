@@ -15,6 +15,7 @@ import com.nhom10.pbl.services.departmentServices;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -86,4 +87,10 @@ public class HomeController {
         }
         return "homePage/ttyt";
     }
+
+    @GetMapping("/thanhtuu")
+    public String thanhtuu() {
+        return "homePage/thanhtuu";
+    }
+
 }

@@ -36,6 +36,9 @@ public class AuthenticateService {
     private RoleRepository roleRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -107,9 +110,9 @@ public class AuthenticateService {
 
         userRepository.save(user);
         var token = jwtService.generateToken(CustomUserDetails.build(user));
+        userService.addRecordPatient(user);
 
         return AuthenticationResponse.builder().token(token).build();
-        // return UserResponse.mapToUserResponse(user);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 // import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +107,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserModel createUser(UserModel user) {
+    public UserModel addRecordPatient(UserModel user) {
         UserModel savedUser = repository.save(user);
         ERole userRole = user.getRole().getName();
 
@@ -124,7 +125,7 @@ public class UserService {
     }
 
     private Long generateRandomId() {
-        return ByteBuffer.wrap(UUID.randomUUID().toString().getBytes()).getLong();
+        return ThreadLocalRandom.current().nextLong(1, 10000);
     }
 
 }

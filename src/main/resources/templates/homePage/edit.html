@@ -18,11 +18,19 @@
 
   <div class="content">
     <aside class="sidebar">
-      <div class="sidebar-item"><a th:href="@{/new-content}"> Sức khỏe của tôi </a></div>
-      <div class="sidebar-item">Hồ sơ của tôi</div>
+      <div class="sidebar-item active">Hồ sơ của tôi</div>
+      <div class="sidebar-item " onclick="navigate()">Sức khỏe của tôi
+        <script>
+          function navigate() {
+            window.location.href = "http://localhost:8080/new-content";
+          }
+        </script>
+      </div>
+      <!-- <a class="sidebar-item active" th:href="@{/new-content}"> Sức khỏe của tôi </a> -->
       <div class="sidebar-item">Lịch sử đặt lịch</div>
       <div class="sidebar-item">Trợ giúp</div>
       <div class="sidebar-item">Đăng xuất</div>
+
     </aside>
     <main class="main-content">
       <h3 class="user-title-main">Thông tin tài khoản</h3>
@@ -65,16 +73,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="current-password">Current Password:<span class="text-danger">*</span></label>
+            <label for="current-password">Mật khẩu cũ:<span class="text-danger">*</span></label>
             <input type="password" id="current-password" class="form-control">
           </div>
           <div class="form-group">
-            <label for="new-password">New Password:<span class="text-danger">*</span></label>
+            <label for="new-password">Mật khẩu mới:<span class="text-danger">*</span></label>
             <input type="password" id="new-password" class="form-control">
           </div>
           <div class="error" id="error-message" style="display: none;"></div>
           <div class="success" id="success-message" style="display: none;"></div>
-          <!-- <button onclick="changePassword()">Change Password</button> -->
           <div class="form-group">
             <button type="submit" class="update-btn">Cập nhật</button>
           </div>
@@ -141,7 +148,8 @@
       <div class="link-chuyn">CHUYÊN KHOA</div>
       <div class="link-i">ĐỘI NGŨ BÁC SĨ</div>
       <div class="link-dch">DỊCH VỤ</div>
-      <div class="link-thnh">THÀNH TỰU</div>
+      <div class="link-thnh" onclick="navigateTo()">THÀNH TỰU</div>
+      <!-- <div class="link-thnh">THÀNH TỰU</div> -->
       <div class="link-tin">TIN TỨC</div>
       <div class="link-lin">LIÊN HỆ</div>
       <a class="link-me" th:text="${user.fullname}"></a>
@@ -158,10 +166,8 @@
 
           const userIdInput = document.getElementById('user-id');
           const userId = userIdInput.value;
-          console.log(`userId là ${userId}`);
           const passwordInput = document.getElementById('password-id');
           const password = passwordInput.value;
-          console.log(`password là ${password}`);
 
           const name = document.querySelector('#username').value;
           const phone = document.querySelector('#phone').value;
@@ -172,86 +178,107 @@
           const birthday = document.querySelector('#birthday').value;
           const currentPasswordInput = document.querySelector('#current-password').value;
           const newPasswordInput = document.querySelector('#new-password').value;
-          console.log(currentPasswordInput);
 
-          // Thông báo lỗi và thành công
           const errorMessage = document.getElementById('error-message');
           const successMessage = document.getElementById('success-message');
           errorMessage.style.display = 'none';
           successMessage.style.display = 'none';
-
-          if (currentPasswordInput && newPasswordInput) {
-            if (currentPasswordInput !== password) {
-              errorMessage.textContent = 'Current password is incorrect.';
-              errorMessage.style.display = 'block';
-              return;
-            }
-            password = newPasswordInput;
-          }
-
-          const userData = {
-            "id": userId,
-            "username": name,
-            "email": email,
-            "phone": phone,
-            "fullname": fullname,
-            "gender": gender,
-            "birthday": birthday,
-            "enabled": 1,
-            "role": "PATIENT",
-          };
-
-          if (password) {
-            userData.password = password;
-          }
-
-          console.log(userData);
-
-          const url = 'http://localhost:8080/api/admin/updateUser/' + userId;
-
-          fetch(url, {
-            method: 'PUT',
+          console.log(currentPasswordInput);
+          console.log(password);
+          fetch("http://localhost:8080/api/auth/comparePassword", {
+            method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+              'Content-Type': 'application/json'
             },
-            body: JSON.stringify(userData)
-          })
-            .then(async response => {
-              console.log('Response status:', response.status);
-              console.log('Response headers:', response.headers);
-
-              if (!response.ok) {
-                const errorText = await response.text();
-                console.log('Error response text:', errorText);
-                throw new Error(errorText || 'Unknown error');
-              }
-
-              const contentType = response.headers.get('Content-Type');
-              if (contentType && contentType.includes('application/json')) {
-                return response.json();
-              } else {
-                const responseText = await response.text();
-                console.log('Response text:', responseText);
-                return responseText ? JSON.parse(responseText) : {};
-              }
+            body: JSON.stringify({
+              "inputPassword": currentPasswordInput,
+              "encodedPassword": password
             })
+          })
+            .then(response => response.json())
             .then(data => {
-              console.log('Response data:', data);
-              successMessage.textContent = 'User updated successfully!';
-              successMessage.style.display = 'block';
+              console.log(data);
+              if (data == true) {
+                console.log("Passwords match");
+                handlePasswordMatch();
+              } else {
+                console.log("Passwords do not match");
+                handlePasswordMismatch();
+              }
             })
             .catch(error => {
               console.error('Error:', error);
-              errorMessage.textContent = 'Failed to update user: ' + error.message;
-              errorMessage.style.display = 'block';
+              handleApiError();
             });
+
+          function handlePasswordMatch() {
+            const userData = {
+              "id": userId,
+              "username": name,
+              "email": email,
+              "phone": phone,
+              "fullname": fullname,
+              "gender": gender,
+              "birthday": birthday,
+              "enabled": 1,
+              "role": "PATIENT",
+              "password": newPasswordInput
+            };
+
+            const url = 'http://localhost:8080/api/admin/updateUser/' + userId;
+
+            fetch(url, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+              },
+              body: JSON.stringify(userData)
+            })
+              .then(async response => {
+                if (!response.ok) {
+                  const errorText = await response.text();
+                  throw new Error(errorText || 'Unknown error');
+                }
+
+                const contentType = response.headers.get('Content-Type');
+                if (contentType && contentType.includes('application/json')) {
+                  return response.json();
+                } else {
+                  const responseText = await response.text();
+                  return responseText ? JSON.parse(responseText) : {};
+                }
+              })
+              .then(data => {
+                successMessage.textContent = 'User updated successfully!';
+                successMessage.style.display = 'block';
+              })
+              .catch(error => {
+                errorMessage.textContent = 'Failed to update user: ' + error.message;
+                errorMessage.style.display = 'block';
+              });
+          }
+
+          function handlePasswordMismatch() {
+            errorMessage.textContent = 'Mật khẩu cũ không đúng';
+            errorMessage.style.display = 'block';
+            return;
+          }
+
+          function handleApiError() {
+            alert('An error occurred while checking passwords. Please try again later.');
+          }
         });
       }
     });
 
   </script>
 
+  <script>
+    function navigateTo() {
+      window.location.href = "http://localhost:8080/thanhtuu";
+    }
+  </script>
 </body>
 
 </html>
