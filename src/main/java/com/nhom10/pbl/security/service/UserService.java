@@ -116,16 +116,11 @@ public class UserService {
 
         if (ERole.PATIENT.equals(userRole)) {
             Patient patient = new Patient();
-            patient.setId(generateRandomId());
             patient.setUser(savedUser);
             patientRepository.save(patient);
         }
 
         return savedUser;
-    }
-
-    private Long generateRandomId() {
-        return ThreadLocalRandom.current().nextLong(1, 10000);
     }
 
 }
