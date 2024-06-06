@@ -1,5 +1,6 @@
 package com.nhom10.pbl.controller;
 
+import java.sql.Date;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,9 @@ import com.nhom10.pbl.payload.response.ArticleResponse;
 import com.nhom10.pbl.payload.response.UserResponse;
 import com.nhom10.pbl.payload.resquest.ArticleRequest;
 import com.nhom10.pbl.payload.resquest.UserDTO;
-import com.nhom10.pbl.security.service.ArticleService;
 import com.nhom10.pbl.security.service.UserService;
+import com.nhom10.pbl.services.ArticleService;
+import com.nhom10.pbl.services.ScheduleServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
     private final UserService userService;
     private final ArticleService articleService;
+    private final ScheduleServices scheduleServices;
 
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserResponse>> getAllUsers() {
@@ -94,6 +97,7 @@ public class AdminController {
         try {
             return ResponseEntity.ok(articleService.createArticle(article));
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
     }
@@ -147,4 +151,23 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @RequestMapping(value = "/getRevenueOfDay", method = RequestMethod.GET)
+    public ResponseEntity<Long> getRevenueOfDay(@RequestParam("date") Date date) {
+        try {
+            return ResponseEntity.ok(scheduleServices.getRevenueOfDay(date));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @RequestMapping(value = "/getRevenueOfMonth", method = RequestMethod.GET)
+    public ResponseEntity<Long> getRevenueOfDay(@RequestParam("month") int month, @RequestParam("year") int year) {
+        try {
+            return ResponseEntity.ok(scheduleServices.getRevenueOfMonth(month, year));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }

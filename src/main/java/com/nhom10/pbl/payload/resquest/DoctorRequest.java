@@ -9,7 +9,7 @@ public class DoctorRequest {
     private String position;
     private String description;
     private String RoomAddress;
-    private String ServicePrices;
+    private Integer ServicePrices;
     private Long department_id;
     private Long user_id;
 }

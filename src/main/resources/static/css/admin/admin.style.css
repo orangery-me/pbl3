@@ -6460,6 +6460,10 @@ td {
     overflow: hidden;
 }
 
+.schedule_id,
+.schedule_doctorId,
+.schedule_patientID,
+.schedule_shiftID,
 .id_user,
 .id_article,
 .gender,
@@ -6469,12 +6473,22 @@ td {
     width: 6%;
 }
 
+.schedule_state,
+.schedule_room,
+.schedule_start,
+.schedule_date,
+.schedule_end,
 .phone,
 .author_name,
 .created_at,
 .modified_at,
 .article_status {
     width: 10%;
+}
+
+.schedule_doctorName,
+.schedule_patientName {
+    width: 16%;
 }
 
 .article_header,
@@ -6565,4 +6579,25 @@ td {
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 9999;
+}
+
+.bookingCard_timeframes__bncJQ {
+    display: grid;
+    margin: 8px 0;
+    grid-gap: 7px 8px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.bookingCard_time__J0MaE {
+    display: flex;
+    min-width: 90px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 4px;
+    border: 1px solid #dbdfe5;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    background: #fff;
+    font-variant-numeric: tabular-nums;
 }

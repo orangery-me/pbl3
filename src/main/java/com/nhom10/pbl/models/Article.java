@@ -19,9 +19,9 @@ public class Article {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "title")
+    @Column(name = "title", columnDefinition = "TEXT")
     private String title;
-    @Column(name = "content", length = 30000)
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")

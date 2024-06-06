@@ -14,4 +14,10 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     @NonNull
     public List<Doctor> findAll();
+
+    // @Query("SELECT d.id, d.position, d.description, d.RoomAddress,
+    // d.ServicePrices, dp.NameDepartment, u.fullName, u.birthday FROM Doctor d JOIN
+    // UserModel u ON d.user.id = u.id JOIN Department dp ON d.department.id =
+    // dp.id")
+    // public List<DoctorInfoResponseImpl> findAllInfo();
 }

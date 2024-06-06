@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,9 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.nhom10.pbl.security.jwt.JWTAuthFilter;
 import com.nhom10.pbl.security.service.CustomUserDetailsService;
 
-@Configuration // This annotation indicates that this class is a configuration class (cau hinh
-// spring security)
-// spring security)
+@Configuration // This annotation indicates that this class is a configuration class
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityAppConfig {
@@ -35,7 +32,6 @@ public class SecurityAppConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
-
                 .sessionManagement((sessionManagement) -> sessionManagement
                         .sessionCreationPolicy(
                                 org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
@@ -43,20 +39,15 @@ public class SecurityAppConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(
                         (authorizeHttpRequests) -> authorizeHttpRequests
-                                .requestMatchers("/api/auth/**", "/login")
-                                .permitAll()
-                                .anyRequest().authenticated())
-                .authorizeHttpRequests(
-                        (authorizeHttpRequests) -> authorizeHttpRequests
-                                .requestMatchers("/api/auth/**", "/login")
+                                .requestMatchers("/api/auth/**", "/login", "/register")
                                 .permitAll()
                                 .anyRequest().authenticated())
                 .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
                         .defaultSuccessUrl("/home", true))
-                .logout()
-                .invalidateHttpSession(true)
-                .deleteCookies("accessToken")
-                .logoutUrl("/logout");
+                .logout(logout -> logout
+                        .invalidateHttpSession(true)
+                        .deleteCookies("accessToken")
+                        .logoutUrl("/logout"));
 
         return httpSecurity.build();
     }

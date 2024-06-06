@@ -25,14 +25,14 @@ public class Patient {
 
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserModel user;
-
-    @OneToMany(mappedBy = "_patient", cascade = CascadeType.ALL)
-    private List<schedule> listSchedule;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Schedule> listSchedule;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserModel user;
+    private String nhomMau;
+    private double canNang;
+    private double chieuCao;
+    private String benhNen;
 }

@@ -1,6 +1,7 @@
 package com.nhom10.pbl.models;
 
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -39,18 +40,30 @@ public class Doctor {
     private String RoomAddress;
     private Integer ServicePrices;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserModel user;
-
     @ManyToOne
     @JoinColumn(name = "department_id")
-    private Department _department;
+    private Department department;
 
-    @OneToMany(mappedBy = "_doctor", cascade = CascadeType.ALL)
-    private List<schedule> listSchedule;
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private List<Schedule> listSchedule;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserModel user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Doctor)) {
+            return false;
+        }
+        Doctor doctor = (Doctor) o;
+        return Objects.equals(id, doctor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

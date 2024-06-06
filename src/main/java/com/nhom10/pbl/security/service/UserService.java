@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nhom10.pbl.models.UserModel;
@@ -20,6 +21,9 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<UserResponse> getUserById(Long id) throws Exception {
         UserModel user = repository.findById(id)
@@ -66,7 +70,7 @@ public class UserService {
         UserModel userFromDb = repository.findById(user.getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         try {
-            userFromDb.setPassWord(user.getPassword());
+            userFromDb.setPassWord(passwordEncoder.encode(user.getPassword()));
             userFromDb.setFullName(user.getFullname());
             userFromDb.setEmail(user.getEmail());
             userFromDb.setTelephone(user.getPhone());

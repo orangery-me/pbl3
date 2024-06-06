@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/fragments/head :: head"> </head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header th:replace="admin/fragments/main-header :: main-header"> </header>
+
+        <aside th:replace="admin/fragments/main-sidebar :: main-sidebar"></aside>
+
+        <div class="content-wrapper">
+
+            <section class="content-header">
+                <h1>
+                    Dashboard
+                    <small>Version 2.0</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Dashboard</li>
+                </ol>
+            </section>
+
+            <section class="content">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="box box-success">
+                            <!-- title -->
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Danh sách lịch hẹn</h3>
+                            </div>
+                            <!-- search bar -->
+                            <div class="search-bar">
+                                <p>Tìm kiếm theo: </p>
+                                <div class="col-md-2 inline-element">
+                                    <select class="form-control options">
+                                        <option>ID lịch hẹn</option>
+                                        <option>Ngày hẹn</option>
+                                        <option>ID Ca</option>
+                                        <option>ID bác sĩ</option>
+                                        <option>ID bệnh nhân</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 col-sm-4 inline-element">
+                                    <input type="text" class="form-control search-input" placeholder="Search...">
+                                </div>
+                                <div class="col-md-3 col-sm-4 inline-element">
+                                    <button class="btn btn-default btn-search">Tìm kiếm</button>
+                                </div>
+                                <button class="btn btn-default btn-add" id="trigger-modal-new-schedule"
+                                    onclick="openNewScheduleModal()">Thêm lịch
+                                    hẹn</button>
+                                <!-- new schedule modal -->
+                                <div class="modal fade" id="newScheduleModalScrollable" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="newScheduleModalScrollableTitle">Thêm lịch
+                                                    hẹn mới
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" id="newScheduleModalScrollableBody">
+                                                <!-- form hiện thông tin -->
+                                                <form id="newScheduleForm">
+                                                    <div class="form-group row">
+                                                        <label for="inputDepartment3"
+                                                            class="col-sm-2 col-form-label">Khoa: </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="department-form-control"
+                                                                onclick="fetchDepartment()">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputDoctor3" class="col-sm-2 col-form-label">Bác
+                                                            sĩ: </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="doctor-form-control"
+                                                                onclick="fetchDoctor()">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputPatient3" class="col-sm-2 col-form-label">ID
+                                                            bệnh nhân: </label>
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" id="inputUserID4"
+                                                                placeholder="ID Patient">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputShift3" class="col-sm-2 col-form-label">Ca:
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <div class="bookingCard_timeframes__bncJQ"
+                                                                data-is-no-slot="false" role="group">
+                                                                <div class="bookingCard_time__J0MaE undefined"
+                                                                    data-is-telemedicine="false" role="button"
+                                                                    tabindex="0">
+                                                                    1. 08:00 -
+                                                                    08:30
+                                                                </div>
+                                                                <div class="bookingCard_time__J0MaE undefined"
+                                                                    data-is-telemedicine="false" role="button"
+                                                                    tabindex="0">
+                                                                    2. 08:30 -
+                                                                    09:00
+                                                                </div>
+                                                                <div class="bookingCard_time__J0MaE undefined"
+                                                                    data-is-telemedicine="false" role="button"
+                                                                    tabindex="0">
+                                                                    3. 09:00 -
+                                                                    09:30
+                                                                </div>
+                                                                <div class="bookingCard_time__J0MaE undefined"
+                                                                    data-is-telemedicine="false" role="button"
+                                                                    tabindex="0">
+                                                                    4. 09:30 -
+                                                                    10:00
+                                                                </div>
+                                                                <div class="bookingCard_time__J0MaE undefined"
+                                                                    data-is-telemedicine="false" role="button"
+                                                                    tabindex="0">
+                                                                    5. 10:00 -
+                                                                    10:30
+                                                                </div>
+                                                                <div class="bookingCard_time__J0MaE undefined"
+                                                                    data-is-telemedicine="false" role="button"
+                                                                    tabindex="0">
+                                                                    6. 10:30 -
+                                                                    11:00
+                                                                </div>
+                                                                <div class="bookingCard_time__J0MaE undefined"
+                                                                    data-is-telemedicine="false" role="button"
+                                                                    tabindex="0">
+                                                                    7. 11:00 -
+                                                                    11:30
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer" id="newScheduleModalScrollableFooter">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Đóng</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                    id="save-new-schedule">Xác nhận</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- table -->
+                            <div class="box-body no-padding">
+                                <div class="row">
+                                    <div class="col-md-9 col-sm-8">
+                                        <div class="table-editable">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="schedule_id">Mã</th>
+                                                        <th class="schedule_date">Ngày</th>
+                                                        <th class="schedule_state">Trạng thái</th>
+                                                        <!-- <th class="schedule_doctorId">ID bác sĩ</th> -->
+                                                        <th class="schedule_doctorName">Tên bác sĩ</th>
+                                                        <th class="schedule_room">Phòng</th>
+                                                        <th class="schedule_patientID">ID bệnh nhân</th>
+                                                        <th class="schedule_patientName">Tên bệnh nhân</th>
+                                                        <th class="schedule_shiftID">ID ca</th>
+                                                        <th class="schedule_start">Thời gian bắt đầu</th>
+                                                        <th class="schedule_end">Thời gian kết thúc</th>
+                                                        <th class="actions">Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableBody">
+                                                </tbody>
+                                            </table>
+                                            <div class="btn-end">
+                                                <button class="btn btn-default">Save changes</button>
+                                            </div>
+                                            <div id="world-map-markers" style="height: 325px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="js-modal open">
+                                    <div class="modal-content">
+                                        <div class="heading">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="box-footer clearfix">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- pop up modal -->
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="exampleModalScrollableBody">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.4.13
+            </div>
+            <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+            reserved.
+        </footer>
+
+        <aside th:replace="admin/fragments/control-sidebar :: control-sidebar-control-sidebar-dark"></aside>
+
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script th:src="@{/js/admin/jquery.min.js}"></script>
+
+    <script th:src="@{/js/admin/bootstrap.min.js}"></script>
+
+    <script th:src="@{/js/admin/fastclick.js}"></script>
+
+    <script th:src="@{/js/admin/adminlte.min.js}"></script>
+
+    <script th:src="@{/js/admin/jquery.sparkline.min.js}"></script>
+
+    <script th:src="@{/js/admin/jquery-jvectormap-1.2.2.min.js}"></script>
+    <script th:src="@{/js/admin/jquery-jvectormap-world-mill-en.js}"></script>
+
+    <script th:src="@{/js/admin/jquery.slimscroll.min.js}"></script>
+
+    <script th:src="@{/js/admin/Chart.js}"></script>
+
+    <script th:src="@{/js/admin/dashboard2.js}"></script>
+
+    <script th:src="@{/js/admin/demo.js}"></script>
+
+    <script th:src="@{/js/admin/schedules-management.js}"> </script>
+</body>
+
+</html>

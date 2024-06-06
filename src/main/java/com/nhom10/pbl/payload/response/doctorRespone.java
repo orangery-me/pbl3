@@ -6,7 +6,7 @@ import com.nhom10.pbl.models.Department;
 import lombok.Data;
 
 @Data
-public class doctorRespone {
+public class DoctorRespone {
     private Long id;
 
     private String nameDoctor;
@@ -17,7 +17,7 @@ public class doctorRespone {
 
     private DepartmentRespone departmentRespone;
 
-    private List<scheduleRespone> listSchedule;
+    private List<ScheduleRespone> listSchedule;
 
     public void setInitValuedepartmentRespone(Department department) {
         DepartmentRespone departmentRespone = new DepartmentRespone();

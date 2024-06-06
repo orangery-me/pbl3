@@ -10,19 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.nhom10.pbl.payload.response.UserResponse;
 import com.nhom10.pbl.payload.response.DepartmentRespone;
 import com.nhom10.pbl.security.service.AuthenticateService;
-import com.nhom10.pbl.services.departmentServices;
-import com.nhom10.pbl.security.service.CustomUserDetails;
-import com.nhom10.pbl.security.service.CustomUserDetailsService;
+import com.nhom10.pbl.services.DepartmentServices;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
 public class HomeController {
 
-    private final DepartmentServices departmentServices;
-    private final AuthenticateService authenticateService;
     private final DepartmentServices departmentServices;
     private final AuthenticateService authenticateService;
 
@@ -47,8 +43,6 @@ public class HomeController {
         return "homePage/index";
     }
 
-    }
-
     @RequestMapping("/login")
     public String login() {
         return "auth/login/login";
@@ -59,38 +53,45 @@ public class HomeController {
         return "homePage/index";
     }
 
-    @RequestMapping("/logout")
-    public String logout() {
-        return "homePage/index";
-    }
-
     @RequestMapping("/admin")
-    public String adminPage() {
-        return "admin/pages/home";
+    public String adminPage(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        return "admin/pages/chart";
     }
 
     @RequestMapping("/admin/accounts")
-    public String adminControllUsers() {
+    public String adminControllUsers(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
         return "admin/pages/accounts";
     }
 
-    @RequestMapping("/logout")
-    public String logout() {
-        return "homePage/index";
-    }
-
     @RequestMapping("/admin/articles")
-    public String adminControllArticles() {
+    public String adminControllArticles(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
         return "admin/pages/articles";
     }
 
     @RequestMapping("/admin/departments")
-    public String adminControllDepartments() {
+    public String adminControllDepartments(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
         return "admin/pages/departments";
     }
 
     @RequestMapping("/admin/doctors")
-    public String adminControllDoctors() {
+    public String adminControllDoctors(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
         return "admin/pages/doctors";
+    }
+
+    @RequestMapping("/admin/schedules")
+    public String adminControllSchedules(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        return "admin/pages/schedules";
     }
 }

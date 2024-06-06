@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-public class scheduleRequest {
+public class ScheduleRequest {
     private Date date;
 
     private Integer state;

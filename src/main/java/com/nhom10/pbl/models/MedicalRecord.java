@@ -19,7 +19,7 @@ public class MedicalRecord {
 
     @OneToOne
     @JoinColumn(name = "schedule_id")
-    private schedule schedule;
+    private Schedule schedule;
 
     @Column(columnDefinition = "TEXT")
     private String diagnosis;

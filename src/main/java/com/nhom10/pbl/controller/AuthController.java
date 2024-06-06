@@ -1,11 +1,8 @@
 package com.nhom10.pbl.controller;
 
-import java.sql.SQLException;
-
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +32,7 @@ public class AuthController {
         } catch (ConstraintViolationException e) {
             return ResponseEntity.status(400).build();
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(500).build();
         }
     }
@@ -44,17 +42,13 @@ public class AuthController {
             HttpServletResponse response) {
         try {
             return ResponseEntity.ok(authenticationService.authenticate(request, response));
-        } catch (Exception e) {
+        } catch (UsernameNotFoundException UsernameNotFoundException) {
             return ResponseEntity.status(401).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(500).build();
         }
 
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request,
-            HttpServletResponse response) {
-        try {
-            return ResponseEntity.ok(authenticationService.authenticate(request, response));
-        } catch (Exception e) {
-            return ResponseEntity.status(401).build();
-        }
     }
 
 }

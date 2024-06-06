@@ -6,9 +6,9 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class bookingModel {
+public class BookingModel {
 
     private Date day;
-    private List<shiftRespone> ListShift;
+    private List<ShiftRespone> ListShift;
 
 }

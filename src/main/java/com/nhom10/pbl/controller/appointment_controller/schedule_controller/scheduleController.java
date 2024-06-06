@@ -10,28 +10,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.nhom10.pbl.payload.response.scheduleRespone;
-import com.nhom10.pbl.payload.resquest.scheduleRequest;
+import com.nhom10.pbl.payload.response.ScheduleRespone;
+import com.nhom10.pbl.payload.resquest.ScheduleRequest;
 import com.nhom10.pbl.services.ScheduleServices;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/user")
-public class scheduleController {
+public class ScheduleController {
     @Autowired
     private ScheduleServices scheduleServices;
 
     @PostMapping(path = "/appointment", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
-    public String createSchedulejson(scheduleRequest sRequest, HttpServletRequest request) {
-        scheduleServices.createSchedule(sRequest);
-        String prevUrl = request.getHeader("referer");
-        return "redirect:" + prevUrl;
+    public String createSchedulejson(ScheduleRequest sRequest, HttpServletRequest request) {
+        try {
+            scheduleServices.createSchedule(sRequest);
+            String prevUrl = request.getHeader("referer");
+            return "redirect:" + prevUrl;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "redirect:/error";
+        }
     }
 
     @GetMapping("/appointment")
     @ResponseBody
-    public List<scheduleRespone> getListOfSchedules() {
-        return scheduleServices.getAllschedule();
+    public List<ScheduleRespone> getListOfSchedules() {
+        return scheduleServices.getAllschedules();
     }
 }

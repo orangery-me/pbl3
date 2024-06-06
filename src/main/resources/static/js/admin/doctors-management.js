@@ -8,11 +8,11 @@ function loadData (data) {
         const row = document.createElement('tr');
         row.innerHTML = `
     <td contenteditable="false">${doctor.id}</td>
-    <td contenteditable="false">${doctor.userModelResponse.fullname}</td>
-    <td contenteditable="true">${doctor.userModelResponse.birthday}</td>
+    <td contenteditable="false">${doctor.fullname}</td>
+    <td contenteditable="true">${doctor.birthday}</td>
+    <td contenteditable="true">${doctor.departmentName}</td>
     <td contenteditable="true">${doctor.position}</td>
     <td contenteditable="true">${doctor.description}</td>
-    <td contenteditable="true">${doctor.departmentResponse.nameDepartment}</td>
     <td contenteditable="true">${doctor.roomAddress}</td>
     <td contenteditable="true">${doctor.servicePrices}</td>
     <td>
@@ -52,13 +52,6 @@ fetch('/api/clinic/doctors/all')
     .then(response => response.json())
     .then(data => loadData(data))
     .catch(error => console.error('Error fetching data:', error));
-
-// add event listener when change content of table
-[...document.getElementsByTagName('td')].forEach(td => td.addEventListener('search', listener));
-function listener (e) {
-    e.console.log(e.target.textContent);
-    e.target.style.setProperty('border', 'yellow');
-}
 
 // add event listener when click button
 // tableBody.addEventListener('click', (e) => {

@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
-import com.nhom10.pbl.payload.response.bookingModel;
+import com.nhom10.pbl.payload.response.BookingModel;
+import com.nhom10.pbl.payload.resquest.ScheduleRequest;
 import com.nhom10.pbl.payload.response.DepartmentRespone;
-import com.nhom10.pbl.payload.response.doctorRespone;
-import com.nhom10.pbl.payload.response.scheduleRespone;
-import com.nhom10.pbl.payload.resquest.scheduleRequest;
+import com.nhom10.pbl.payload.response.DoctorRespone;
+import com.nhom10.pbl.payload.response.ScheduleRespone;
 import com.nhom10.pbl.services.DepartmentServices;
 import com.nhom10.pbl.services.DoctorServices;
 
@@ -39,7 +39,7 @@ public class HandleFillteAppointmentController {
 
     @GetMapping("/doctors/{departmentId}")
     public String getListDoctorOfDepartment(@PathVariable String departmentId, Model model) {
-        List<doctorRespone> ListdoctorResponses = _departmentServices.getListDoctor(Long.parseLong(departmentId),
+        List<DoctorRespone> ListdoctorResponses = _departmentServices.getListDoctor(Long.parseLong(departmentId),
                 false);
         List<DepartmentRespone> listDepartmentRespones = _departmentServices.getAllDepartmentRespones();
 
@@ -56,9 +56,9 @@ public class HandleFillteAppointmentController {
     @GetMapping("/doctor/{doctorId}")
     public String getDetailDoctor(@PathVariable String doctorId, Model model) {
 
-        List<bookingModel> ListBookingAvailable = _doctorServices
+        List<BookingModel> ListBookingAvailable = _doctorServices
                 .getListBookingModelsOfDoctor(Long.parseLong(doctorId));
-        doctorRespone doctorRespone = _doctorServices.getDoctorResponeById(Long.parseLong(doctorId));
+        DoctorRespone doctorRespone = _doctorServices.getDoctorResponeById(Long.parseLong(doctorId));
         List<DepartmentRespone> listDepartmentRespones = _departmentServices.getAllDepartmentRespones();
 
         model.addAttribute("view", "homePage/homeComponent/bookAppointment");
@@ -68,7 +68,7 @@ public class HandleFillteAppointmentController {
         model.addAttribute("doctor", doctorRespone);
         model.addAttribute("listDepartmentRespones", listDepartmentRespones);
         model.addAttribute("ListbookingAvailable", ListBookingAvailable);
-        model.addAttribute("scheduleRequest", new scheduleRequest());
+        model.addAttribute("scheduleRequest", new ScheduleRequest());
 
         return "homePage/index";
     }
@@ -98,7 +98,7 @@ public class HandleFillteAppointmentController {
     @GetMapping("/doctors/today/{departmentId}")
     public String getListDoctorOfDepartmentToday(@PathVariable String departmentId, Model model) {
 
-        List<doctorRespone> listDoctorResponeToday = _departmentServices.listDoctorToday(Long.parseLong(departmentId));
+        List<DoctorRespone> listDoctorResponeToday = _departmentServices.listDoctorToday(Long.parseLong(departmentId));
         List<DepartmentRespone> listDepartmentRespones = _departmentServices.getAllDepartmentRespones();
 
         model.addAttribute("view", "homePage/homeComponent/fillterDoctorPage");
@@ -114,7 +114,7 @@ public class HandleFillteAppointmentController {
     @GetMapping("/doctors/tomorrow/{departmentId}")
     public String getListDoctorOfDepartmentTomorrow(@PathVariable String departmentId, Model model) {
 
-        List<doctorRespone> listDoctorResponeTomorrow = _departmentServices
+        List<DoctorRespone> listDoctorResponeTomorrow = _departmentServices
                 .listDoctorTomorrow(Long.parseLong(departmentId));
         List<DepartmentRespone> listDepartmentRespones = _departmentServices.getAllDepartmentRespones();
 
@@ -131,7 +131,7 @@ public class HandleFillteAppointmentController {
     @GetMapping("/doctors/nextsevenday/{departmentId}")
     public String getListDoctorOfDepartmentNextSevenDay(@PathVariable String departmentId, Model model) {
 
-        List<doctorRespone> listDoctorResponeNextSevenDay = _departmentServices
+        List<DoctorRespone> listDoctorResponeNextSevenDay = _departmentServices
                 .listDoctorNextSevenDay(Long.parseLong(departmentId));
         List<DepartmentRespone> listDepartmentRespones = _departmentServices.getAllDepartmentRespones();
 
@@ -147,7 +147,7 @@ public class HandleFillteAppointmentController {
 
     @GetMapping("/doctor/schedules/{doctorId}")
     @ResponseBody
-    public List<scheduleRespone> getListScheduleOfDoctor(@PathVariable String doctorId) {
+    public List<ScheduleRespone> getListScheduleOfDoctor(@PathVariable String doctorId) {
         return _doctorServices.getListScheduleResponsesOfDoctor(Long.parseLong(doctorId));
     }
 
