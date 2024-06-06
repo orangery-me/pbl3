@@ -1,0 +1,194 @@
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+/*.container {*/
+/*    max-width: 600px;*/
+/*    margin: 0 auto;*/
+/*    padding: 20px;*/
+/*}*/
+
+/*#contentContainer {*/
+/*    position: relative;*/
+/*}*/
+
+/*#contentContainer button {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*}*/
+
+/*h1 {*/
+/*    text-align: center;*/
+/*}*/
+
+/*form {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.form-group {*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*label {*/
+/*    display: block;*/
+/*}*/
+
+/*input[type="text"],*/
+/*input[type="date"],*/
+/*textarea,*/
+/*input[type="file"] {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    margin-top: 3px;*/
+/*    margin-bottom: 10px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*button {*/
+/*    background-color: #4CAF50;*/
+/*    color: white;*/
+/*    padding: 10px 20px;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*    float: right;*/
+/*}*/
+
+/*button:hover {*/
+/*    background-color: #45a049;*/
+/*}*/
+
+/*.content-editable {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    margin-top: 3px;*/
+/*    margin-bottom: 10px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*    box-sizing: border-box;*/
+/*    min-height: 150px;*/
+/*    overflow-y: auto;*/
+/*}*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 20px; /* Khoảng cách giữa form và các bài báo */
+    align-items: flex-start; /* Căn chỉnh các mục con theo chiều dọc */
+}
+
+.form-container {
+    flex: 2; /* Form sẽ chiếm 2 phần */
+}
+
+.medical-articles {
+    flex: 1; /* Các bài báo sẽ chiếm 1 phần */
+    margin-top: 100px; /* Đẩy phần bài báo xuống để ngang hàng với nút Chèn hình ảnh */
+}
+
+.medical-articles h2 {
+    margin-top: 0;
+    color: #2d6fb6; /* Màu xanh dương cho tiêu đề */
+}
+
+.medical-article {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.medical-article img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+.article-content {
+    max-width: calc(100% - 110px);
+}
+
+.article-content h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.article-content p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+    color: #555;
+}
+
+h1 {
+    text-align: center;
+    color: #2d6fb6; /* Màu xanh dương cho tiêu đề */
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    color: #2d6fb6; /* Màu xanh dương cho tiêu đề */
+}
+
+input[type="text"],
+input[type="date"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#contentContainer {
+    position: relative;
+}
+
+#imagePickerButton {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.content-editable {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    min-height: 500px; /* Tăng chiều cao tối thiểu của trường content */
+    overflow-y: auto;
+}
+

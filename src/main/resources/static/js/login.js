@@ -46,6 +46,8 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
             alert("Login successful!");
             window.location.href = "http://localhost:8080/home";
             console.log("Authentication successful:", data);
+            sessionStorage.setItem('userId', data.id); // lấy id lưu vào sessionStorage
+            console.log(sessionStorage.getItem('userId'));
         })
         .catch(error => {
             // show diaglog error

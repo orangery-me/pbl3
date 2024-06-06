@@ -10,6 +10,7 @@ var formCheckToday = document.querySelector('#form-check-today');
 var inputCheckToday = document.querySelector('#check-today');
 
 console.log('hello')
+console.log('test xem nhé');
 
 const storage =  {
     get() {
