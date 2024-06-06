@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.nhom10.pbl.dto.request.medicalRecordRequest;
-import com.nhom10.pbl.dto.respone.medicalRecordResponeModel;
 import com.nhom10.pbl.models.ERole;
 import com.nhom10.pbl.models.MedicalRecord;
 import com.nhom10.pbl.models.UserModel;
+import com.nhom10.pbl.payload.request.MedicalRecordRequest;
+import com.nhom10.pbl.payload.response.MedicalRecordResponeModel;
 import com.nhom10.pbl.security.jwt.JWTService;
 import com.nhom10.pbl.security.service.CustomUserDetails;
 import com.nhom10.pbl.security.service.CustomUserDetailsService;
@@ -26,35 +26,37 @@ import lombok.AllArgsConstructor;
 @Controller
 @RequestMapping("/home")
 @AllArgsConstructor
-public class medicalRecordController {
+public class MedicalRecordController {
 
     private final MedicalRecordServices medicalRecordServices;
     private final CustomUserDetailsService customUserDetailsService;
     private final JWTService jwtService;
 
     @GetMapping("/doctor/medical")
-    public String getMedicalRecordBydoctorId(Model model, HttpServletRequest request, 
-                                                @RequestParam(value = "date", defaultValue = "") String date, 
-                                                @RequestParam(value = "namePatient", defaultValue = "") String namePatient,
-                                                @RequestParam(value = "today", defaultValue = "") String today){
+    public String getMedicalRecordBydoctorId(Model model, HttpServletRequest request,
+            @RequestParam(value = "date", defaultValue = "") String date,
+            @RequestParam(value = "namePatient", defaultValue = "") String namePatient,
+            @RequestParam(value = "today", defaultValue = "") String today) {
 
         String username = jwtService.extractUserNameFromTokenCookie(request);
 
-        if(username != null){
+        if (username != null) {
             CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
             UserModel currUser = userDetails.getUser();
 
-            if(currUser.getRole().getName().equals(ERole.DOCTOR)){
-                List<MedicalRecord> afterFilterList = medicalRecordServices.handleFilterMedicalrecord(currUser.getDoctor().getId(), date, namePatient, today);
-                List<medicalRecordResponeModel> listMedicalRecordResponeModels = medicalRecordServices.mapdataMedicalRecordResponeModels(afterFilterList);
+            if (currUser.getRole().getName().equals(ERole.DOCTOR)) {
+                List<MedicalRecord> afterFilterList = medicalRecordServices
+                        .handleFilterMedicalrecord(currUser.getDoctor().getId(), date, namePatient, today);
+                List<MedicalRecordResponeModel> listMedicalRecordResponeModels = medicalRecordServices
+                        .mapdataMedicalRecordResponeModels(afterFilterList);
 
                 model.addAttribute("view", "homePage/homeComponent/medicalRecordInforPage");
                 model.addAttribute("file", "medicalRecordInforPage");
-        
+
                 model.addAttribute("nav", "homePage/partials/navDoctorLogged");
                 model.addAttribute("navState", "navDoctorLogged");
                 model.addAttribute("listMedicalRecordRespone", listMedicalRecordResponeModels);
-                model.addAttribute("medicalRecordRequest", new medicalRecordRequest());
+                model.addAttribute("medicalRecordRequest", new MedicalRecordRequest());
             }
             model.addAttribute("user", currUser);
         }
@@ -63,21 +65,23 @@ public class medicalRecordController {
     }
 
     @GetMapping("/doctor/medical-filter")
-    public String getMedicalRecordBydoctorIdAfterFilter(Model model, HttpServletRequest request, 
-                                                @RequestParam(value = "date", defaultValue = "") String date, 
-                                                @RequestParam(value = "namePatient", defaultValue = "") String namePatient,
-                                                @RequestParam(value = "today", defaultValue = "") String today){
+    public String getMedicalRecordBydoctorIdAfterFilter(Model model, HttpServletRequest request,
+            @RequestParam(value = "date", defaultValue = "") String date,
+            @RequestParam(value = "namePatient", defaultValue = "") String namePatient,
+            @RequestParam(value = "today", defaultValue = "") String today) {
 
         String username = jwtService.extractUserNameFromTokenCookie(request);
 
-        if(username != null){
+        if (username != null) {
             CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
             UserModel currUser = userDetails.getUser();
 
-            if(currUser.getRole().getName().equals(ERole.DOCTOR)){
-                List<MedicalRecord> afterFilterList = medicalRecordServices.handleFilterMedicalrecord(currUser.getDoctor().getId(), date, namePatient, today);
-                List<medicalRecordResponeModel> listMedicalRecordResponeModels = medicalRecordServices.mapdataMedicalRecordResponeModels(afterFilterList);
-           
+            if (currUser.getRole().getName().equals(ERole.DOCTOR)) {
+                List<MedicalRecord> afterFilterList = medicalRecordServices
+                        .handleFilterMedicalrecord(currUser.getDoctor().getId(), date, namePatient, today);
+                List<MedicalRecordResponeModel> listMedicalRecordResponeModels = medicalRecordServices
+                        .mapdataMedicalRecordResponeModels(afterFilterList);
+
                 model.addAttribute("listMedicalRecordRespone", listMedicalRecordResponeModels);
             }
         }
@@ -87,7 +91,7 @@ public class medicalRecordController {
 
     @PutMapping("/doctor/update-medicalrecord")
     @ResponseBody
-    public void updateMedicalRecord(medicalRecordRequest medicalRecordRequest){
+    public void updateMedicalRecord(MedicalRecordRequest medicalRecordRequest) {
         medicalRecordServices.updateMedicalRecord(medicalRecordRequest);
     }
 }

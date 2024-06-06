@@ -7,13 +7,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.nhom10.pbl.dto.request.medicalRecordRequest;
-import com.nhom10.pbl.dto.respone.medicalRecordResponeModel;
-import com.nhom10.pbl.dto.respone.shiftRespone;
 import com.nhom10.pbl.models.MedicalRecord;
-import com.nhom10.pbl.models.schedule;
+import com.nhom10.pbl.models.Schedule;
+import com.nhom10.pbl.payload.request.MedicalRecordRequest;
+import com.nhom10.pbl.payload.response.MedicalRecordResponeModel;
+import com.nhom10.pbl.payload.response.ShiftRespone;
 import com.nhom10.pbl.repository.MedicalRecordRepository;
-import com.nhom10.pbl.repository.scheduleRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -21,59 +20,62 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MedicalRecordServices {
     private final MedicalRecordRepository medicalRecordRepository;
-    
-    public void CreateMedicalRecord(schedule schedule){
+
+    public void CreateMedicalRecord(Schedule schedule) {
         MedicalRecord medicalRecord = new MedicalRecord();
         medicalRecord.setSchedule(schedule);
-        
+
         medicalRecordRepository.save(medicalRecord);
     }
 
-    public List<MedicalRecord>  handleFilterMedicalrecord(Long id, String date, String namePatient, String today){
+    public List<MedicalRecord> handleFilterMedicalrecord(Long id, String date, String namePatient, String today) {
         List<MedicalRecord> listMedicalRecords = medicalRecordRepository.findAllByDoctorId(id);
         List<MedicalRecord> resultList = new ArrayList<>();
 
-        if(date.equals("") && namePatient.equals("") && today.equals("")){
+        if (date.equals("") && namePatient.equals("") && today.equals("")) {
             return listMedicalRecords;
         }
 
-        if(Boolean.valueOf(today)){
-            if(!namePatient.equals("")){
+        if (Boolean.valueOf(today)) {
+            if (!namePatient.equals("")) {
                 for (MedicalRecord medicalRecord : listMedicalRecords) {
-                    if(medicalRecord.getSchedule().getDate().equals(Date.valueOf(LocalDate.now())) 
-                        && medicalRecord.getSchedule().get_patient().getUser().getFullName().toLowerCase().contains(namePatient.toLowerCase())){
-                        
+                    if (medicalRecord.getSchedule().getDate().equals(Date.valueOf(LocalDate.now()))
+                            && medicalRecord.getSchedule().getPatient().getUser().getFullName().toLowerCase()
+                                    .contains(namePatient.toLowerCase())) {
+
                         resultList.add(medicalRecord);
                     }
                 }
-            }else{
+            } else {
                 for (MedicalRecord medicalRecord : listMedicalRecords) {
-                    if(medicalRecord.getSchedule().getDate().equals(Date.valueOf(LocalDate.now()))){
-                        
+                    if (medicalRecord.getSchedule().getDate().equals(Date.valueOf(LocalDate.now()))) {
+
                         resultList.add(medicalRecord);
                     }
                 }
             }
-        }else{
-            if(!date.equals("") && !namePatient.equals("")){
+        } else {
+            if (!date.equals("") && !namePatient.equals("")) {
                 for (MedicalRecord medicalRecord : listMedicalRecords) {
-                    if(medicalRecord.getSchedule().getDate().equals(Date.valueOf(date)) 
-                        && medicalRecord.getSchedule().get_patient().getUser().getFullName().toLowerCase().contains(namePatient.toLowerCase())){
-                        
+                    if (medicalRecord.getSchedule().getDate().equals(Date.valueOf(date))
+                            && medicalRecord.getSchedule().getPatient().getUser().getFullName().toLowerCase()
+                                    .contains(namePatient.toLowerCase())) {
+
                         resultList.add(medicalRecord);
                     }
                 }
-            }else if(date.equals("") && !namePatient.equals("")){
+            } else if (date.equals("") && !namePatient.equals("")) {
                 for (MedicalRecord medicalRecord : listMedicalRecords) {
-                    if(medicalRecord.getSchedule().get_patient().getUser().getFullName().toLowerCase().contains(namePatient.toLowerCase())){
-                        
+                    if (medicalRecord.getSchedule().getPatient().getUser().getFullName().toLowerCase()
+                            .contains(namePatient.toLowerCase())) {
+
                         resultList.add(medicalRecord);
                     }
                 }
-            }else if(!date.equals("") && namePatient.equals("")){
+            } else if (!date.equals("") && namePatient.equals("")) {
                 for (MedicalRecord medicalRecord : listMedicalRecords) {
-                    if(medicalRecord.getSchedule().getDate().equals(Date.valueOf(date))){
-                        
+                    if (medicalRecord.getSchedule().getDate().equals(Date.valueOf(date))) {
+
                         resultList.add(medicalRecord);
                     }
                 }
@@ -82,21 +84,21 @@ public class MedicalRecordServices {
         return resultList;
     }
 
-    public List<medicalRecordResponeModel> mapdataMedicalRecordResponeModels(List<MedicalRecord> listMedicalRecords){
+    public List<MedicalRecordResponeModel> mapdataMedicalRecordResponeModels(List<MedicalRecord> listMedicalRecords) {
 
-        List<medicalRecordResponeModel> resultList = new ArrayList<>();
+        List<MedicalRecordResponeModel> resultList = new ArrayList<>();
 
         for (MedicalRecord medicalRecord : listMedicalRecords) {
-            medicalRecordResponeModel model = new medicalRecordResponeModel();
+            MedicalRecordResponeModel model = new MedicalRecordResponeModel();
 
             model.setMedicalRecordId(medicalRecord.getId());
-            model.setPatientName(medicalRecord.getSchedule().get_patient().getUser().getFullName());
+            model.setPatientName(medicalRecord.getSchedule().getPatient().getUser().getFullName());
             model.setDate(medicalRecord.getSchedule().getDate());
-            
-            shiftRespone shift = new shiftRespone();
-            shift.setId(medicalRecord.getSchedule().get_shift().getId());
-            shift.setTimeStart(medicalRecord.getSchedule().get_shift().getTime_start());
-            shift.setTimeEnd(medicalRecord.getSchedule().get_shift().getTime_end());
+
+            ShiftRespone shift = new ShiftRespone();
+            shift.setId(medicalRecord.getSchedule().getShift().getId());
+            shift.setTimeStart(medicalRecord.getSchedule().getShift().getTime_start());
+            shift.setTimeEnd(medicalRecord.getSchedule().getShift().getTime_end());
             model.setShift(shift);
 
             model.setScheduleId(medicalRecord.getSchedule().getId());
@@ -108,9 +110,10 @@ public class MedicalRecordServices {
         return resultList;
     }
 
-    public void updateMedicalRecord(medicalRecordRequest request){
+    public void updateMedicalRecord(MedicalRecordRequest request) {
 
-        MedicalRecord medicalRecord = medicalRecordRepository.findById(request.getId()).orElseThrow(()->new RuntimeException("medicalRecord not found"));
+        MedicalRecord medicalRecord = medicalRecordRepository.findById(request.getId())
+                .orElseThrow(() -> new RuntimeException("medicalRecord not found"));
 
         medicalRecord.setDiagnosis(request.getDiagnosis());
 

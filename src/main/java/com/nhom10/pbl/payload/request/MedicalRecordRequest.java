@@ -1,9 +1,9 @@
-package com.nhom10.pbl.dto.request;
+package com.nhom10.pbl.payload.request;
 
 import lombok.Data;
 
 @Data
-public class medicalRecordRequest {
+public class MedicalRecordRequest {
     private Long id;
     private String diagnosis;
 }

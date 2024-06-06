@@ -1,11 +1,11 @@
-package com.nhom10.pbl.dto.respone;
+package com.nhom10.pbl.payload.response;
 
 import java.time.LocalTime;
 
 import lombok.Data;
 
 @Data
-public class shiftRespone {
+public class ShiftRespone {
 
     private Long Id;
 

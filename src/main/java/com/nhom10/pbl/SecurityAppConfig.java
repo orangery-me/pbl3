@@ -19,66 +19,66 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.nhom10.pbl.security.jwt.JWTAuthFilter;
 import com.nhom10.pbl.security.service.CustomUserDetailsService;
 
-@Configuration // This annotation indicates that this class is a configuration class (cau hinh
-               // spring security)
+@Configuration // This annotation indicates that this class is a configuration class
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityAppConfig {
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+        @Autowired
+        private CustomUserDetailsService userDetailsService;
 
-    @Autowired
-    private JWTAuthFilter jwtAuthFilter;
+        @Autowired
+        private JWTAuthFilter jwtAuthFilter;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(AbstractHttpConfigurer::disable)
-        .sessionManagement((sessionManagement) -> sessionManagement
-        .sessionCreationPolicy(
-                org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
-        .authenticationProvider(authenticationProvider())
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-        .authorizeHttpRequests(
-                (authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/api/auth/**", "/login", "/auth/register", "/api/medical_record/**")
-                        .permitAll()
-                        .anyRequest().authenticated())
-        .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
-        .defaultSuccessUrl("/home", true))
-                .logout()
-                .invalidateHttpSession(true)
-                .deleteCookies("accessToken")
-                .logoutUrl("/logout");        
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+                httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                                .sessionManagement((sessionManagement) -> sessionManagement
+                                                .sessionCreationPolicy(
+                                                                org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
+                                .authenticationProvider(authenticationProvider())
+                                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                                .authorizeHttpRequests(
+                                                (authorizeHttpRequests) -> authorizeHttpRequests
+                                                                .requestMatchers("/api/auth/**", "/login", "/register")
+                                                                .permitAll()
+                                                                .anyRequest().authenticated())
+                                .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
+                                                .defaultSuccessUrl("/home", true))
+                                .logout(logout -> logout
+                                                .invalidateHttpSession(true)
+                                                .deleteCookies("accessToken")
+                                                .logoutUrl("/logout"));
 
-        return httpSecurity.build();
-    }
+                return httpSecurity.build();
+        }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/static/**", "/css/**",
-                "/js/**",
-                "/images/**");
-    }
+        @Bean
+        public WebSecurityCustomizer webSecurityCustomizer() {
+                return (web) -> web.ignoring().requestMatchers("/static/**", "/css/**",
+                                "/js/**",
+                                "/images/**");
+        }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+                return authConfig.getAuthenticationManager();
+        }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        // this is data access object which is used to fetch the user details and
-        // encoded password
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        @Bean
+        public DaoAuthenticationProvider authenticationProvider() {
+                // this is data access object which is used to fetch the user details and
+                // encoded password
+                DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+                authProvider.setUserDetailsService(userDetailsService);
+                authProvider.setPasswordEncoder(passwordEncoder());
 
-        return authProvider;
-    }
+                return authProvider;
+        }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
+
 }

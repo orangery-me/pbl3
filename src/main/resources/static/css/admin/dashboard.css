@@ -1,0 +1,31 @@
+.css-12f9l5c {
+    margin-bottom: 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 15px 10px -15px;
+    --Grid-borderWidth: 1px;
+    border-radius: 2px;
+    overflow: hidden;
+    border-color: rgb(222, 226, 230);
+}
+
+.css-12f9l5c>div {
+    border-color: rgb(222, 226, 230);
+    width: 25%;
+}
+
+.css-qmhy7w {
+    display: flex;
+    flex-direction: row;
+    padding: 24px;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.css-qmhy7w> :not(style)+ :not(style) {
+    margin: 0px 0px 0px 24px;
+}

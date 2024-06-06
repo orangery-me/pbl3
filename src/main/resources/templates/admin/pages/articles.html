@@ -27,10 +27,31 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="box box-success">
+                            <!-- title -->
                             <div class="box-header with-border">
-                                <h3 class="box-title">Articles management</h3>
+                                <h3 class="box-title">Quản lý bài viết khoa học</h3>
+                            </div>
+                            <!-- search bar -->
+                            <div class="search-bar">
+                                <p>Tìm kiếm theo: </p>
+                                <div class="col-md-2 inline-element">
+                                    <select class="form-control options">
+                                        <option>Id bài viết</option>
+                                        <option>Tiêu đề</option>
+                                        <option>Nội dung</option>
+                                        <option>Tên tác giả</option>
+                                        <option>Trạng thái bài viết</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 col-sm-4 inline-element">
+                                    <input type="text" class="form-control search-input" placeholder="Search...">
+                                </div>
+                                <div class="col-md-3 col-sm-4 inline-element">
+                                    <button class="btn btn-default btn-search">Tìm kiếm</button>
+                                </div>
                             </div>
 
+                            <!-- table -->
                             <div class="box-body no-padding">
                                 <div class="row">
                                     <div class="col-md-9 col-sm-8">
@@ -38,10 +59,14 @@
                                             <table>
                                                 <thead>
                                                     <tr>
-                                                        <th>ID Bài viết</th>
-                                                        <th>Tiêu đề</th>
-                                                        <th>Nội dung</th>
-                                                        <th>ID tác giả</th>
+                                                        <th class="id_article">ID Bài viết</th>
+                                                        <th class="article_header">Tiêu đề</th>
+                                                        <th class="article_content">Nội dung</th>
+                                                        <th class="author_name">Tên tác giả</th>
+                                                        <th class="created_at">Ngày tạo</th>
+                                                        <th class="modified_at">Ngày cập nhật</th>
+                                                        <th class="article_status">Trạng thái</th>
+                                                        <th class="actions">Thao tác</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tableBody">
@@ -50,13 +75,18 @@
                                             <div class="btn-end">
                                                 <button class="btn btn-default">Save changes</button>
                                             </div>
-                                            <script th:src="@{/js/admin/accounts-management.js}"> </script>
                                             <div id="world-map-markers" style="height: 325px;"></div>
                                         </div>
                                     </div>
-
                                 </div>
 
+                                <div class="js-modal open">
+                                    <div class="modal-content">
+                                        <div class="heading">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -76,6 +106,36 @@
 
                         </div>
 
+                    </div>
+
+                    <!-- pop up modal -->
+
+                    <!-- Button trigger modal -->
+                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModalScrollable">
+                        Launch demo modal
+                    </button> -->
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="exampleModalScrollableBody">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -119,6 +179,8 @@
     <script th:src="@{/js/admin/dashboard2.js}"></script>
 
     <script th:src="@{/js/admin/demo.js}"></script>
+
+    <script th:src="@{/js/admin/articles-management.js}"> </script>
 </body>
 
 </html>

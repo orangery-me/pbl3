@@ -1,12 +1,12 @@
-package com.nhom10.pbl.dto.respone;
+package com.nhom10.pbl.payload.response;
+
 import java.util.List;
 
-import com.nhom10.pbl.models.department;
-
+import com.nhom10.pbl.models.Department;
 import lombok.Data;
 
 @Data
-public class doctorRespone {
+public class DoctorRespone {
     private Long id;
 
     private String nameDoctor;
@@ -16,12 +16,12 @@ public class doctorRespone {
     private String RoomAddress;
     private Integer ServicePrices;
 
-    private departmentRespone departmentRespone;
-    
-    private List<scheduleRespone> listSchedule;
+    private DepartmentRespone departmentRespone;
 
-    public void setInitValuedepartmentRespone(department department){
-        departmentRespone departmentRespone = new departmentRespone();
+    private List<ScheduleRespone> listSchedule;
+
+    public void setInitValuedepartmentRespone(Department department) {
+        DepartmentRespone departmentRespone = new DepartmentRespone();
         departmentRespone.setId(department.getId());
         departmentRespone.setDescriptionDepartment(department.getDescriptionDepartment());
         departmentRespone.setLocation(department.getLocation());

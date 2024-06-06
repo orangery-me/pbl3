@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +17,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "patient")
-public class patient {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +25,14 @@ public class patient {
 
     private String name;
 
-    @OneToOne
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Schedule> listSchedule;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserModel user;
-
-    @OneToMany(mappedBy = "_patient", cascade = CascadeType.ALL)
-    private List<schedule> listSchedule;
+    private String nhomMau;
+    private double canNang;
+    private double chieuCao;
+    private String benhNen;
 }

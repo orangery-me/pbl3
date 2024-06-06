@@ -1,11 +1,11 @@
-package com.nhom10.pbl.dto.respone;
+package com.nhom10.pbl.payload.response;
 
 import java.sql.Date;
 
 import lombok.Data;
 
 @Data
-public class medicalRecordResponeModel {
+public class MedicalRecordResponeModel {
 
     private Long medicalRecordId;
 
@@ -13,7 +13,7 @@ public class medicalRecordResponeModel {
 
     private Date date;
 
-    private shiftRespone shift;
+    private ShiftRespone shift;
 
     private String diagnosis;
 

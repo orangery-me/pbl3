@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "shift")
-public class shift {
+public class Shift {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,6 @@ public class shift {
     private LocalTime time_start;
     private LocalTime time_end;
 
-    @OneToMany(mappedBy = "_shift")
-    private List<schedule> listSchedules;
+    @OneToMany(mappedBy = "shift")
+    private List<Schedule> listSchedules;
 }

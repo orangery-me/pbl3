@@ -7,15 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.nhom10.pbl.dto.respone.departmentRespone;
-import com.nhom10.pbl.models.Doctor;
 import com.nhom10.pbl.models.ERole;
-import com.nhom10.pbl.models.UserModel;
-import com.nhom10.pbl.security.jwt.JWTService;
-import com.nhom10.pbl.services.departmentServices;
-import com.nhom10.pbl.services.doctorServices;
-import com.nhom10.pbl.security.service.CustomUserDetails;
-import com.nhom10.pbl.security.service.CustomUserDetailsService;
+import com.nhom10.pbl.payload.response.DepartmentRespone;
+import com.nhom10.pbl.payload.response.UserResponse;
+import com.nhom10.pbl.services.DepartmentServices;
+import com.nhom10.pbl.security.service.AuthenticateService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -23,56 +19,86 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class HomeController {
-    private final CustomUserDetailsService customUserDetailsService;
-    private final departmentServices _departmentServices;
-    private final JWTService jwtService;
-    private final doctorServices doctorServices;
+
+    private final DepartmentServices departmentServices;
+    private final AuthenticateService authenticateService;
 
     @GetMapping("/home")
     public String getHomePage(Model model, HttpServletRequest request) {
 
-        String username = jwtService.extractUserNameFromTokenCookie(request);
-        
+        UserResponse user = authenticateService.getUserFromCookie(request);
 
         model.addAttribute("view", "homePage/homeComponent/homePage");
         model.addAttribute("file", "homePage");
-        
+        model.addAttribute("nav", "homePage/partials/navLogged");
+        model.addAttribute("navState", "navLogged");
 
-        if(username != null){
-            CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-            UserModel currUser = userDetails.getUser();
-            if(currUser.getRole().getName().equals(ERole.DOCTOR)){
+        if (user.getUsername() != null) {
+
+            if (user.getRole().equals(ERole.DOCTOR.name())) {
                 model.addAttribute("nav", "homePage/partials/navDoctorLogged");
                 model.addAttribute("navState", "navDoctorLogged");
-            }else if(currUser.getRole().getName().equals(ERole.PATIENT)){
+            } else if (user.getRole().equals(ERole.PATIENT.name())) {
                 model.addAttribute("nav", "homePage/partials/navLogged");
                 model.addAttribute("navState", "navLogged");
-                List<departmentRespone> listDepartmentRespones =  _departmentServices.getAllDepartmentRespones();
+                List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
                 model.addAttribute("listDepartmentRespones", listDepartmentRespones);
             }
-            model.addAttribute("user", currUser);
+            model.addAttribute("user", user);
         }
 
         return "homePage/index";
     }
-      
+
     @RequestMapping("/login")
     public String login() {
         return "auth/login/login";
     }
 
-    @RequestMapping("/admin")
-    public String adminPage() {
-        return "admin/pages/home";
-    }
-
-    @RequestMapping("/admin/accounts")
-    public String adminControllUsers() {
-        return "admin/pages/accounts";
-    }
-
     @RequestMapping("/logout")
     public String logout() {
         return "homePage/index";
+    }
+
+    @RequestMapping("/admin")
+    public String adminPage(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        return "admin/pages/chart";
+    }
+
+    @RequestMapping("/admin/accounts")
+    public String adminControllUsers(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        return "admin/pages/accounts";
+    }
+
+    @RequestMapping("/admin/articles")
+    public String adminControllArticles(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        return "admin/pages/articles";
+    }
+
+    @RequestMapping("/admin/departments")
+    public String adminControllDepartments(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        return "admin/pages/departments";
+    }
+
+    @RequestMapping("/admin/doctors")
+    public String adminControllDoctors(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        return "admin/pages/doctors";
+    }
+
+    @RequestMapping("/admin/schedules")
+    public String adminControllSchedules(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("user", user);
+        return "admin/pages/schedules";
     }
 }

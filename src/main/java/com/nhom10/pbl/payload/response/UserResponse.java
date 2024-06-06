@@ -24,6 +24,8 @@ public class UserResponse {
     private String role;
 
     public static UserResponse mapToUserResponse(UserModel user) {
+        if (user == null)
+            return null;
 
         return UserResponse.builder()
                 .id(user.getId())

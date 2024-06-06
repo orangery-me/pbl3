@@ -1,6 +1,7 @@
 package com.nhom10.pbl.models;
 
 import java.sql.Date;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "schedule")
-public class schedule {
+public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +27,33 @@ public class schedule {
 
     @ManyToOne
     @JoinColumn(name = "Doctor_id")
-    private Doctor _doctor;
+    private Doctor doctor;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    private patient _patient; 
-    
+    private Patient patient;
+
     @ManyToOne
     @JoinColumn(name = "shift_id")
-    private shift _shift;
+    private Shift shift;
 
     @OneToOne(mappedBy = "schedule")
     private MedicalRecord medicalRecord;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Schedule)) {
+            return false;
+        }
+        Schedule schedule = (Schedule) o;
+        return id == schedule.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
 }
