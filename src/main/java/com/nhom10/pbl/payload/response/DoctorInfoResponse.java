@@ -32,6 +32,6 @@ public class DoctorInfoResponse {
                 doctor.getDescription(),
                 doctor.getRoomAddress(), doctor.getServicePrices(),
                 departmentName,
-                doctor.getUser().getFullName(), doctor.getUser().getBirthday());
+                doctor.getUser().getFullname(), doctor.getUser().getBirthday());
     }
 }

@@ -33,7 +33,7 @@ public class UserResponse {
                 .password(user.getPassWord())
                 .email(user.getEmail())
                 .phone(user.getTelephone())
-                .fullname(user.getFullName())
+                .fullname(user.getFullname())
                 .gender(user.getGender())
                 .birthday(user.getBirthday().toString())
                 .enabled(user.getEnabled())

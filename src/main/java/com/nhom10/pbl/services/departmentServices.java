@@ -67,7 +67,7 @@ public class DepartmentServices {
             for (Doctor doctor : listDoctor) {
                 DoctorResponse _DoctorRespone = new DoctorResponse();
                 _DoctorRespone.setId(doctor.getId());
-                _DoctorRespone.setNameDoctor(doctor.getUser().getFullName());
+                _DoctorRespone.setNameDoctor(doctor.getUser().getFullname());
                 _DoctorRespone.setGender(doctor.getUser().getGender());
                 _DoctorRespone.setDescription(doctor.getDescription());
                 _DoctorRespone.setPosition(doctor.getPosition());

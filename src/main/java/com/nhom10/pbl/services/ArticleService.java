@@ -69,7 +69,7 @@ public class ArticleService {
     }
 
     public List<ArticleResponse> getArticleByAuthor(String authorName) {
-        List<UserModel> authors = userRepository.findByFullNameContaining(authorName)
+        List<UserModel> authors = userRepository.findByFullnameContaining(authorName)
                 .orElseThrow(() -> new NullPointerException("Author not found"));
         List<ArticleResponse> responses = new ArrayList<ArticleResponse>();
         authors.forEach(author -> articleRepository.findByAuthor(author).ifPresent(articles -> {

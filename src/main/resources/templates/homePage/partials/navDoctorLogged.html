@@ -12,8 +12,8 @@
                 <a class="link" href="#">THÀNH TỰU</a>
                 <a class="link" href="#">TIN TỨC</a>
                 <a class="link" href="#">LIÊN HỆ</a>
-                <a class="link url-get-medical" th:href="@{/home/doctor/medical}" >LỊCH ĐẶT KHÁM</a>
-                <a class="link" th:href="@{/auth/register}" th:text="${user.userName}"></a>
+                <a class="link url-get-medical" th:href="@{/home/doctor/medical}">LỊCH ĐẶT KHÁM</a>
+                <a class="link" th:text="${user.fullname}"></a>
                 <!-- <li class="link dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  th:object="${user}" th:text="${user.userName}"></a>
                     <ul class="dropdown-menu">
@@ -29,6 +29,6 @@
     </nav>
     <div class="customer">
         <span class="content-TC">Trang chủ >></span>
-        <span class="content-KH">Dành cho khách hàng</span>
+        <span class="content-KH">Dành cho bác sĩ</span>
     </div>
 </div>

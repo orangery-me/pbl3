@@ -40,7 +40,7 @@ public class MedicalRecordServices {
             if (!namePatient.equals("")) {
                 for (MedicalRecord medicalRecord : listMedicalRecords) {
                     if (medicalRecord.getSchedule().getDate().equals(Date.valueOf(LocalDate.now()))
-                            && medicalRecord.getSchedule().getPatient().getUser().getFullName().toLowerCase()
+                            && medicalRecord.getSchedule().getPatient().getUser().getFullname().toLowerCase()
                                     .contains(namePatient.toLowerCase())) {
 
                         resultList.add(medicalRecord);
@@ -58,7 +58,7 @@ public class MedicalRecordServices {
             if (!date.equals("") && !namePatient.equals("")) {
                 for (MedicalRecord medicalRecord : listMedicalRecords) {
                     if (medicalRecord.getSchedule().getDate().equals(Date.valueOf(date))
-                            && medicalRecord.getSchedule().getPatient().getUser().getFullName().toLowerCase()
+                            && medicalRecord.getSchedule().getPatient().getUser().getFullname().toLowerCase()
                                     .contains(namePatient.toLowerCase())) {
 
                         resultList.add(medicalRecord);
@@ -66,7 +66,7 @@ public class MedicalRecordServices {
                 }
             } else if (date.equals("") && !namePatient.equals("")) {
                 for (MedicalRecord medicalRecord : listMedicalRecords) {
-                    if (medicalRecord.getSchedule().getPatient().getUser().getFullName().toLowerCase()
+                    if (medicalRecord.getSchedule().getPatient().getUser().getFullname().toLowerCase()
                             .contains(namePatient.toLowerCase())) {
 
                         resultList.add(medicalRecord);
@@ -92,7 +92,7 @@ public class MedicalRecordServices {
             MedicalRecordResponeModel model = new MedicalRecordResponeModel();
 
             model.setMedicalRecordId(medicalRecord.getId());
-            model.setPatientName(medicalRecord.getSchedule().getPatient().getUser().getFullName());
+            model.setPatientName(medicalRecord.getSchedule().getPatient().getUser().getFullname());
             model.setDate(medicalRecord.getSchedule().getDate());
 
             ShiftResponse shift = new ShiftResponse();

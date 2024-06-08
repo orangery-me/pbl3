@@ -71,7 +71,7 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         try {
             userFromDb.setPassWord(passwordEncoder.encode(user.getPassword()));
-            userFromDb.setFullName(user.getFullname());
+            userFromDb.setFullname(user.getFullname());
             userFromDb.setEmail(user.getEmail());
             userFromDb.setTelephone(user.getPhone());
             userFromDb.setBirthday(user.getBirthday());

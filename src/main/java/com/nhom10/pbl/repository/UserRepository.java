@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     public Optional<List<UserModel>> findByTelephoneContaining(String phone);
 
-    public Optional<List<UserModel>> findByFullNameContaining(String fullName);
+    public Optional<List<UserModel>> findByFullnameContaining(String fullName);
 
     public void deleteById(@NonNull Long id);
 

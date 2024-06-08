@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.nhom10.pbl.models.MedicalRecord;
 
-public interface MedicalRecordRepository extends JpaRepository<MedicalRecord, Long>{
+public interface MedicalRecordRepository extends JpaRepository<MedicalRecord, Long> {
 
-    @Query("SELECT s FROM MedicalRecord s WHERE s.schedule._doctor.id = :doctorId ORDER BY s.schedule.date DESC")
+    @Query("SELECT s FROM MedicalRecord s WHERE s.schedule.doctor.id = :doctorId ORDER BY s.schedule.date DESC")
     List<MedicalRecord> findAllByDoctorId(@Param("doctorId") Long doctorId);
 }

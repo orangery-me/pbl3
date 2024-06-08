@@ -36,7 +36,7 @@ public class UserModel {
     private Boolean enabled;
     @Column(name = "fullname")
     @NonNull
-    private String fullName;
+    private String fullname;
     @Column(name = "gender")
     @NonNull
     private Boolean gender;

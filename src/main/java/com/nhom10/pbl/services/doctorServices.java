@@ -70,7 +70,7 @@ public class DoctorServices {
         if (doctor.isPresent()) {
             Doctor _doctor = _doctorr;
             doctorRespone.setId(_doctor.getId());
-            doctorRespone.setNameDoctor(_doctor.getUser().getFullName());
+            doctorRespone.setNameDoctor(_doctor.getUser().getFullname());
             doctorRespone.setGender(_doctor.getUser().getGender());
             doctorRespone.setDescription(_doctor.getDescription());
             doctorRespone.setListSchedule(getListScheduleResponsesOfDoctor(id));

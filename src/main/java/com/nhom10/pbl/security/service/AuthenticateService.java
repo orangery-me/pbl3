@@ -98,7 +98,7 @@ public class AuthenticateService {
                 .passWord(passwordEncoder.encode(request.getPassword()))
                 .email(request.getEmail())
                 .telephone(request.getPhone())
-                .fullName(request.getFullname())
+                .fullname(request.getFullname())
                 .birthday(request.getBirthday())
                 .gender(request.getGender())
                 .enabled(true)

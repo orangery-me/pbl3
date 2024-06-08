@@ -27,9 +27,9 @@ public class ScheduleInfoResponse {
     public static ScheduleInfoResponse mapToScheduleInfoResponse(Schedule schedule) {
         return new ScheduleInfoResponse(schedule.getId(), schedule.getDate(),
                 ScheduleState.getState(schedule.getState()),
-                schedule.getDoctor().getId(), schedule.getDoctor().getUser().getFullName(),
+                schedule.getDoctor().getId(), schedule.getDoctor().getUser().getFullname(),
                 schedule.getDoctor().getRoomAddress(),
-                schedule.getPatient().getId(), schedule.getPatient().getUser().getFullName(),
+                schedule.getPatient().getId(), schedule.getPatient().getUser().getFullname(),
                 schedule.getShift().getId(),
                 schedule.getShift().getTime_start(), schedule.getShift().getTime_end());
     }

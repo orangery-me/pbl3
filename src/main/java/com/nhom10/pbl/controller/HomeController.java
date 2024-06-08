@@ -30,8 +30,6 @@ public class HomeController {
 
         model.addAttribute("view", "homePage/homeComponent/homePage");
         model.addAttribute("file", "homePage");
-        model.addAttribute("nav", "homePage/partials/navLogged");
-        model.addAttribute("navState", "navLogged");
 
         if (user.getUsername() != null) {
 
