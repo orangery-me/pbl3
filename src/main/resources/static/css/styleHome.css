@@ -127,18 +127,24 @@
 }
 
 div a {
-    color: #000;
+    color: #fff;
+    text-decoration: none;
+}
+
+div li a {
+    color: black;
     text-decoration: none;
 }
 
 nav .nav-link {
-    background-color: white;
+    background-color: black;
     height: 47px;
     top: 247px;
     border-bottom: 5px solid transparent;
 }
 
 .nav-link .container-custom.navLogged {
+    background-color: black;
     padding: 0px;
     margin: 0px;
     max-width: 1480px;
@@ -166,15 +172,36 @@ nav .nav-link {
 }
 
 .container.container-custom .link.active {
+    color: black;
     background-color: rgb(243, 246, 246);
     border-color: rgb(61, 111, 197);
     opacity: 1;
 }
 
 .container.container-custom .link:hover {
-    color: rgb(76, 76, 231);
+    color: white;
     border-color: rgb(178, 201, 240);
     opacity: 1;
+}
+
+.container.container-custom .link.active:hover {
+    color: black;
+    border-color: rgb(61, 111, 197);
+    opacity: 1;
+}
+
+.container.container-custom .link.dropdown {
+    color: black;
+    opacity: 1;
+}
+
+.dropdown-toggle {
+    color: #ffffffb8;
+}
+
+.link.dropdown.active .dropdown-toggle {
+    color: black;
+    /* Change to the desired active color */
 }
 
 .nav-link .container.container-custom .line {
@@ -233,6 +260,9 @@ nav .nav-link {
     height: 100%;
     padding-top: 13px;
     text-align: center;
+    color: black;
+    box-shadow: -1px 4px 39px rgb(0 0 0 / 8%);
+    border-radius: 20px;
 }
 
 .list-department .item-department:hover {

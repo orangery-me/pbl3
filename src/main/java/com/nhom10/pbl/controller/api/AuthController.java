@@ -1,4 +1,4 @@
-package com.nhom10.pbl.controller;
+package com.nhom10.pbl.controller.api;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
