@@ -2,27 +2,27 @@
     <nav>
         <div class="nav-link">
             <div class="container container-custom navLogged">
-                <a class="link" th:href="@{/}">
+                <a class="link" th:href="@{/home}">
                     <i class="fa-solid fa-house"></i>
                 </a>
-                <a class="link" th:href="@{/greeting}">GIỚI THIỆU</a>
+                <a class="link" href="#">GIỚI THIỆU</a>
                 <a class="link" href="#">CHUYÊN KHOA</a>
-                <div class="link team-of-doctors">ĐỘI NGŨ BÁC SĨ</div>
+                <a class="link team-of-doctors">ĐỘI NGŨ BÁC SĨ</a>
                 <a class="link" href="#">DỊCH VỤ</a>
                 <a class="link" href="#">THÀNH TỰU</a>
                 <a class="link" href="#">TIN TỨC</a>
                 <a class="link" href="#">LIÊN HỆ</a>
-                <div id="link-popup" class="link">ĐẶT LỊCH NGAY</div>
-                <a class="link" th:text="${user.fullname}"></a>
-                <!-- <li class="link dropdown">
-                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  th:object="${user}" th:text="${user.userName}"></a>
+                <a id="link-popup" class="link">ĐẶT LỊCH NGAY</a>
+                <li class="link dropdown" style="width: 158px;">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">HỒ SƠ</a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Hồ sơ cá nhân</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" th:href="@{/edit}">Thông tin cá nhân</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
                     </ul>
-                </li> -->
+                </li>
                 <div class="line"></div>
             </div>
         </div>

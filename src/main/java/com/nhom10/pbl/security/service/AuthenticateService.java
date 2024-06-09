@@ -21,6 +21,7 @@ import com.nhom10.pbl.repository.RoleRepository;
 import com.nhom10.pbl.repository.UserRepository;
 import com.nhom10.pbl.security.jwt.JWTService;
 import com.nhom10.pbl.services.DoctorServices;
+import com.nhom10.pbl.services.PatientService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,7 +47,14 @@ public class AuthenticateService {
     private DoctorServices doctorService;
 
     @Autowired
+    private PatientService patientService;
+
+    @Autowired
     private final AuthenticationManager authenticationManager;
+
+    public Boolean comparePassword(String inputPassword, String encodedPassword) {
+        return passwordEncoder.matches(inputPassword, encodedPassword);
+    }
 
     public UserResponse getUserFromCookie(HttpServletRequest request) throws UsernameNotFoundException {
         String username = null;
@@ -107,7 +115,7 @@ public class AuthenticateService {
 
         userRepository.save(user);
         if (role.getName().equals(ERole.PATIENT)) {
-            // create patient
+            patientService.createNewPatient(user);
         } else if (role.getName().equals(ERole.DOCTOR)) {
             doctorService.createNewDoctor(user);
         }
