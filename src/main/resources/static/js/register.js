@@ -38,9 +38,10 @@ document.getElementById("form-1").addEventListener("submit", function (event) {
     var m = document.getElementById("fullname").value;
     var e = document.getElementById("email").value;
     var p = document.getElementById("password").value;
-    var c = document.getElementById("birthday").value;
+    var c = document.getElementById("birth").value;
     var g = document.querySelector('input[name="gender"]:checked');
     var sdt = document.getElementById("sdt").value;
+    var pa = document.getElementById("password_confirmation").value;
 
     if (!g) {
         alert("Please select a gender.");
@@ -48,45 +49,51 @@ document.getElementById("form-1").addEventListener("submit", function (event) {
     }
 
     const genderValue = g.value === "1";
+    if (p == pa) {
+        const userData = {
+            "username": u,
+            "email": e,
+            "phone": sdt,
+            "fullname": m,
+            "gender": genderValue,
+            "birthday": c,
+            "enabled": 1,
+            "role": "PATIENT",
+            "password": p
+        };
 
-    const userData = {
-        "username": u,
-        "email": e,
-        "phone": sdt,
-        "fullname": m,
-        "gender": genderValue,
-        "birthday": c,
-        "enabled": 1,
-        "role": "PATIENT",
-        "password": p
-    };
+        console.log("Sending user data:", JSON.stringify(userData));
 
-    console.log("Sending user data:", JSON.stringify(userData));
-
-    fetch("http://localhost:8080/api/auth/register", {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(userData)
-    })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(errorData => {
-                    console.error("Error response from server:", errorData);
-                    alert("This account already existed");
-                    throw new Error("Failed to authenticate");
-                });
-            }
-            return response.json();
+        fetch("http://localhost:8080/api/auth/register", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
         })
-        .then(data => {
-            alert("Register successful!");
-            window.location.href = "http://localhost:8080/home";
-            console.log("Authentication successful:", data);
-        })
-        .catch(error => {
-            alert("Error with registration! Please try again later.");
-            console.error("Authentication error:", error.message);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        console.error("Error response from server:", errorData);
+                        alert("This account already existed");
+                        throw new Error("Failed to authenticate");
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert("Register successful!");
+                window.location.href = "http://localhost:8080/home";
+                console.log("Authentication successful:", data);
+            })
+            .catch(error => {
+                alert("Error with registration! Please try again later.");
+                console.error("Authentication error:", error.message);
+            });
+
+
+    }
+    else {
+        alert("Mật khẩu nhập lại không đúng");
+    }
 });
