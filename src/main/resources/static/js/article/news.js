@@ -11,14 +11,19 @@ function fetchData() {
                 articleCard.className = 'col-md-4';
                 const modalId = `exampleModal-${article.id}`;
 
-                const createdAt = new Date(article.createdAt);
-                const formattedDate = createdAt instanceof Date && !isNaN(createdAt) ? createdAt.toLocaleDateString() : 'Unknown';
+
+                const parsedDate = Date.parse(article.createdAt);
+                const formattedDate = parsedDate ? new Date(parsedDate).toLocaleDateString() : 'Unknown';
+
+
                 articleCard.innerHTML = `
                         <div class="card mb-4" onClick="openModal('${modalId}')">
                             ${article.firstImageUrl ? `<img src="${article.firstImageUrl}" class="card-img-top" alt="Article Image">` : ''}
                             <div class="card-body">
                                 <h5 class="card-title">${article.title}</h5>
-                               <p class="card-text">${formattedDate}</p>
+                               <p class="card-text">
+                                <i class="fa fa-calendar" aria-hidden="true"></i> ${formattedDate}
+                            </p>
                                 
                             </div>
                         </div>

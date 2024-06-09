@@ -35,3 +35,11 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.underline-title {
+    display: inline-block;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+    text-align: center;
+    margin: 0 auto; /* Center the element */
+}
