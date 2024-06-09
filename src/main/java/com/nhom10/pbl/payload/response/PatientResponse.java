@@ -22,10 +22,10 @@ public class PatientResponse {
         return PatientResponse.builder()
                 .id(patient.getId())
                 .user(patient.getUser())
-                .nhomMau(patient.getNhomMau())
-                .canNang(patient.getCanNang())
-                .chieuCao(patient.getChieuCao())
-                .benhNen(patient.getBenhNen())
+                .nhomMau(patient.getNhommau())
+                .canNang(patient.getCannang())
+                .chieuCao(patient.getChieucao())
+                .benhNen(patient.getBenhnen())
                 .build();
     }
 }

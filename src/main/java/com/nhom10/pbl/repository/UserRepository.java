@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.EntityGraph;
 
 import com.nhom10.pbl.models.UserModel;
 
@@ -13,6 +14,7 @@ import com.nhom10.pbl.models.UserModel;
 public interface UserRepository extends JpaRepository<UserModel, Long> {
     public @NonNull Optional<UserModel> findById(@NonNull Long id);
 
+    @EntityGraph(attributePaths = { "role" })
     public Optional<UserModel> findByUserName(String userName);
 
     public Optional<List<UserModel>> findByUserNameContaining(String userName);

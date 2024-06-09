@@ -12,11 +12,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
 
 @Entity
 @Data
+@Builder
 @Table(name = "patient")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Patient {
 
     @Id
@@ -31,8 +37,8 @@ public class Patient {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserModel user;
-    private String nhomMau;
-    private double canNang;
-    private double chieuCao;
-    private String benhNen;
+    private String nhommau;
+    private double cannang;
+    private double chieucao;
+    private String benhnen;
 }

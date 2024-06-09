@@ -13,16 +13,17 @@
                 <a class="link" href="#">TIN TỨC</a>
                 <a class="link" href="#">LIÊN HỆ</a>
                 <div id="link-popup" class="link">ĐẶT LỊCH NGAY</div>
-                <a class="link" th:text="${user.fullname}"></a>
-                <!-- <li class="link dropdown">
-                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  th:object="${user}" th:text="${user.userName}"></a>
+                <li class="link dropdown" style="width: 180px;">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        th:text="${user.fullname}"></a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Hồ sơ cá nhân</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" th:href="@{/edit}">Hồ sơ cá nhân</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
                     </ul>
-                </li> -->
+                </li>
                 <div class="line"></div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-package com.nhom10.pbl.controller;
+package com.nhom10.pbl.controller.home;
 
 import java.util.List;
 
@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nhom10.pbl.models.ERole;
+import com.nhom10.pbl.models.Patient;
 import com.nhom10.pbl.payload.response.DepartmentRespone;
 import com.nhom10.pbl.payload.response.UserResponse;
 import com.nhom10.pbl.services.DepartmentServices;
+import com.nhom10.pbl.services.PatientService;
 import com.nhom10.pbl.security.service.AuthenticateService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ public class HomeController {
 
     private final DepartmentServices departmentServices;
     private final AuthenticateService authenticateService;
+    private final PatientService patientServices;
 
     @GetMapping("/home")
     public String getHomePage(Model model, HttpServletRequest request) {
@@ -51,6 +54,11 @@ public class HomeController {
     @RequestMapping("/login")
     public String login() {
         return "auth/login/login";
+    }
+
+    @GetMapping("/register")
+    public String getRegisterPage() {
+        return "auth/register/register";
     }
 
     @RequestMapping("/logout")
@@ -98,5 +106,41 @@ public class HomeController {
         UserResponse user = authenticateService.getUserFromCookie(request);
         model.addAttribute("user", user);
         return "admin/pages/schedules";
+    }
+
+    @GetMapping("/edit")
+    public String Update(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+
+        if (user.getUsername() != null) {
+            model.addAttribute("nav", "homePage/partials/navLogged");
+            model.addAttribute("navState", "navLogged");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+            model.addAttribute("user", user);
+        }
+        return "homePage/homeComponent/edit";
+    }
+
+    @GetMapping("/new-content")
+    public String newContent(Model model, HttpServletRequest request) {
+        UserResponse user = authenticateService.getUserFromCookie(request);
+
+        if (user != null) {
+            Patient patient = patientServices.getPatientByUserId(user.getId());
+            model.addAttribute("patient", patient);
+            model.addAttribute("user", user);
+
+            model.addAttribute("nav", "homePage/partials/navLogged");
+            model.addAttribute("navState", "navLogged");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        }
+        return "homePage/homeComponent/medicalInfo";
+    }
+
+    @GetMapping("/thanhtuu")
+    public String thanhtuu() {
+        return "homePage/thanhtuu";
     }
 }

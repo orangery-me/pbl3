@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nhom10.pbl.payload.response.AuthenticationResponse;
 import com.nhom10.pbl.payload.request.AuthenticationRequest;
+import com.nhom10.pbl.payload.request.PasswordCheckRequest;
 import com.nhom10.pbl.payload.request.RegisterRequest;
 import com.nhom10.pbl.security.service.AuthenticateService;
 
@@ -49,6 +50,12 @@ public class AuthController {
             return ResponseEntity.status(500).build();
         }
 
+    }
+
+    @PostMapping("/comparePassword")
+    public Boolean comparePassword(@RequestBody PasswordCheckRequest passwordCheckRequest) {
+        return authenticationService.comparePassword(passwordCheckRequest.getInputPassword(),
+                passwordCheckRequest.getEncodedPassword());
     }
 
 }
