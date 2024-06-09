@@ -88,10 +88,11 @@
 
 .list-bs .container .row .card-bs .card .card-body{
    height: 100px;
+   margin-left: -20px;
 }
 
 .list-bs .container .row .card-bs .card .card-body .card-text{
-    color: #095F8B;
+    color: black;
     font-weight: 700;
 }
 
@@ -343,9 +344,36 @@ nav .nav-link{
 
 #img-logo-gud{
     position: relative;
-    width: 231.66px;
-    height: 129.09px;
+    width: 256.66px;
+    height: 144.09px;
     left: 165px;
-    top: 46px;
+    top: 50px;
 }
 
+.logo-and-contact{
+    display: flex;
+    color: whitesmoke;
+    padding-left: 50px;
+}
+.contact-us{
+    padding-left: 750px;
+    padding-top: 50px;
+    font-size: 1.1rem;
+}
+.contact-title-text{
+    font-weight: 500;
+    padding-left: 40px;
+    color: rgb(93,102,204);
+    text-decoration: underline;
+}
+.read-text{
+    padding-left: 350px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding-top: 19px;
+    white-space: pre-wrap;
+    color: whitesmoke;
+}
+.contact-phone1-text{
+    padding-left: 4px;
+}

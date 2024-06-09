@@ -42,8 +42,7 @@ public class SecurityAppConfig {
                                                                 .requestMatchers("/api/auth/**", "/login", "/register")
                                                                 .permitAll()
                                                                 .anyRequest().authenticated())
-                                .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
-                                                .defaultSuccessUrl("/home", true))
+                               
                                 .logout(logout -> logout
                                                 .invalidateHttpSession(true)
                                                 .deleteCookies("accessToken")

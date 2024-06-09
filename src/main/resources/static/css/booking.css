@@ -144,10 +144,10 @@ body > div {
     border: solid 1px rgb(45,135,243);
 }
 
-.fa-solid.fa-chevron-right{
+#right-click{
     position: absolute;
     right: 179px;
-    top: 730px;
+    top: 590px;
     z-index: 7;
     cursor: pointer;
 }
