@@ -253,7 +253,7 @@ nav .nav-link {
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    border-radius: 3px;
+    border-radius: 20px;
 }
 
 .list-department .item-department .department-item {

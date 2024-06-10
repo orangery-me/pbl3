@@ -1,5 +1,4 @@
 const NAV_INDEX_STORAGE_KEY = 'INDEX'
-const SCROLL_POSITION_KEY = 'VALUE_POSITION'
 
 var navLink = document.querySelectorAll('.link')
 var popUp = document.querySelector('.pop-up');
@@ -73,30 +72,15 @@ const storage =  {
     set(index) {
         localStorage.setItem(NAV_INDEX_STORAGE_KEY, JSON.stringify(index));
     },
-    setPositionScroll(scrollY) {
-        localStorage.setItem(SCROLL_POSITION_KEY, JSON.stringify(scrollY));
-    },
-    getPositionScroll() {
-        return JSON.parse(localStorage.getItem(SCROLL_POSITION_KEY));
-    },
     delete() {
         localStorage.clear();
     }
 }
 
-if(storage.getPositionScroll()){
-    window.scrollY = storage.getPositionScroll()
-}
-
-document.onscroll = () => {
-    console.log(window.scrollY)
-    storage.setPositionScroll(window.scrollY)
-}
-
 navLink[0].classList.add('active');
 
 for(let i=0; i < navLink.length; i++) {
-    if(navLink[i].classList.contains('active') && storage.get()){
+    if(navLink[i].classList.contains('active') && storage.get() < navLink.length){
         navLink[i].classList.remove('active');
         navLink[storage.get()].classList.add('active')
         break;

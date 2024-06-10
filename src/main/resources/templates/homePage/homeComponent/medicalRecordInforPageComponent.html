@@ -6,6 +6,7 @@
       <th scope="col">Ngày khám</th>
       <th scope="col">Ca khám</th>
       <th scope="col">Kết luận của bác sĩ</th>
+      <th scope="col">Chi tiết</th>
     </tr>
   </thead>
   <tbody th:if="${listMedicalRecordRespone != null && !(#lists.isEmpty(listMedicalRecordRespone))}" th:each="medicalRecord, iterStat : ${listMedicalRecordRespone}">

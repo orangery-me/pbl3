@@ -66,6 +66,9 @@ public class AuthenticateService {
                 }
             }
         }
+
+        if(username == null) return  UserResponse.mapToUserResponse(null);
+        
         var user = userRepository.findByUserName(username).orElseThrow();
         return UserResponse.mapToUserResponse(user);
     }

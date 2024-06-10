@@ -41,7 +41,8 @@ public class SecurityAppConfig {
                                                 (authorizeHttpRequests) -> authorizeHttpRequests
                                                                 .requestMatchers("/api/auth/**", "/login", "/register",
                                                                                 "/home", "/logout",
-                                                                                "/home/user/appointment")
+                                                                                "/home/user/appointment",
+                                                                                "/huongdan", "/tracuu", "/banggia" )
                                                                 .permitAll()
                                                                 .requestMatchers("/admin").hasRole("ADMIN")
                                                                 .anyRequest().authenticated())
