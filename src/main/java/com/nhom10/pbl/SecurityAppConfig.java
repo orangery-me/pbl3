@@ -42,9 +42,8 @@ public class SecurityAppConfig {
                                                                 .requestMatchers("/api/auth/**", "/login", "/register",
                                                                                 "/home", "/logout",
                                                                                 "/home/user/appointment",
-                                                                                "/huongdan", "/tracuu", "/banggia" )
+                                                                                "/home/**")
                                                                 .permitAll()
-                                                                .requestMatchers("/admin").hasRole("ADMIN")
                                                                 .anyRequest().authenticated())
                                 .formLogin((formLogin) -> formLogin.loginPage("/login").loginProcessingUrl("/login")
                                                 .defaultSuccessUrl("/home", true))

@@ -1,4 +1,4 @@
-package com.nhom10.pbl.controller.home;
+package com.nhom10.pbl.controller.view;
 
 import java.util.List;
 
@@ -28,31 +28,25 @@ public class HomeController {
 
     @GetMapping("/home")
     public String getHomePage(Model model, HttpServletRequest request) {
-
         UserResponse user = authenticateService.getUserFromCookie(request);
 
         model.addAttribute("view", "homePage/homeComponent/homePage");
         model.addAttribute("file", "homePage");
+        List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+        model.addAttribute("listDepartmentRespones", listDepartmentRespones);
 
-        if(user == null){
+        if (user == null || user.getRole().equals(ERole.ADMIN.name())) {
             model.addAttribute("nav", "homePage/partials/nav");
             model.addAttribute("navState", "nav");
-            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
-            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
-        }else{
-            if (user.getUsername() != null) {
-
-                if (user.getRole().equals(ERole.DOCTOR.name())) {
-                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
-                    model.addAttribute("navState", "navDoctorLogged");
-                } else if (user.getRole().equals(ERole.PATIENT.name())) {
-                    model.addAttribute("nav", "homePage/partials/navLogged");
-                    model.addAttribute("navState", "navLogged");
-                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
-                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
-                }
-                model.addAttribute("user", user);
+        } else {
+            if (user.getRole().equals(ERole.DOCTOR.name())) {
+                model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                model.addAttribute("navState", "navDoctorLogged");
+            } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                model.addAttribute("nav", "homePage/partials/navLogged");
+                model.addAttribute("navState", "navLogged");
             }
+            model.addAttribute("user", user);
         }
 
         return "homePage/index";
@@ -73,46 +67,31 @@ public class HomeController {
         return "homePage/index";
     }
 
-    @RequestMapping("/admin")
-    public String adminPage(Model model, HttpServletRequest request) {
+    @RequestMapping("/new-article")
+    public String newArticle(Model model, HttpServletRequest request) {
         UserResponse user = authenticateService.getUserFromCookie(request);
         model.addAttribute("user", user);
-        return "admin/pages/chart";
+        return "articles/post";
     }
 
-    @RequestMapping("/admin/accounts")
-    public String adminControllUsers(Model model, HttpServletRequest request) {
+    @RequestMapping("/news")
+    public String news(Model model, HttpServletRequest request) {
         UserResponse user = authenticateService.getUserFromCookie(request);
         model.addAttribute("user", user);
-        return "admin/pages/accounts";
-    }
-
-    @RequestMapping("/admin/articles")
-    public String adminControllArticles(Model model, HttpServletRequest request) {
-        UserResponse user = authenticateService.getUserFromCookie(request);
-        model.addAttribute("user", user);
-        return "admin/pages/articles";
-    }
-
-    @RequestMapping("/admin/departments")
-    public String adminControllDepartments(Model model, HttpServletRequest request) {
-        UserResponse user = authenticateService.getUserFromCookie(request);
-        model.addAttribute("user", user);
-        return "admin/pages/departments";
-    }
-
-    @RequestMapping("/admin/doctors")
-    public String adminControllDoctors(Model model, HttpServletRequest request) {
-        UserResponse user = authenticateService.getUserFromCookie(request);
-        model.addAttribute("user", user);
-        return "admin/pages/doctors";
-    }
-
-    @RequestMapping("/admin/schedules")
-    public String adminControllSchedules(Model model, HttpServletRequest request) {
-        UserResponse user = authenticateService.getUserFromCookie(request);
-        model.addAttribute("user", user);
-        return "admin/pages/schedules";
+        if (user == null) {
+            model.addAttribute("view", "homePage/homeComponent/homePage");
+            model.addAttribute("file", "homePage");
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+        } else {
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("view", "homePage/homeComponent/homePage");
+            model.addAttribute("file", "homePage");
+            model.addAttribute("nav", "homePage/partials/navLogged");
+            model.addAttribute("navState", "navLogged");
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        }
+        return "articles/news";
     }
 
     @GetMapping("/edit")
@@ -152,19 +131,19 @@ public class HomeController {
     }
 
     @GetMapping("/huongdan")
-    public String huongdan(Model model, HttpServletRequest request){
+    public String huongdan(Model model, HttpServletRequest request) {
 
         UserResponse user = authenticateService.getUserFromCookie(request);
 
         model.addAttribute("view", "homePage/homeComponent/medical_examination_process_page");
         model.addAttribute("file", "medical_examination_process_page");
 
-        if(user == null){
+        if (user == null) {
             model.addAttribute("nav", "homePage/partials/nav");
             model.addAttribute("navState", "nav");
             List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
             model.addAttribute("listDepartmentRespones", listDepartmentRespones);
-        }else{
+        } else {
             if (user.getUsername() != null) {
 
                 if (user.getRole().equals(ERole.DOCTOR.name())) {
@@ -184,19 +163,19 @@ public class HomeController {
     }
 
     @GetMapping("/banggia")
-    public String BangGia(Model model, HttpServletRequest request){
+    public String BangGia(Model model, HttpServletRequest request) {
 
         UserResponse user = authenticateService.getUserFromCookie(request);
 
         model.addAttribute("view", "homePage/homeComponent/priceOfGudmec");
         model.addAttribute("file", "priceOfGudmec");
 
-        if(user == null){
+        if (user == null) {
             model.addAttribute("nav", "homePage/partials/nav");
             model.addAttribute("navState", "nav");
             List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
             model.addAttribute("listDepartmentRespones", listDepartmentRespones);
-        }else{
+        } else {
             if (user.getUsername() != null) {
 
                 if (user.getRole().equals(ERole.DOCTOR.name())) {
@@ -216,32 +195,29 @@ public class HomeController {
     }
 
     @GetMapping("/tracuu")
-    public String TraCuu(Model model, HttpServletRequest request){
+    public String TraCuu(Model model, HttpServletRequest request) {
 
         UserResponse user = authenticateService.getUserFromCookie(request);
 
         model.addAttribute("view", "homePage/homeComponent/SearchResult");
         model.addAttribute("file", "SearchResult");
 
-        if(user == null){
+        if (user == null) {
             model.addAttribute("nav", "homePage/partials/nav");
             model.addAttribute("navState", "nav");
             List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
             model.addAttribute("listDepartmentRespones", listDepartmentRespones);
-        }else{
-            if (user.getUsername() != null) {
-
-                if (user.getRole().equals(ERole.DOCTOR.name())) {
-                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
-                    model.addAttribute("navState", "navDoctorLogged");
-                } else if (user.getRole().equals(ERole.PATIENT.name())) {
-                    model.addAttribute("nav", "homePage/partials/navLogged");
-                    model.addAttribute("navState", "navLogged");
-                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
-                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
-                }
-                model.addAttribute("user", user);
+        } else {
+            if (user.getRole().equals(ERole.DOCTOR.name())) {
+                model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                model.addAttribute("navState", "navDoctorLogged");
+            } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                model.addAttribute("nav", "homePage/partials/navLogged");
+                model.addAttribute("navState", "navLogged");
+                List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                model.addAttribute("listDepartmentRespones", listDepartmentRespones);
             }
+            model.addAttribute("user", user);
         }
 
         return "homePage/index";

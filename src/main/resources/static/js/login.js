@@ -36,22 +36,18 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
         .then(response => {
             if (!response.ok) {
                 alert("Tên tài khoản hoặc mật khẩu không chính xác!");
-                // $('#login-toast').toast('show');
-                // document.getElementById("toast-content").innerText = "Tên tài khoản hoặc mật khẩu không chính xác!";
                 throw new Error("Failed to authenticate");
             }
             return response.json();
         })
         .then(data => {
             alert("Đăng nhập thành công!");
-            // document.getElementById("toast-content").innerText = "Đăng nhập thành công!";
-            // $('#login-toast').toast('show');
             window.location.href = "http://localhost:8080/home";
             console.log("Authentication successful:", data);
         })
         .catch(error => {
             // show diaglog error
-            alert("Username or password is incorrect");
+            alert("Đã có lỗi xảy ra, vui lòng thử lại sau!");
             console.error("Authentication error:", error.message);
         });
 });
