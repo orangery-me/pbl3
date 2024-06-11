@@ -29,4 +29,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @NonNull
     public List<Article> findAll();
+
+    // Thêm phương thức mới để lấy 3 bài viết mới nhất
+    List<Article> findTop3ByOrderByCreatedAtDesc();
 }

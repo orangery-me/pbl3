@@ -3,6 +3,8 @@ package com.nhom10.pbl.services;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,5 +99,36 @@ public class ArticleService {
     public List<ArticleResponse> getAllArticles() {
         return articleRepository.findAll().stream().map(ArticleResponse::mapToArticleResponse)
                 .collect(Collectors.toList());
+    }
+
+    public ArticleResponse findArticleById(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+        return ArticleResponse.mapToArticleResponse(article);
+    }
+
+    public List<ArticleResponse> getLatestArticles() {
+        return articleRepository.findTop3ByOrderByCreatedAtDesc()
+                .stream()
+                .map(this::mapToArticleResponseWithImage)
+                .collect(Collectors.toList());
+
+    }
+
+    private ArticleResponse mapToArticleResponseWithImage(Article article) { // để trích xuất URL của hình ảnh đầu tiên
+                                                                             // từ nội dung bài viết
+        // và cập nhật content của ArticleResponse thành URL của hình ảnh đầu tiên để
+        // hiển thị trước khi người dùng click vào bài viết để xem chi tiết
+        String firstImage = extractFirstImage(article.getContent());
+        ArticleResponse response = ArticleResponse.mapToArticleResponse(article);
+        response.setContent(firstImage);
+        return response;
+    }
+
+    private String extractFirstImage(String content) { // tìm tất cả các thẻ hình ảnh <img> trong nội dung bài viết.
+        // Lấy ra URL của hình ảnh đầu tiên từ kết quả tìm kiếm.
+        Pattern pattern = Pattern.compile("<img[^>]+src=\"([^\"]+)\"");
+        Matcher matcher = pattern.matcher(content);
+        return matcher.find() ? matcher.group(1) : null;
     }
 }

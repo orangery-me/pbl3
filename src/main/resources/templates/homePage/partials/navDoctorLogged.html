@@ -10,13 +10,23 @@
                 <a class="link team-of-doctors">ĐỘI NGŨ BÁC SĨ</a>
                 <a class="link" href="#">DỊCH VỤ</a>
                 <a class="link" href="#">THÀNH TỰU</a>
-                <a class="link" href="#">TIN TỨC</a>
+                <!-- <a class="link" th:href="@{/news}">TIN TỨC</a> -->
+                <li class="link dropdown" style="width: 158px;">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">TIN TỨC</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/news}">XEM TIN TỨC</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/new-article}">ĐĂNG BÀI VIẾT MỚI</a></li>
+                    </ul>
+                </li>
                 <a class="link" href="#">LIÊN HỆ</a>
                 <a class="link url-get-medical" th:href="@{/home/doctor/medical}">LỊCH ĐẶT KHÁM</a>
                 <li class="link dropdown" style="width: 158px;">
                     <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">HỒ SƠ</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">ĐĂNG XUẤT</a></li>
                     </ul>
                 </li>
                 <div class="line"></div>

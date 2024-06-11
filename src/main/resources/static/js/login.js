@@ -35,15 +35,17 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     })
         .then(response => {
             if (!response.ok) {
-                alert("Username or password is incorrect");
+                alert("Tên tài khoản hoặc mật khẩu không chính xác!");
+                // $('#login-toast').toast('show');
+                // document.getElementById("toast-content").innerText = "Tên tài khoản hoặc mật khẩu không chính xác!";
                 throw new Error("Failed to authenticate");
             }
             return response.json();
         })
         .then(data => {
-            // Handle successful authentication
-            // Redirect to another page or perform any necessary actions
-            alert("Login successful!");
+            alert("Đăng nhập thành công!");
+            // document.getElementById("toast-content").innerText = "Đăng nhập thành công!";
+            // $('#login-toast').toast('show');
             window.location.href = "http://localhost:8080/home";
             console.log("Authentication successful:", data);
         })
