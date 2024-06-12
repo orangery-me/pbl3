@@ -125,11 +125,6 @@ public class HomeController {
         return "homePage/homeComponent/medicalInfo";
     }
 
-    @GetMapping("/thanhtuu")
-    public String thanhtuu() {
-        return "homePage/thanhtuu";
-    }
-
     @GetMapping("/huongdan")
     public String huongdan(Model model, HttpServletRequest request) {
 
@@ -201,6 +196,252 @@ public class HomeController {
 
         model.addAttribute("view", "homePage/homeComponent/SearchResult");
         model.addAttribute("file", "SearchResult");
+
+        if (user == null) {
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        } else {
+            if (user.getUsername() != null) {
+
+                if (user.getRole().equals(ERole.DOCTOR.name())) {
+                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                    model.addAttribute("navState", "navDoctorLogged");
+                } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                    model.addAttribute("nav", "homePage/partials/navLogged");
+                    model.addAttribute("navState", "navLogged");
+                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+                }
+                model.addAttribute("user", user);
+            }
+        }
+
+        return "homePage/index";
+    }
+
+    @GetMapping("/muchailong")
+    public String muchailong(Model model, HttpServletRequest request) {
+
+        UserResponse user = authenticateService.getUserFromCookie(request);
+
+        if (user == null) {
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        } else {
+            if (user.getUsername() != null) {
+
+                if (user.getRole().equals(ERole.DOCTOR.name())) {
+                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                    model.addAttribute("navState", "navDoctorLogged");
+                } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                    model.addAttribute("nav", "homePage/partials/navLogged");
+                    model.addAttribute("navState", "navLogged");
+                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+                }
+                model.addAttribute("user", user);
+            }
+        }
+
+        return "homePage/fixpage/mc-hi-lng";
+    }
+
+    @GetMapping("/huongdankham")
+    public String huongdankham(Model model, HttpServletRequest request) {
+
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("view", "homePage/fixpage/hng-dn-khm-bnh");
+        model.addAttribute("file", "huongdankham");
+
+        if (user == null) {
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        } else {
+            if (user.getUsername() != null) {
+
+                if (user.getRole().equals(ERole.DOCTOR.name())) {
+                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                    model.addAttribute("navState", "navDoctorLogged");
+                } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                    model.addAttribute("nav", "homePage/partials/navLogged");
+                    model.addAttribute("navState", "navLogged");
+                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+                }
+                model.addAttribute("user", user);
+            }
+        }
+
+        return "homePage/index";
+    }
+
+    @GetMapping("/huongdanthanhtoanbaohiem")
+    public String thanhtoanbaohiem(Model model, HttpServletRequest request) {
+
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("view", "homePage/fixpage/hng-dn-thanh-ton-bo-him");
+        model.addAttribute("file", "thanhtoanbaohiem");
+
+        if (user == null) {
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        } else {
+            if (user.getUsername() != null) {
+
+                if (user.getRole().equals(ERole.DOCTOR.name())) {
+                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                    model.addAttribute("navState", "navDoctorLogged");
+                } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                    model.addAttribute("nav", "homePage/partials/navLogged");
+                    model.addAttribute("navState", "navLogged");
+                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+                }
+                model.addAttribute("user", user);
+            }
+        }
+
+        return "homePage/index";
+    }
+
+    @GetMapping("/thutucxuatnhapvien")
+    public String thutuc(Model model, HttpServletRequest request) {
+
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("view", "homePage/fixpage/th-tc-xut-v-nhp-vin");
+        model.addAttribute("file", "thutucxuatnhapvien");
+
+        if (user == null) {
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        } else {
+            if (user.getUsername() != null) {
+
+                if (user.getRole().equals(ERole.DOCTOR.name())) {
+                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                    model.addAttribute("navState", "navDoctorLogged");
+                } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                    model.addAttribute("nav", "homePage/partials/navLogged");
+                    model.addAttribute("navState", "navLogged");
+                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+                }
+                model.addAttribute("user", user);
+            }
+        }
+
+        return "homePage/index";
+    }
+
+    @GetMapping("/thongtinkhachthambenh")
+    public String thongtin(Model model, HttpServletRequest request) {
+
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("view", "homePage/fixpage/thng-tin-cho-khch-thm-bnh");
+        model.addAttribute("file", "thongtinkhachthambenh");
+
+        if (user == null) {
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        } else {
+            if (user.getUsername() != null) {
+
+                if (user.getRole().equals(ERole.DOCTOR.name())) {
+                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                    model.addAttribute("navState", "navDoctorLogged");
+                } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                    model.addAttribute("nav", "homePage/partials/navLogged");
+                    model.addAttribute("navState", "navLogged");
+                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+                }
+                model.addAttribute("user", user);
+            }
+        }
+
+        return "homePage/index";
+    }
+
+    @GetMapping("/dieutrinoitru")
+    public String dieutri(Model model, HttpServletRequest request) {
+
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("view", "homePage/fixpage/hng-dn-khch-hng-iu-tr-ni-tr");
+        model.addAttribute("file", "dieutrinoitru");
+
+        if (user == null) {
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        } else {
+            if (user.getUsername() != null) {
+
+                if (user.getRole().equals(ERole.DOCTOR.name())) {
+                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                    model.addAttribute("navState", "navDoctorLogged");
+                } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                    model.addAttribute("nav", "homePage/partials/navLogged");
+                    model.addAttribute("navState", "navLogged");
+                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+                }
+                model.addAttribute("user", user);
+            }
+        }
+
+        return "homePage/index";
+    }
+
+    @GetMapping("/thanhtuu")
+    public String thanhtuu(Model model, HttpServletRequest request) {
+
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("view", "homePage/fixpage/thnh-tu");
+        model.addAttribute("file", "thanhtuu");
+
+        if (user == null) {
+            model.addAttribute("nav", "homePage/partials/nav");
+            model.addAttribute("navState", "nav");
+            List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+            model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+        } else {
+            if (user.getUsername() != null) {
+
+                if (user.getRole().equals(ERole.DOCTOR.name())) {
+                    model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                    model.addAttribute("navState", "navDoctorLogged");
+                } else if (user.getRole().equals(ERole.PATIENT.name())) {
+                    model.addAttribute("nav", "homePage/partials/navLogged");
+                    model.addAttribute("navState", "navLogged");
+                    List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
+                    model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+                }
+                model.addAttribute("user", user);
+            }
+        }
+
+        return "homePage/index";
+    }
+
+    @GetMapping("/chuyenkhoa")
+    public String chuyenkhoa(Model model, HttpServletRequest request) {
+
+        UserResponse user = authenticateService.getUserFromCookie(request);
+        model.addAttribute("view", "homePage/fixpage/chuyenkhoa");
+        model.addAttribute("file", "chuyenkhoa");
 
         if (user == null) {
             model.addAttribute("nav", "homePage/partials/nav");
