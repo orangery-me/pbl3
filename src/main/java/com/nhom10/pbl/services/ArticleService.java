@@ -101,19 +101,24 @@ public class ArticleService {
                 .collect(Collectors.toList());
     }
 
+
     public ArticleResponse findArticleById(Long id) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
         return ArticleResponse.mapToArticleResponse(article);
     }
 
-    public List<ArticleResponse> getLatestArticles() {
-        return articleRepository.findTop3ByOrderByCreatedAtDesc()
-                .stream()
-                .map(this::mapToArticleResponseWithImage)
+    public List<ArticleResponse> getTop3Articles() {
+        return articleRepository.findTop3ByOrderByCreatedAtDesc().stream()
+                .map(ArticleResponse::mapToArticleResponse)
                 .collect(Collectors.toList());
-
     }
+
+//    public ArticleResponse getArticleById(Long id) {
+//        Article article = articleRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Article not found with id " + id));
+//        return ArticleResponse.mapToArticleResponse(article);
+//    }
 
     private ArticleResponse mapToArticleResponseWithImage(Article article) { // để trích xuất URL của hình ảnh đầu tiên
                                                                              // từ nội dung bài viết

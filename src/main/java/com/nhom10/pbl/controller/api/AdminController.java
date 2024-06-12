@@ -115,7 +115,6 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-
     @RequestMapping(value = "/getArticleByTitle", method = RequestMethod.GET)
     public ResponseEntity<List<ArticleResponse>> getArticleByTitle(@RequestParam("title") String title) {
         try {

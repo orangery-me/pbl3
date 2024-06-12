@@ -66,3 +66,4 @@ function openModal (modalId) {
 //     <h5 className="modal-title" id="exampleModalLabel" th:text="${article.title}"></h5>
 // </div>
 // <p className="card-text">${new Date(article.createdAt).toLocaleDateString()}</p>
+

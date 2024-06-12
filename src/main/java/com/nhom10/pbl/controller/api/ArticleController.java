@@ -61,8 +61,8 @@ public class ArticleController {
 
     // Thêm endpoint mới để lấy 3 bài viết mới nhất
     @GetMapping("/top3")
-    public ResponseEntity<List<ArticleResponse>> getTop3Articles() {
-        List<ArticleResponse> articles = articleService.getLatestArticles();
-        return ResponseEntity.ok(articles);
+    public List<ArticleResponse> getTop3Articles() {
+        return articleService.getTop3Articles();
     }
+
 }
