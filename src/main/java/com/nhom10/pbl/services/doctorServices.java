@@ -15,12 +15,16 @@ import com.nhom10.pbl.models.Doctor;
 import com.nhom10.pbl.models.Schedule;
 import com.nhom10.pbl.models.Shift;
 import com.nhom10.pbl.models.UserModel;
+import com.nhom10.pbl.payload.request.DoctorRequest;
 import com.nhom10.pbl.payload.response.BookingModel;
 import com.nhom10.pbl.payload.response.DoctorInfoResponse;
 import com.nhom10.pbl.payload.response.DoctorResponse;
 import com.nhom10.pbl.payload.response.ScheduleRespone;
 import com.nhom10.pbl.payload.response.ShiftResponse;
+import com.nhom10.pbl.repository.DepartmentRepository;
 import com.nhom10.pbl.repository.DoctorRepository;
+import com.nhom10.pbl.repository.UserRepository;
+import com.nhom10.pbl.security.service.UserService;
 
 @Service
 public class DoctorServices {
@@ -31,6 +35,12 @@ public class DoctorServices {
     @Autowired
     private DoctorRepository doctorRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
     public List<DoctorInfoResponse> getAllDoctors() {
         return doctorRepository.findAll().stream().map(DoctorInfoResponse::mapToDoctorInfoRespone).toList();
     }
@@ -38,6 +48,17 @@ public class DoctorServices {
     public void createNewDoctor(UserModel userModel) {
         Doctor doctor = Doctor.builder().user(userModel).build();
         doctorRepository.save(doctor);
+    }
+
+    public Doctor updateInfo(DoctorRequest doctor) throws Exception {
+        Doctor _doctor = new Doctor();
+        _doctor.setDescription(doctor.getDescription());
+        _doctor.setDepartment(departmentRepository.findById(doctor.getDepartment_id()).orElseThrow(Exception::new));
+        _doctor.setPosition(doctor.getPosition());
+        _doctor.setRoomAddress(doctor.getRoomAddress());
+        _doctor.setServicePrices(doctor.getServicePrices());
+        doctorRepository.save(_doctor);
+        return _doctor;
     }
 
     public List<ScheduleRespone> getListScheduleResponsesOfDoctor(Long doctorId) {

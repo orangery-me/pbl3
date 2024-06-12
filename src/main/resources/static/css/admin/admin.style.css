@@ -6554,7 +6554,7 @@ td {
     margin-top: 20px;
 }
 
-.search-bar {
+.calendar-container {
     display: flex;
     justify-content: center;
     margin: 0px 8px 16px 8px;

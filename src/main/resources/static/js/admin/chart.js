@@ -4,6 +4,54 @@ let dates = [];
 let datelyRevenue = [];
 let monthlyRevenue = [];
 
+// loadData(currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1).toString().padStart(2, '0') + '-' + currentDate.getDate().toString().padStart(2, '0'));
+
+function getDateValue () {
+    const calendar = document.getElementById('calendar');
+    const selectedDate = calendar.value;
+    if (!selectedDate) {
+        alert('Please select a date');
+        return;
+    }
+    loadData(selectedDate);
+}
+
+
+function loadData (selectedDate) {
+    fetch('/api/clinic/schedules/getScheduleOfDay' + '?date=' + selectedDate)
+        .then(response => response.json())
+        .then(data => {
+            // clear the exisiting table
+            tableBody.innerHTML = '';
+
+
+            data.forEach(schedule => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${schedule.id}</td>
+                    <td>${schedule.date}</td>
+                    <td>${schedule.state}</td>
+                    <td>${schedule.doctorName}</td>
+                    <td>${schedule.location}</td>
+                    <td>${schedule.patientId}</td>
+                    <td>${schedule.patientName}</td>
+                    <td>${schedule.shiftId}</td>
+                    <td>${schedule.timeStart}</td>
+                    <td>${schedule.timeEnd}</td>
+                    <td>${schedule.servicePrice}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    const totalfee = document.getElementById('total-fee');
+    const todayearn = document.getElementById('today-earn');
+    getRevenueOfDay(selectedDate).then(data => {
+        totalfee.innerHTML = 'Tổng doanh thu: ' + data + ' đồng';
+        todayearn.innerHTML = data + ' đ';
+    });
+}
+
 function getRevenueOfDay (date) {
     return fetch("/api/admin/getRevenueOfDay?date=" + date)
         .then(response => response.json())
@@ -36,6 +84,7 @@ for (let i = 0; i < 12; i++) {
 
 
 Promise.all([Promise.all(datelyRevenue), Promise.all(monthlyRevenue)]).then(([datelyRevenue, monthlyRevenue]) => {
+    loadData(currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1).toString().padStart(2, '0') + '-' + currentDate.getDate().toString().padStart(2, '0'));
     let ctx = document.getElementById("myChart-weekly").getContext("2d");
     let myChart = new Chart(ctx, {
         type: "line",

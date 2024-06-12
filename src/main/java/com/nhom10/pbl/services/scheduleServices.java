@@ -57,6 +57,11 @@ public class ScheduleServices {
                 .collect(Collectors.toList());
     }
 
+    public List<ScheduleInfoResponse> getListScheduleInfoByDate(Date date) {
+        return schedule_Repository.findAllByDate(date).stream().map(ScheduleInfoResponse::mapToScheduleInfoResponse)
+                .collect(Collectors.toList());
+    }
+
     public List<Schedule> getListSchedulesByDate(Date date) {
         List<Schedule> lSchedules = new ArrayList<>();
         try {

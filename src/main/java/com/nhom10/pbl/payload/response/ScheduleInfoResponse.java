@@ -23,6 +23,7 @@ public class ScheduleInfoResponse {
     private Long shiftId;
     private LocalTime timeStart;
     private LocalTime timeEnd;
+    private Integer servicePrice;
 
     public static ScheduleInfoResponse mapToScheduleInfoResponse(Schedule schedule) {
         return new ScheduleInfoResponse(schedule.getId(), schedule.getDate(),
@@ -31,6 +32,7 @@ public class ScheduleInfoResponse {
                 schedule.getDoctor().getRoomAddress(),
                 schedule.getPatient().getId(), schedule.getPatient().getUser().getFullname(),
                 schedule.getShift().getId(),
-                schedule.getShift().getTime_start(), schedule.getShift().getTime_end());
+                schedule.getShift().getTime_start(), schedule.getShift().getTime_end(),
+                schedule.getDoctor().getServicePrices());
     }
 }
