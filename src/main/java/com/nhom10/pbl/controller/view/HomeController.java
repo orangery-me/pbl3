@@ -78,18 +78,22 @@ public class HomeController {
     public String news(Model model, HttpServletRequest request) {
         UserResponse user = authenticateService.getUserFromCookie(request);
         model.addAttribute("user", user);
+        model.addAttribute("view", "homePage/homeComponent/homePage");
+        model.addAttribute("file", "homePage");
         if (user == null) {
-            model.addAttribute("view", "homePage/homeComponent/homePage");
-            model.addAttribute("file", "homePage");
+
             model.addAttribute("nav", "homePage/partials/nav");
             model.addAttribute("navState", "nav");
         } else {
             List<DepartmentRespone> listDepartmentRespones = departmentServices.getAllDepartmentRespones();
-            model.addAttribute("view", "homePage/homeComponent/homePage");
-            model.addAttribute("file", "homePage");
-            model.addAttribute("nav", "homePage/partials/navLogged");
-            model.addAttribute("navState", "navLogged");
             model.addAttribute("listDepartmentRespones", listDepartmentRespones);
+            if (user.getRole().equals(ERole.DOCTOR.name())) {
+                model.addAttribute("nav", "homePage/partials/navDoctorLogged");
+                model.addAttribute("navState", "navDoctorLogged");
+            } else {
+                model.addAttribute("nav", "homePage/partials/navLogged");
+                model.addAttribute("navState", "navLogged");
+            }
         }
         return "articles/news";
     }

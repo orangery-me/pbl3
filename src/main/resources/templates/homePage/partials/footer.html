@@ -43,51 +43,45 @@
         </div>
       </div>
     </div>
-<!--    // Hien thi 3 bai bao -->
-    <div class="container mt-5">
-      <h2 class="text-center"><span class="underline-title">Latest Articles</span></h2>
-      <div id="articles-container" class="row"></div>
-    </div>
-<!--ú thì script ở dưới đó-->
-    <!-- Modal chi tiết bài báo -->
-    <div class="modal fade" id="articleModal" tabindex="-1" role="dialog" aria-labelledby="articleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="articleModalLabel">Article Title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div id="articleContent"></div>
+
+    <div class="top-3-articles">
+      <!--    // Hien thi 3 bai bao -->
+      <div class="container mt-5">
+        <h2 class="text-center"><span class="underline-title">Latest Articles</span></h2>
+        <div id="articles-container" class="row"></div>
+      </div>
+      <!--ú thì script ở dưới đó-->
+      <!-- Modal chi tiết bài báo -->
+      <div class="modal fade" id="articleModal" tabindex="-1" role="dialog" aria-labelledby="articleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="articleModalLabel">Article Title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div id="articleContent"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-<!-- thoi dai khai la m kiem tra lai script cho dung ha :> chac loi script thui-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-      .underline-title {
-        text-decoration: underline;
-      }
-    </style>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        fetch('/api/articles/top3')
-                .then(response => response.json())
-                .then(data => {
-                  const container = document.querySelector('#articles-container');
-                  container.innerHTML = ''; // Clear existing content
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          fetch('/api/articles/top3')
+            .then(response => response.json())
+            .then(data => {
+              const container = document.querySelector('#articles-container');
+              container.innerHTML = ''; // Clear existing content
 
-                  data.forEach(article => {
-                    const articleElement = document.createElement('div');
-                    articleElement.classList.add('col-lg-4', 'mb-4');
+              data.forEach(article => {
+                const articleElement = document.createElement('div');
+                articleElement.classList.add('col-lg-4', 'mb-4');
 
-                    const createdAt = new Date(article.createdAt);
-                    const formattedDate = createdAt instanceof Date && !isNaN(createdAt) ? createdAt.toLocaleDateString() : 'Unknown';
+                const createdAt = new Date(article.createdAt);
+                const formattedDate = createdAt instanceof Date && !isNaN(createdAt) ? createdAt.toLocaleDateString() : 'Unknown';
 
-                    articleElement.innerHTML = `
+                articleElement.innerHTML = `
                             <div class="card mb-4">
                                 ${article.firstImageUrl ? `<img src="${article.firstImageUrl}" class="card-img-top" alt="Article Image">` : ''}
                                 <div class="card-body">
@@ -101,38 +95,35 @@
                             </div>
                         `;
 
-                    container.appendChild(articleElement);
-                  });
-                })
-                .catch(error => console.error('Error fetching articles:', error));
-      });
-      console.log("co vao roi nhe");
-      function openArticleModal(articleId) {
-        console.log("co vao open roi nhe");
-        console.log(articleId);
-        fetch(`/api/articles/${articleId}`)
-                .then(response => response.json())
-                .then(article => {
-                  console.log("co vao open2 roi nhe");
-                  const modalTitle = document.getElementById('articleModalLabel');
-                  const modalContent = document.getElementById('articleContent');
-                  console.log(article[0].content);
+                container.appendChild(articleElement);
+              });
+            })
+            .catch(error => console.error('Error fetching articles:', error));
+        });
+        console.log("co vao roi nhe");
+        function openArticleModal (articleId) {
+          console.log("co vao open roi nhe");
+          console.log(articleId);
+          fetch(`/api/articles/${articleId}`)
+            .then(response => response.json())
+            .then(article => {
+              console.log("co vao open2 roi nhe");
+              const modalTitle = document.getElementById('articleModalLabel');
+              const modalContent = document.getElementById('articleContent');
+              console.log(article[0].content);
 
-                  modalTitle.textContent = article[0].title;
-                  modalContent.innerHTML = `
+              modalTitle.textContent = article[0].title;
+              modalContent.innerHTML = `
                         <p>${article[0].content}</p>
                     `;
 
-                  const modal = new bootstrap.Modal(document.getElementById('articleModal'));
-                  modal.show();
-                })
-                .catch(error => console.error('Error fetching article details:', error));
-      }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+              const modal = new bootstrap.Modal(document.getElementById('articleModal'));
+              modal.show();
+            })
+            .catch(error => console.error('Error fetching article details:', error));
+        }
+      </script>
+    </div>
 
     <div class="footer-footer">
       <div class="logo-and-contact">
