@@ -152,6 +152,16 @@ public class AdminController {
         }
     }
 
+    @PutMapping("/updateArticle/{id}")
+    public ResponseEntity<ArticleResponse> updateArticle(@PathVariable("id") Long id,
+            @RequestParam("status") Status status) {
+        try {
+            return ResponseEntity.ok(articleService.updateStatus(id, status));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @RequestMapping(value = "/getRevenueOfDay", method = RequestMethod.GET)
     public ResponseEntity<Long> getRevenueOfDay(@RequestParam("date") Date date) {
         try {

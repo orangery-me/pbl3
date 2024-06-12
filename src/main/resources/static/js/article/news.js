@@ -1,10 +1,9 @@
-function fetchData() {
+function fetchData () {
     fetch("/api/articles/all")
         .then(response => response.json())
         .then(data => {
             const articlesContainer = document.getElementById('articles-container');
             articlesContainer.innerHTML = ''; // Clear any existing content
-            console.log("eheheheheheeh");
             console.log(data);
             data.forEach(article => {
                 const articleCard = document.createElement('div');
@@ -58,7 +57,7 @@ function fetchData() {
 
 document.addEventListener('DOMContentLoaded', fetchData);
 
-function openModal(modalId) {
+function openModal (modalId) {
     const modal = document.getElementById(modalId);
     $(modal).modal('show');
 }

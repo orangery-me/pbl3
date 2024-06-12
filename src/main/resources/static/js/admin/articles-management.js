@@ -4,45 +4,73 @@ function loadData (data) {
     tableBody.innerHTML = '';
     data.forEach(article => {
         const row = document.createElement('tr');
+        const modalId = `exampleModal-${article.id}`;
         row.innerHTML = `
         <td>${article.id}</td>
         <td>${article.title}</td>
-        <td>${article.content}</td>
         <td>${article.author.fullname}</td>
         <td>${article.createAt}</td>
         <td>${article.updateAt}</td>
-        <td contenteditable='true'>${article.status}</td>
         <td>
-                <a href="#" id="trigger-modal">Xem</a>
-                <button class="btn btn-remove"><i class="fa fa-remove"></i></button>
+            <select onchange="updateStatus(${article.id}, this.value)">
+                <option value="APPROVED" ${article.status === 'APPROVED' ? 'selected' : ''}>Approved</option>
+                <option value="PENDING" ${article.status === 'PENDING' ? 'selected' : ''}>Pending</option>
+                <option value="REJECTED" ${article.status === 'REJECTED' ? 'selected' : ''}>Rejected</option>
+            </select>
         </td>
+        <td>
+                <a href="#" id="trigger-modal" onClick="openModal('${modalId}')" >Xem</a>
+        </td>
+        <!-- Modal -->
+        <div class="modal fade" id="${modalId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="min-width: 900px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="text-align: center; font-size: x-large; font-weight: bold;">${article.title}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p style="font-size: 16px;" th:text="${article.content}"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onClick="closeModal('${modalId}')">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         `;
         tableBody.appendChild(row);
     });
 }
-// Use event delegation to bind the click event to the tableBody element
-tableBody.addEventListener('click', function (event) {
-    const target = event.target;
-    if (target.id === 'trigger-modal') {
-        const row = target.closest('tr');
-        const title = row.children[1].textContent;
-        const content = row.children[2].textContent;
-        const author = row.children[3].textContent;
-        const createAt = row.children[4].textContent;
-        var modalTitle = document.getElementById('exampleModalScrollableTitle');
-        var modalBody = document.getElementById('exampleModalScrollableBody');
-        const modal = document.getElementById('exampleModalScrollable');
-        $(modal).modal('show');
-        modalTitle.innerHTML = `
-            <h4 style="text-align: center; font-weight: bold"> ${title}</h4>
-        `;
-        modalBody.innerHTML = `
-            <p style="text-align: right" >${createAt}</p>
-            <p>${content}</p>
-            <p style="text-align: right; font-weight: bold">Tác giả: ${author}</p>
-        `;
-    }
-});
+function openModal (modalId) {
+    const modal = document.getElementById(modalId);
+    $(modal).modal('show');
+}
+
+function closeModal (modalId) {
+    const modal = document.getElementById(modalId);
+    $(modal).modal('close');
+}
+function updateStatus (articleId, newStatus) {
+    console.log('/api/admin/updateArticle/' + articleId + '?status=' + newStatus);
+    fetch('/api/admin/updateArticle/' + articleId + '?status=' + newStatus, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Cập nhật thành công');
+            } else {
+                alert('Đã có lỗi xảy ra, vui lòng thử lại sau');
+            }
+
+        })
+        .catch(error => {
+            console.error('Error updating status:', error);
+        });
+}
+
 
 // load all articles
 fetch('/api/admin/getAllArticles')

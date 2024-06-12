@@ -131,4 +131,11 @@ public class ArticleService {
         Matcher matcher = pattern.matcher(content);
         return matcher.find() ? matcher.group(1) : null;
     }
+
+    public ArticleResponse updateStatus(Long id, Status status) throws Exception {
+        Article article = articleRepository.findById(id).orElseThrow(Exception::new);
+        article.setStatus(status);
+        articleRepository.save(article);
+        return ArticleResponse.mapToArticleResponse(articleRepository.save(article));
+    }
 }
