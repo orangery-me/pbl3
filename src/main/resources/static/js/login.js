@@ -1,7 +1,7 @@
 var slideIndex = 0;
 showSlides();
 
-function showSlides() {
+function showSlides () {
     var i;
     var slides = document.getElementsByClassName("slide");
     for (i = 0; i < slides.length; i++) {
@@ -35,20 +35,19 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     })
         .then(response => {
             if (!response.ok) {
-                alert("Username or password is incorrect");
+                alert("Tên tài khoản hoặc mật khẩu không chính xác!");
                 throw new Error("Failed to authenticate");
             }
             return response.json();
         })
         .then(data => {
-            // Handle successful authentication
-            // Redirect to another page or perform any necessary actions
+            alert("Đăng nhập thành công!");
             window.location.href = "http://localhost:8080/home";
             console.log("Authentication successful:", data);
         })
         .catch(error => {
             // show diaglog error
-            alert("Username or password is incorrect");
+            alert("Đã có lỗi xảy ra, vui lòng thử lại sau!");
             console.error("Authentication error:", error.message);
         });
 });

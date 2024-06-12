@@ -19,9 +19,9 @@ var img3 = Imgs[2]
 var img4 = Imgs[3]
 
 var left = -100
-setInterval(()=>{
+setInterval(() => {
     left -= 1225
-    if (left === -5000){
+    if (left === -5000) {
         left = -100
     }
     img1.style.left = left + 'px'
@@ -31,4 +31,69 @@ setInterval(()=>{
     console.log(left)
 }, 4000)
 
+document.getElementById("form-1").addEventListener("submit", function (event) {
+    event.preventDefault();
 
+    var u = document.getElementById("username").value;
+    var m = document.getElementById("fullname").value;
+    var e = document.getElementById("email").value;
+    var p = document.getElementById("password").value;
+    var c = document.getElementById("birth").value;
+    var g = document.querySelector('input[name="gender"]:checked');
+    var sdt = document.getElementById("sdt").value;
+    var pa = document.getElementById("password_confirmation").value;
+
+    if (!g) {
+        alert("Please select a gender.");
+        return;
+    }
+
+    const genderValue = g.value === "1";
+    if (p == pa) {
+        const userData = {
+            "username": u,
+            "email": e,
+            "phone": sdt,
+            "fullname": m,
+            "gender": genderValue,
+            "birthday": c,
+            "enabled": 1,
+            "role": "PATIENT",
+            "password": p
+        };
+
+        console.log("Sending user data:", JSON.stringify(userData));
+
+        fetch("http://localhost:8080/api/auth/register", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        console.error("Error response from server:", errorData);
+                        alert("This account already existed");
+                        throw new Error("Failed to authenticate");
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert("Register successful!");
+                window.location.href = "http://localhost:8080/home";
+                console.log("Authentication successful:", data);
+            })
+            .catch(error => {
+                alert("Error with registration! Please try again later.");
+                console.error("Authentication error:", error.message);
+            });
+
+
+    }
+    else {
+        alert("Mật khẩu nhập lại không đúng");
+    }
+});

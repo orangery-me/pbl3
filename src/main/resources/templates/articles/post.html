@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Article Submission</title>
+    <link rel="stylesheet" th:href="@{/css/article/styles.css}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Doctor Article Submission</h1>
+            <form id="articleForm">
+                <div class="form-group">
+                    <input type="hidden" id="user" th:value="${user.id}"></input>
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title">
+                </div>
+                <div class="form-group">
+                    <div id="contentContainer">
+                        <button type="button" onclick="openImagePicker()" id="imagePickerButton">Chèn hình ảnh</button>
+                        <div id="content" contenteditable="true" name="content" class="content-editable" required></div>
+                    </div>
+                </div>
+                <button type="button" onclick="submitArticle()">Submit</button>
+            </form>
+        </div>
+        <div class="medical-articles">
+            <!-- Danh sách các bài báo -->
+            <h2>Các bài báo về y tế</h2>
+            <div class="medical-article">
+                <img src="https://images2.thanhnien.vn/528068263637045248/2023/11/15/taptheduc-17000191599141974670528.jpg"
+                    alt="Bài báo 1">
+                <div class="article-content">
+                    <h3>Lợi ích của việc tập thể dục thường xuyên</h3>
+                    <p>Một nghiên cứu được công bố trên Frontiers in Cardiovascular Medicine cho thấy tập thể dục ngăn
+                        ngừa cả sự khởi phát và phát triển của bệnh tim.
+
+                        Tập thể dục thường xuyên giúp cải thiện khả năng bơm máu của tim, giảm mức huyết áp và
+                        cholesterol....
+
+                    </p>
+                </div>
+            </div>
+            <div class="medical-article">
+                <img src="https://static-images.vnncdn.net/vps_images_publish/000001/000003/2024/5/24/benh-nhan-1a-2108.jpg?width=0&s=TsxGCepe4E2huEYN9ZEjHQ"
+                    alt="Bài báo 2">
+                <div class="article-content">
+                    <h3>Hành động giúp hai vợ chồng may mắn thoát chết trong vụ cháy ở Trung Kính</h3>
+                    <p>Hai vợ chồng anh K. vào nhà vệ sinh lấy khăn thấm nước bịt mũi, miệng và chờ đội cứu hộ tới trợ
+                        giúp thay vì chạy ra ngoài thoát thân trong biển lửa.
+                        Tiến sĩ, bác sĩ Bùi Tuấn Anh, Giám đốc Bệnh viện Giao thông vận tải, cho biết tính đến 9h sáng
+                        nay, đơn vị đã tiếp nhận 6 người trong vụ cháy nhà trọ tại phố Trung Kính. Trong đó có 4 người
+                        lớn và 2 trẻ nhỏ. Hiện 5 người nằm tại Khoa Cấp cứu, 1 người nằm tại Khoa Hồi sức tích cực...
+                    </p>
+                </div>
+            </div>
+            <div class="medical-article">
+                <img src="https://static-images.vnncdn.net/vps_images_publish/000001/000003/2024/5/23/bvlaokhoa-2905.jpeg?width=0&s=_kLyFrYYRf8SHLXXsHFvzQ"
+                    alt="Bài báo 2">
+                <div class="article-content">
+                    <h3>Hành động quyết liệt của nữ điều dưỡng cứu bé trai bị sơ cứu sai cách thoát chết</h3>
+                    <p>Đang đi nghỉ cùng gia đình, điều dưỡng Dương Thị Hồng phát hiện bé trai 8 tuổi bị đuối nước được
+                        sơ cứu sai cách. Chị lập tức chạy tới, quyết liệt yêu cầu đặt bé xuống mặt phẳng cứng để cấp
+                        cứu....</p>
+                </div>
+            </div>
+            <!-- <div class="medical-article">
+            <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-4.jpg" alt="Bài báo 2">
+            <div class="article-content">
+                <h3>Tiêu đề bài báo 2</h3>
+                <p>Đây là nội dung mô tả của bài báo 2. Nội dung này cung cấp một cái nhìn tổng quan ngắn gọn về bài báo.</p>
+            </div>
+        </div> -->
+            <div class="medical-article">
+                <img src="https://static-images.vnncdn.net/vps_images_publish/000001/000003/2024/5/23/w-banhmy-thuc-an-duong-pho-attp-thachthao-648.png?width=0&s=iqBcWUYDs-13c5lyCyXKVg"
+                    alt="Bài báo 2">
+                <div class="article-content">
+                    <h3>Có nên cấm hoàn toàn thức ăn đường phố?</h3>
+                    <p>Cho rằng thức ăn đường phố là nét văn hóa, đặc trưng ẩm thực tại nhiều địa phương, độc giả Như
+                        Bình chia sẻ loại hình này phong phú chủng loại từ bún, phở đến cơm, cháo, nước giải khát, bánh
+                        kẹo, hoa quả…, </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js}"></script>
+    <script th:src="@{/js/article/scripts.js}"></script>
+</body>
+
+</html>

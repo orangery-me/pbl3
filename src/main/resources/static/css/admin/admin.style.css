@@ -4114,6 +4114,16 @@ table.text-center th {
     border-color: rgba(0, 0, 0, 0.2)
 }
 
+.btn-add {
+    background-color: #0089db;
+    color: #fff;
+}
+
+.btn-add:hover {
+    background-color: #00c0ef;
+    color: #fff;
+}
+
 .btn-adn:active,
 .btn-adn.active,
 .open>.dropdown-toggle.btn-adn {
@@ -6448,22 +6458,54 @@ th,
 td {
     white-space: nowrap;
     overflow: hidden;
-    /* text-overflow: ellipsis; */
 }
 
+.schedule_id,
+.schedule_doctorId,
+.schedule_patientID,
+.schedule_shiftID,
 .id_user,
+.id_article,
 .gender,
-.enabled {
+.enabled,
+.id_dep,
+.id_doc {
     width: 6%;
 }
 
-.phone {
-    width: 9%;
+.schedule_state,
+.schedule_room,
+.schedule_start,
+.schedule_date,
+.schedule_end,
+.phone,
+.author_name,
+.created_at,
+.modified_at,
+.article_status {
+    width: 10%;
+}
+
+.schedule_doctorName,
+.schedule_patientName {
+    width: 16%;
+}
+
+.article_header,
+.article_content {
+    width: 24%;
+}
+
+.name_dep,
+.des_dep,
+.loction {
+    width: 28%;
 }
 
 .role,
 .action,
-.birthday {
+.birthday,
+.actions {
     width: 8%;
 }
 
@@ -6510,4 +6552,52 @@ td {
     display: flex;
     justify-content: end;
     margin-top: 20px;
+}
+
+.calendar-container {
+    display: flex;
+    justify-content: center;
+    margin: 0px 8px 16px 8px;
+}
+
+.col-md-3 .col-sm-4 {
+    margin: 0 0 16px 0;
+}
+
+.inline-element {
+    margin: 0 8px 0 8px;
+}
+
+.js-model {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+
+.bookingCard_timeframes__bncJQ {
+    display: grid;
+    margin: 8px 0;
+    grid-gap: 7px 8px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.bookingCard_time__J0MaE {
+    display: flex;
+    min-width: 90px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 4px;
+    border: 1px solid #dbdfe5;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    background: #fff;
+    font-variant-numeric: tabular-nums;
 }

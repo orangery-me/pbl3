@@ -31,6 +31,7 @@
             <th scope="col">Ngày khám</th>
             <th scope="col">Ca khám</th>
             <th scope="col">Kết luận của bác sĩ</th>
+            <th scope="col">Chi tiết</th>
           </tr>
         </thead>
         <tbody th:if="${listMedicalRecordRespone != null && !(#lists.isEmpty(listMedicalRecordRespone))}" th:each="medicalRecord, iterStat : ${listMedicalRecordRespone}">
@@ -138,6 +139,7 @@
     }
     .detail-content{
         text-decoration: underline;
+        color: #000;
     }
     .detail-content:hover{
         cursor: pointer;
@@ -289,6 +291,7 @@
           });
         }
 
+        let state_today = _btnToday.checked
         _btnToday.onclick = () => {
 
           _date.value = null
@@ -301,14 +304,16 @@
 
           console.log(final_url)
 
-          $.ajax({
-            url: final_url,
+          if(!state_today){
+            $.ajax({
+              url: final_url,
 
-            success: function (result) {
-              $("#dynamic-medical").html(result);
-              handleMedical()
-            }
-          });
+              success: function (result) {
+                $("#dynamic-medical").html(result);
+                handleMedical()
+              }
+            });
+          } 
         }
 
         _date.onchange = () => {
@@ -334,6 +339,11 @@
         }
 
         resetFilter.onclick = () => {
+
+          _btnToday.checked = false
+          _date.value = null
+          _namePatient.value = null
+          
           var _url = '/home/doctor/medical-filter'
 
           var final_url = `${_url}?today=&date=&namePatient=`

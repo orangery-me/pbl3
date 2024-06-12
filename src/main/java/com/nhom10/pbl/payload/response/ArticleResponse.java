@@ -1,10 +1,12 @@
 package com.nhom10.pbl.payload.response;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.nhom10.pbl.models.Article;
 import com.nhom10.pbl.models.Status;
-import com.nhom10.pbl.payload.resquest.UserDTO;
+import com.nhom10.pbl.payload.request.UserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +21,9 @@ public class ArticleResponse {
     private Long id;
     private String title;
     private String content;
-    private UserDTO user;
-    private Date createAt;
+    private String firstImageUrl;
+    private UserDTO author;
+    private Date createdAt;
     private Date updatedAt;
     private Status status;
 
@@ -29,8 +32,9 @@ public class ArticleResponse {
                 .id(article.getId())
                 .title(article.getTitle())
                 .content(article.getContent())
-                .user(UserDTO.mapToUserDTO(article.getUser()))
-                .createAt(article.getCreatedAt())
+                .firstImageUrl(extractFirstImage(article.getContent()))
+                .author(UserDTO.mapToUserDTO(article.getAuthor()))
+                .createdAt(article.getCreatedAt())
                 .updatedAt(article.getUpdatedAt())
                 .status(article.getStatus())
                 .build();
@@ -41,10 +45,16 @@ public class ArticleResponse {
                 .id(articleResponse.getId())
                 .title(articleResponse.getTitle())
                 .content(articleResponse.getContent())
-                .user(UserDTO.mapToUserModel(articleResponse.getUser()))
-                .createdAt(articleResponse.getCreateAt())
+                .author(UserDTO.mapToUserModel(articleResponse.getAuthor()))
+                .createdAt(articleResponse.getCreatedAt())
                 .updatedAt(articleResponse.getUpdatedAt())
                 .status(articleResponse.getStatus())
                 .build();
+    }
+
+    private static String extractFirstImage(String content) {
+        Pattern pattern = Pattern.compile("<img[^>]+src=\"([^\"]+)\"");
+        Matcher matcher = pattern.matcher(content);
+        return matcher.find() ? matcher.group(1) : null;
     }
 }

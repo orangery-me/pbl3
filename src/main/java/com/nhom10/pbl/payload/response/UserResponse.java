@@ -24,6 +24,8 @@ public class UserResponse {
     private String role;
 
     public static UserResponse mapToUserResponse(UserModel user) {
+        if (user == null)
+            return null;
 
         return UserResponse.builder()
                 .id(user.getId())
@@ -31,7 +33,7 @@ public class UserResponse {
                 .password(user.getPassWord())
                 .email(user.getEmail())
                 .phone(user.getTelephone())
-                .fullname(user.getFullName())
+                .fullname(user.getFullname())
                 .gender(user.getGender())
                 .birthday(user.getBirthday().toString())
                 .enabled(user.getEnabled())

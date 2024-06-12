@@ -1,24 +1,24 @@
 <div th:fragment="nav">
     <nav>
         <div class="nav-link">
-            <div class="container container-custom">
-                <a class="link" th:href="@{/}">
+            <div class="container container-custom" style="max-width: 1474px;">
+                <a class="link" th:href="@{/home}">
                     <i class="fa-solid fa-house"></i>
                 </a>
-                <a class="link" th:href="@{/greeting}">GIỚI THIỆU</a>
-                <a class="link" href="#">CHUYÊN KHOA</a>
-                <a class="link" href="#">ĐỘI NGŨ BÁC SĨ</a>
-                <a class="link" href="#">DỊCH VỤ</a>
-                <a class="link" href="#">THÀNH TỰU</a>
-                <a class="link" href="#">TIN TỨC</a>
-                <a class="link" href="#">LIÊN HỆ</a>
+                <a class="link" th:href="@{/home}">GIỚI THIỆU</a>
+                <a class="link" th:href="@{/chuyenkhoa}">CHUYÊN KHOA</a>
+                <a class="link team-of-doctors">ĐỘI NGŨ BÁC SĨ</a>
+                <a class="link" th:href="@{/home}">DỊCH VỤ</a>
+                <a class="link" th:href="@{/thanhtuu}">THÀNH TỰU</a>
+                <a class="link" th:href="@{/news}">TIN TỨC</a>
+                <a class="link team-of-doctors">LIÊN HỆ</a>
+                <a id="link-popup" class="link" th:href="@{/login}">ĐẶT LỊCH NGAY</a>
                 <a class="link" th:href="@{/login}">ĐĂNG NHẬP</a>
-                <div class="line"></div>
             </div>
         </div>
     </nav>
     <div class="customer">
         <span class="content-TC">Trang chủ >></span>
-        <span class="content-KH">Dành cho khách hàng</span>
+        <span class="content-KH">Dành cho khách</span>
     </div>
 </div>

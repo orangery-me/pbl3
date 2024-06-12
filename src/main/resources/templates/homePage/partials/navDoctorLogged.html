@@ -2,33 +2,39 @@
     <nav>
         <div class="nav-link">
             <div class="container container-custom navLogged" th:object="${user}">
-                <a class="link" th:href="@{/}">
+                <a class="link" th:href="@{/home}">
                     <i class="fa-solid fa-house"></i>
                 </a>
-                <a class="link" th:href="@{/greeting}">GIỚI THIỆU</a>
-                <a class="link" href="#">CHUYÊN KHOA</a>
-                <div class="link team-of-doctors">ĐỘI NGŨ BÁC SĨ</div>
-                <a class="link" href="#">DỊCH VỤ</a>
-                <a class="link" href="#">THÀNH TỰU</a>
-                <a class="link" href="#">TIN TỨC</a>
-                <a class="link" href="#">LIÊN HỆ</a>
-                <a class="link url-get-medical" th:href="@{/home/doctor/medical}" >LỊCH ĐẶT KHÁM</a>
-                <a class="link" th:href="@{/auth/register}" th:text="${user.userName}"></a>
-                <!-- <li class="link dropdown">
-                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  th:object="${user}" th:text="${user.userName}"></a>
+                <a class="link">GIỚI THIỆU</a>
+                <a class="link" th:href="@{/chuyenkhoa}">CHUYÊN KHOA</a>
+                <a class="link team-of-doctors">ĐỘI NGŨ BÁC SĨ</a>
+                <a class="link" th:href="@{/home}">DỊCH VỤ</a>
+                <a class="link" th:href="@{/thanhtuu}">THÀNH TỰU</a>
+                <!-- <a class="link" th:href="@{/news}">TIN TỨC</a> -->
+                <li class="link dropdown" style="width: 158px;">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">TIN TỨC</a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Hồ sơ cá nhân</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" th:href="@{/news}">XEM TIN TỨC</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/new-article}">ĐĂNG BÀI VIẾT MỚI</a></li>
                     </ul>
-                </li> -->
+                </li>
+                <a class="link team-of-doctors">LIÊN HỆ</a>
+                <a class="link url-get-medical" th:href="@{/home/doctor/medical}">LỊCH ĐẶT KHÁM</a>
+                <li class="link dropdown" style="width: 158px;">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">HỒ SƠ</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/logout}">ĐĂNG XUẤT</a></li>
+                    </ul>
+                </li>
                 <div class="line"></div>
             </div>
         </div>
     </nav>
     <div class="customer">
         <span class="content-TC">Trang chủ >></span>
-        <span class="content-KH">Dành cho khách hàng</span>
+        <span class="content-KH">Dành cho bác sĩ</span>
     </div>
 </div>

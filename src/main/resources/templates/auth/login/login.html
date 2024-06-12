@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
 <body>
     <style>
+        body {
+            font-family: "Open Sans", sans-serif;
+        }
+
         .flex-container {
             display: flex;
             flex-direction: row;
@@ -149,7 +164,7 @@
             /* display: none; */
             height: 100vh;
             width: 100%;
-            background-color: red;
+            background-color: white;
             overflow: hidden;
         }
 
@@ -183,7 +198,7 @@
         <div class="info-banner">
             <div class="logo-name">
                 <h1 style="color: blue;">
-                    TramAnh
+                    GudMec
                 </h1>
                 <h1 style="color: black;">
                     Clinic
@@ -192,9 +207,9 @@
             <div class="main-view-input">
                 <div class="logo-name">
                     <h1 style="color: black;">
-                        Sign in to
+                        Chào mừng bạn đến với
                     </h1>
-                    <h1 style="color: blue;">TramAnh</h1>
+                    <h1 style="color: blue;"> GudMec</h1>
 
                 </div>
 
@@ -202,14 +217,28 @@
                     <input class="input-info" type="text" id="username" name="username" placeholder="Username">
                     <input class="input-info" type="password" id="password" name="password" placeholder="Password">
                     <div style="display: flex; align-self: stretch; justify-content: flex-end; margin-right: 50px;">
-                        <h4><a th:href="@{https://example.com}">Forgot password?</a></h4>
+                        <h4><a th:href="@{https://example.com}">Quên mật khẩu?</a></h4>
                     </div>
                     <button type="submit" class="button-sign-in" id="loginButton">
                         <p style="color: white; font-weight: 600;">
-                            Sign in
+                            Đăng nhập
                         </p>
                     </button>
                 </form>
+
+                <!-- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="login-toast"
+                    data-animation="true" data-delay="500">
+                    <div class="toast-header">
+                        <img src="..." class="rounded mr-2" alt="...">
+                        <strong class="mr-auto">Thông báo</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        <p id="toast-content"></p>
+                    </div>
+                </div> -->
 
                 <div class="view-line">
                     <div class="line"></div>
@@ -217,14 +246,14 @@
                     <div class="line"></div>
                 </div>
                 <div class="question-sign">
-                    <h4>You don't have an account? </h4>
-                    <h4 style="margin-left: 5px;"><a>Sign up</a></h4>
+                    <h4>Bạn chưa có tài khoản? </h4>
+                    <h4 style="margin-left: 5px;"><a th:href="@{/register}">Đăng ký</a></h4>
                 </div>
                 <div class="question-sign">
                     <p style="font-weight: lighter;">
-                        <b> Terms & Conditions </b>
-                        <b> &nbsp;&nbsp; Privacy Policy</b>
-                        <b> &nbsp;&nbsp; Help</b>
+                        <b> Điều khoản </b>
+                        <b> &nbsp;&nbsp; Chính sách bảo mật</b>
+                        <b> &nbsp;&nbsp; Trợ giúp</b>
                         <b> &nbsp;&nbsp; English</b>
                     </p>
                 </div>
@@ -252,7 +281,7 @@
         </div>
     </div>
 
-    <script th:src="@{/js/login.js}"></script> <!-- Nạp tệp JavaScript -->
+    <script th:src="@{/js/login.js}"></script>
 
 </body>
 

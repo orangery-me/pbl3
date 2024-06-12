@@ -144,10 +144,10 @@ body > div {
     border: solid 1px rgb(45,135,243);
 }
 
-.fa-solid.fa-chevron-right{
+#right-click{
     position: absolute;
     right: 179px;
-    top: 730px;
+    top: 590px;
     z-index: 7;
     cursor: pointer;
 }
@@ -251,8 +251,8 @@ body > div {
     margin-left: 31px;
 }
 
-.fa-dollar-sign{
-    font-size: small;
+.icon-dong{
+    margin-left: 2px;
     margin-top: 4px;
 }
 .price .txt-price{

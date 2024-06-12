@@ -3,16 +3,16 @@ package com.nhom10.pbl.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nhom10.pbl.dto.respone.departmentRespone;
-import com.nhom10.pbl.dto.respone.doctorRespone;
-import com.nhom10.pbl.dto.respone.scheduleRespone;
-import com.nhom10.pbl.dto.respone.shiftRespone;
+import com.nhom10.pbl.models.Department;
 import com.nhom10.pbl.models.Doctor;
-import com.nhom10.pbl.models.department;
-import com.nhom10.pbl.models.schedule;
-import com.nhom10.pbl.models.shift;
-import com.nhom10.pbl.repository.departmentRepository;
-import com.nhom10.pbl.repository.shiftRepository;
+import com.nhom10.pbl.models.Schedule;
+import com.nhom10.pbl.models.Shift;
+import com.nhom10.pbl.payload.response.DepartmentRespone;
+import com.nhom10.pbl.payload.response.DoctorResponse;
+import com.nhom10.pbl.payload.response.ScheduleRespone;
+import com.nhom10.pbl.payload.request.DepartmentRequest;
+import com.nhom10.pbl.repository.DepartmentRepository;
+import com.nhom10.pbl.repository.ShiftRepository;
 
 import java.sql.Date;
 import java.time.DayOfWeek;
@@ -21,37 +21,34 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Service
-public class departmentServices {
+public class DepartmentServices {
     @Autowired
-    private shiftRepository shiftRepository;
-    
-    @Autowired
-    private shiftServices shiftServices;
+    private ShiftRepository shiftRepository;
 
     @Autowired
-    private departmentRepository departmentRepo;
+    private ShiftServices shiftServices;
 
-    public List<departmentRespone> getAllDepartmentRespones() {
-        List<departmentRespone> departmentRespones = new ArrayList<>();
+    @Autowired
+    private DepartmentRepository departmentRepo;
 
-        List<department> listDepartments = departmentRepo.findAll();
-        for (department i : listDepartments) {
-            departmentRespone _departmentRespone = new departmentRespone();
-            _departmentRespone.setId(i.getId());
-            _departmentRespone.setNameDepartment(i.getNameDepartment());
-            _departmentRespone.setDescriptionDepartment(i.getDescriptionDepartment());
-            _departmentRespone.setLocation(i.getLocation());
-
-            departmentRespones.add(_departmentRespone);
-        }
-        return departmentRespones;
+    public DepartmentRespone createDepartment(DepartmentRequest departmentRequest) {
+        Department department = Department.builder().NameDepartment(departmentRequest.getNameDepartment())
+                .DescriptionDepartment(departmentRequest.getDescriptionDepartment())
+                .Location(departmentRequest.getLocation())
+                .build();
+        departmentRepo.save(department);
+        return DepartmentRespone.mapToDepartmentRespone(department);
     }
 
-    public departmentRespone getDepartmentByID(Long id){
-        Optional<department> departmentOptional = departmentRepo.findById(id);
+    public List<DepartmentRespone> getAllDepartmentRespones() {
+        return departmentRepo.findAll().stream().map(DepartmentRespone::mapToDepartmentRespone).toList();
+    }
+
+    public DepartmentRespone getDepartmentByID(Long id) {
+        Optional<Department> departmentOptional = departmentRepo.findById(id);
         if (departmentOptional.isPresent()) {
-            department _department = departmentOptional.get();
-            departmentRespone _departmentRespone = new departmentRespone();
+            Department _department = departmentOptional.get();
+            DepartmentRespone _departmentRespone = new DepartmentRespone();
             _departmentRespone.setId(_department.getId());
             _departmentRespone.setDescriptionDepartment(_department.getDescriptionDepartment());
             _departmentRespone.setLocation(_department.getLocation());
@@ -61,34 +58,33 @@ public class departmentServices {
         return null;
     }
 
-    public List<doctorRespone> getListDoctor(Long id , boolean addSchedule){
-        List<doctorRespone> listDoctorRespone = new ArrayList<>();
-        Optional<department> departmentOptional = departmentRepo.findById(id);
-        
+    public List<DoctorResponse> getListDoctor(Long id, boolean addSchedule) {
+        List<DoctorResponse> listDoctorRespone = new ArrayList<>();
+        Optional<Department> departmentOptional = departmentRepo.findById(id);
 
         if (departmentOptional.isPresent()) {
             List<Doctor> listDoctor = departmentOptional.get().getListDoctors();
             for (Doctor doctor : listDoctor) {
-                doctorRespone _DoctorRespone = new doctorRespone();
+                DoctorResponse _DoctorRespone = new DoctorResponse();
                 _DoctorRespone.setId(doctor.getId());
-                _DoctorRespone.setNameDoctor(doctor.getUser().getFullName());
+                _DoctorRespone.setNameDoctor(doctor.getUser().getFullname());
                 _DoctorRespone.setGender(doctor.getUser().getGender());
                 _DoctorRespone.setDescription(doctor.getDescription());
                 _DoctorRespone.setPosition(doctor.getPosition());
                 _DoctorRespone.setRoomAddress(doctor.getRoomAddress());
                 _DoctorRespone.setServicePrices(doctor.getServicePrices());
-                _DoctorRespone.setInitValuedepartmentRespone(doctor.get_department());
+                _DoctorRespone.setInitValuedepartmentRespone(doctor.getDepartment());
 
                 if (addSchedule) {
-                    List<scheduleRespone> scheduleRespones = new ArrayList<>();
-                    for (schedule schedule : doctor.getListSchedule()) {
-                        scheduleRespone scheduleRespone = new scheduleRespone();
+                    List<ScheduleRespone> scheduleRespones = new ArrayList<>();
+                    for (Schedule schedule : doctor.getListSchedule()) {
+                        ScheduleRespone scheduleRespone = new ScheduleRespone();
                         scheduleRespone.setId(schedule.getId());
                         scheduleRespone.setDate(schedule.getDate());
                         scheduleRespone.setState(schedule.getState());
-                        scheduleRespone.set_doctorId(schedule.get_doctor().getId());
-                        scheduleRespone.set_patientId(schedule.get_patient().getId());
-                        scheduleRespone.set_shiftId(schedule.get_shift().getId());
+                        scheduleRespone.setDoctorId(schedule.getDoctor().getId());
+                        scheduleRespone.setPatientId(schedule.getPatient().getId());
+                        scheduleRespone.setShiftId(schedule.getShift().getId());
                         scheduleRespones.add(scheduleRespone);
                     }
                     _DoctorRespone.setListSchedule(scheduleRespones);
@@ -100,231 +96,232 @@ public class departmentServices {
         return listDoctorRespone;
     }
 
-    public List<doctorRespone> listDoctorToday(Long id){
+    public List<DoctorResponse> listDoctorToday(Long id) {
 
-        List<shift> listShifts = shiftServices.getShiftList();
+        List<Shift> listShifts = shiftServices.getShiftList();
 
-        List<doctorRespone> listResponses = getListDoctor(id, true); 
-        
-        List<doctorRespone> listDoctorToday = new ArrayList<>();
+        List<DoctorResponse> listResponses = getListDoctor(id, true);
 
-        if(LocalDate.now().getDayOfWeek().equals(DayOfWeek.SATURDAY) 
-        || LocalDate.now().getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+        List<DoctorResponse> listDoctorToday = new ArrayList<>();
+
+        if (LocalDate.now().getDayOfWeek().equals(DayOfWeek.SATURDAY)
+                || LocalDate.now().getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
             return listDoctorToday;
         }
 
-        for (doctorRespone doctor : listResponses) {
+        for (DoctorResponse doctor : listResponses) {
 
-            List<shift> listShiftsBookedFromNow = new ArrayList<>();
+            List<Shift> listShiftsBookedFromNow = new ArrayList<>();
 
-            for (scheduleRespone schedule  : doctor.getListSchedule()) {
+            for (ScheduleRespone schedule : doctor.getListSchedule()) {
 
-                if(schedule.getDate().equals(Date.valueOf(LocalDate.now())) 
-                && shiftRepository.findById(schedule.get_shiftId()).get().getTime_start().isAfter(LocalTime.now())
-                )
-                {
-                    listShiftsBookedFromNow.add(shiftRepository.findById(schedule.get_shiftId()).get());
+                if (schedule.getDate().equals(Date.valueOf(LocalDate.now()))
+                        && shiftRepository.findById(schedule.getShiftId()).get().getTime_start()
+                                .isAfter(LocalTime.now())) {
+                    listShiftsBookedFromNow.add(shiftRepository.findById(schedule.getShiftId()).get());
                 }
             }
 
-            List<shift> listShiftsFromNow = new ArrayList<>();
+            List<Shift> listShiftsFromNow = new ArrayList<>();
 
-            for (shift shift : listShifts) {
-                if(!listShiftsBookedFromNow.contains(shift) && shift.getTime_start().isAfter(LocalTime.now())){
+            for (Shift shift : listShifts) {
+                if (!listShiftsBookedFromNow.contains(shift) && shift.getTime_start().isAfter(LocalTime.now())) {
                     listShiftsFromNow.add(shift);
                 }
             }
 
-            if(listShiftsFromNow.size() > listShiftsBookedFromNow.size()){
+            if (listShiftsFromNow.size() > listShiftsBookedFromNow.size()) {
                 listDoctorToday.add(doctor);
             }
         }
         return listDoctorToday;
     }
 
-    public List<doctorRespone> listDoctorTomorrow(Long id){
+    public List<DoctorResponse> listDoctorTomorrow(Long id) {
 
-        List<shift> listShifts = shiftServices.getShiftList();
+        List<Shift> listShifts = shiftServices.getShiftList();
 
-        List<doctorRespone> listResponses = getListDoctor(id, true); 
-        
-        List<doctorRespone> listDoctorTomorrow = new ArrayList<>();
+        List<DoctorResponse> listResponses = getListDoctor(id, true);
 
-        for (doctorRespone doctor : listResponses) {
+        List<DoctorResponse> listDoctorTomorrow = new ArrayList<>();
 
-            List<shift> listShiftsBookedTomorrow = new ArrayList<>();
+        for (DoctorResponse doctor : listResponses) {
 
-            for (scheduleRespone schedule  : doctor.getListSchedule()) {
+            List<Shift> listShiftsBookedTomorrow = new ArrayList<>();
 
-                if(schedule.getDate().equals(Date.valueOf(LocalDate.now().plusDays(1))))
-                {
-                    listShiftsBookedTomorrow.add(shiftRepository.findById(schedule.get_shiftId()).get());
+            for (ScheduleRespone schedule : doctor.getListSchedule()) {
+
+                if (schedule.getDate().equals(Date.valueOf(LocalDate.now().plusDays(1)))) {
+                    listShiftsBookedTomorrow.add(shiftRepository.findById(schedule.getShiftId()).get());
                 }
             }
 
-            if(listShifts.size() > listShiftsBookedTomorrow.size()){
+            if (listShifts.size() > listShiftsBookedTomorrow.size()) {
                 listDoctorTomorrow.add(doctor);
             }
         }
         return listDoctorTomorrow;
     }
 
-    public List<doctorRespone> listDoctorNextSevenDay(Long id){
+    public List<DoctorResponse> listDoctorNextSevenDay(Long id) {
 
-        List<shift> listShifts = shiftServices.getShiftList();
+        List<Shift> listShifts = shiftServices.getShiftList();
 
-        List<doctorRespone> listResponses = getListDoctor(id, true); 
-        
-        List<doctorRespone> listDoctorNextSevenDay = new ArrayList<>();
+        List<DoctorResponse> listResponses = getListDoctor(id, true);
 
-        for (doctorRespone doctor : listResponses) {
+        List<DoctorResponse> listDoctorNextSevenDay = new ArrayList<>();
 
-            List<shift> listShiftsBookedNextSevenDay = new ArrayList<>();
+        for (DoctorResponse doctor : listResponses) {
 
-            for (scheduleRespone schedule  : doctor.getListSchedule()) {
+            List<Shift> listShiftsBookedNextSevenDay = new ArrayList<>();
 
-                if(schedule.getDate().after(Date.valueOf(LocalDate.now().plusDays(1)))
-                && schedule.getDate().before(Date.valueOf(LocalDate.now().plusDays(8))))
-                {
-                    listShiftsBookedNextSevenDay.add(shiftRepository.findById(schedule.get_shiftId()).get());
+            for (ScheduleRespone schedule : doctor.getListSchedule()) {
+
+                if (schedule.getDate().after(Date.valueOf(LocalDate.now().plusDays(1)))
+                        && schedule.getDate().before(Date.valueOf(LocalDate.now().plusDays(8)))) {
+                    listShiftsBookedNextSevenDay.add(shiftRepository.findById(schedule.getShiftId()).get());
                 }
             }
 
-            if(listShifts.size() > listShiftsBookedNextSevenDay.size()){
+            if (listShifts.size() > listShiftsBookedNextSevenDay.size()) {
                 listDoctorNextSevenDay.add(doctor);
             }
         }
         return listDoctorNextSevenDay;
     }
 
-    public List<doctorRespone> searchByNameDoctor(List<doctorRespone> listDoctor, String name){
-        List<doctorRespone> resuList = new ArrayList<>();
-        if(name == null || name == ""){
+    public List<DoctorResponse> searchByNameDoctor(List<DoctorResponse> listDoctor, String name) {
+        List<DoctorResponse> resuList = new ArrayList<>();
+        if (name == null || name == "") {
             return listDoctor;
         }
 
-        for (doctorRespone doctorRespone : listDoctor) {
-            if(doctorRespone.getNameDoctor().toLowerCase().contains(name.toLowerCase()))
-            {
+        for (DoctorResponse doctorRespone : listDoctor) {
+            if (doctorRespone.getNameDoctor().toLowerCase().contains(name.toLowerCase())) {
                 resuList.add(doctorRespone);
             }
         }
         return resuList;
     }
 
-    public boolean checkFilterDay(Date date, String type){
+    public boolean checkFilterDay(Date date, String type) {
         switch (type) {
             case "today":
-                if(date.equals(Date.valueOf(LocalDate.now())))
+                if (date.equals(Date.valueOf(LocalDate.now())))
                     return true;
                 break;
 
             case "tomorrow":
-                if(date.equals(Date.valueOf(LocalDate.now().plusDays(1))))
+                if (date.equals(Date.valueOf(LocalDate.now().plusDays(1))))
                     return true;
                 break;
 
             case "nextseven":
-                if(date.after(Date.valueOf(LocalDate.now().plusDays(1)))
-                && date.before(Date.valueOf(LocalDate.now().plusDays(8))))
+                if (date.after(Date.valueOf(LocalDate.now().plusDays(1)))
+                        && date.before(Date.valueOf(LocalDate.now().plusDays(8))))
                     return true;
                 break;
 
             default:
-                if(date.equals(Date.valueOf(LocalDate.now()))
-                || date.after(Date.valueOf(LocalDate.now())))
+                if (date.equals(Date.valueOf(LocalDate.now()))
+                        || date.after(Date.valueOf(LocalDate.now())))
                     return true;
         }
         return false;
     }
 
-    public List<doctorRespone> filterDoctorByGenderAndShift(List<doctorRespone> listDoctor, Boolean gender, String _Shift, String type){
-        if(gender == null && _Shift.equals("")) {
+    public List<DoctorResponse> filterDoctorByGenderAndShift(List<DoctorResponse> listDoctor, Boolean gender,
+            String _Shift, String type) {
+        if (gender == null && _Shift.equals("")) {
             return listDoctor;
         }
-        List<shift> listAllShifts = shiftServices.getShiftList();
-        List<doctorRespone> resuList = new ArrayList<>();
-       
-        for (doctorRespone doctorRespone : listDoctor) {
-            List<shift> listShiftBooked = new ArrayList<>();
-            List<shift> listShiftAvailable = new ArrayList<>();
+        List<Shift> listAllShifts = shiftServices.getShiftList();
+        List<DoctorResponse> resuList = new ArrayList<>();
 
-            if(gender == null){
-                if(_Shift.equals("morning")){
-                    if(type.equals("none")){
+        for (DoctorResponse doctorRespone : listDoctor) {
+            List<Shift> listShiftBooked = new ArrayList<>();
+            List<Shift> listShiftAvailable = new ArrayList<>();
+
+            if (gender == null) {
+                if (_Shift.equals("morning")) {
+                    if (type.equals("none")) {
                         resuList.add(doctorRespone);
-                    }else{
-                        for (scheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
-                            if(checkFilterDay(scheduleRespone.getDate(), type)){
-                                shift shiftofSchedule = shiftRepository.findById(scheduleRespone.get_shiftId()).get();
+                    } else {
+                        for (ScheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
+                            if (checkFilterDay(scheduleRespone.getDate(), type)) {
+                                Shift shiftofSchedule = shiftRepository.findById(scheduleRespone.getShiftId()).get();
                                 listShiftBooked.add(shiftofSchedule);
                             }
                         }
-                        for (shift shift : listAllShifts) {
-                            if(shift.getId() <= 7 && !listShiftBooked.contains(shift)){
+                        for (Shift shift : listAllShifts) {
+                            if (shift.getId() <= 7 && !listShiftBooked.contains(shift)) {
                                 listShiftAvailable.add(shift);
                             }
                         }
-                        if(listShiftAvailable.size() > 0) resuList.add(doctorRespone);
+                        if (listShiftAvailable.size() > 0)
+                            resuList.add(doctorRespone);
                     }
-                }else if(_Shift.equals("afternoon")){
-                    if(type.equals("none")){
+                } else if (_Shift.equals("afternoon")) {
+                    if (type.equals("none")) {
                         resuList.add(doctorRespone);
-                    }else{
-                        for (scheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
-                            if(checkFilterDay(scheduleRespone.getDate(), type)){
-                                shift shiftofSchedule = shiftRepository.findById(scheduleRespone.get_shiftId()).get();
+                    } else {
+                        for (ScheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
+                            if (checkFilterDay(scheduleRespone.getDate(), type)) {
+                                Shift shiftofSchedule = shiftRepository.findById(scheduleRespone.getShiftId()).get();
                                 listShiftBooked.add(shiftofSchedule);
                             }
                         }
-                        for (shift shift : listAllShifts) {
-                            if(shift.getId() > 7 && !listShiftBooked.contains(shift)){
+                        for (Shift shift : listAllShifts) {
+                            if (shift.getId() > 7 && !listShiftBooked.contains(shift)) {
                                 listShiftAvailable.add(shift);
                             }
                         }
-                        if(listShiftAvailable.size() > 0) resuList.add(doctorRespone);
+                        if (listShiftAvailable.size() > 0)
+                            resuList.add(doctorRespone);
                     }
-                }else{
+                } else {
                     resuList.add(doctorRespone);
                 }
             }
-            
-            if(doctorRespone.getGender().equals(gender)){
-                if(_Shift.equals("morning")){
-                    if(type.equals("none")){
+
+            if (doctorRespone.getGender().equals(gender)) {
+                if (_Shift.equals("morning")) {
+                    if (type.equals("none")) {
                         resuList.add(doctorRespone);
-                    }else{
-                        for (scheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
-                            if(checkFilterDay(scheduleRespone.getDate(), type)){
-                                shift shiftofSchedule = shiftRepository.findById(scheduleRespone.get_shiftId()).get();
+                    } else {
+                        for (ScheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
+                            if (checkFilterDay(scheduleRespone.getDate(), type)) {
+                                Shift shiftofSchedule = shiftRepository.findById(scheduleRespone.getShiftId()).get();
                                 listShiftBooked.add(shiftofSchedule);
                             }
                         }
-                        for (shift shift : listAllShifts) {
-                            if(shift.getId() <= 7 && !listShiftBooked.contains(shift)){
+                        for (Shift shift : listAllShifts) {
+                            if (shift.getId() <= 7 && !listShiftBooked.contains(shift)) {
                                 listShiftAvailable.add(shift);
                             }
                         }
-                        if(listShiftAvailable.size() > 0) resuList.add(doctorRespone);
+                        if (listShiftAvailable.size() > 0)
+                            resuList.add(doctorRespone);
                     }
-                }else if(_Shift.equals("afternoon")){
-                    if(type.equals("none")){
+                } else if (_Shift.equals("afternoon")) {
+                    if (type.equals("none")) {
                         resuList.add(doctorRespone);
-                    }else{
-                        for (scheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
-                            if(checkFilterDay(scheduleRespone.getDate(), type)){
-                                shift shiftofSchedule = shiftRepository.findById(scheduleRespone.get_shiftId()).get();
+                    } else {
+                        for (ScheduleRespone scheduleRespone : doctorRespone.getListSchedule()) {
+                            if (checkFilterDay(scheduleRespone.getDate(), type)) {
+                                Shift shiftofSchedule = shiftRepository.findById(scheduleRespone.getShiftId()).get();
                                 listShiftBooked.add(shiftofSchedule);
                             }
                         }
-                        for (shift shift : listAllShifts) {
-                            if(shift.getId() > 7 && !listShiftBooked.contains(shift)){
+                        for (Shift shift : listAllShifts) {
+                            if (shift.getId() > 7 && !listShiftBooked.contains(shift)) {
                                 listShiftAvailable.add(shift);
                             }
                         }
-                        if(listShiftAvailable.size() > 0) resuList.add(doctorRespone);
+                        if (listShiftAvailable.size() > 0)
+                            resuList.add(doctorRespone);
                     }
-                }else{
+                } else {
                     resuList.add(doctorRespone);
                 }
             }
